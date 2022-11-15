@@ -37,16 +37,21 @@ namespace GameProject.Content.Game.Santa {
 
         private void move() {
             KeyboardState state = Keyboard.GetState();
-            var direction = new Vector2(0, 1);
+            var direction = new Vector2(0, 0);
             var prevFrameList = activeFrameList;
             if (state.IsKeyDown(Keys.Left))
                 direction.X -= 1;
             if (state.IsKeyDown(Keys.Right))
                 direction.X += 1;
+            if (state.IsKeyDown(Keys.Up))
+                direction.Y -= 1;
+            if (state.IsKeyDown(Keys.Down))
+                direction.Y += 1;
 
             direction *= speed;
-            Vector2 acturalMovement = checkCollisions(direction);
-            position += (acturalMovement);
+            Vector2 actualMovement = checkCollisions(direction);
+
+            position += actualMovement;
 
 
             //check which animation frame is required
@@ -83,12 +88,12 @@ namespace GameProject.Content.Game.Santa {
             if (activeFrame >= activeFrameList.Count)
                 activeFrame = 0;
         }
-        private Rectangle hitboxRectangle(Rectangle hitbox, Vector2 movement) {
+        private Rectangle hitboxRectangle(Rectangle hitbox, Vector2 position) {
             if (spriteEffect == SpriteEffects.FlipHorizontally)
                 //left = positionX + spritesheet width - hitbox.width - hitbox.left
-                return new Rectangle((int)(position + movement).X + activeFrameList[activeFrame].BoundingBox.Width - hitbox.Left - hitbox.Width, (int)(position + movement).Y, hitbox.Width, hitbox.Height);
+                return new Rectangle((int)position.X + activeFrameList[activeFrame].BoundingBox.Width - hitbox.Left - hitbox.Width, (int)position.Y + hitbox.Top, hitbox.Width, hitbox.Height);
             //left = positionX + left boundry
-            return new Rectangle((int)(position + movement).X + hitbox.Left, (int)(position + movement).Y, hitbox.Width, hitbox.Height);
+            return new Rectangle((int)position.X + hitbox.Left, (int)position.Y + hitbox.Top, hitbox.Width, hitbox.Height);
         }
         private Vector2 intersectionDepth(Rectangle rect1, Rectangle rect2) {
             // no intersection --> return no depth vector
@@ -112,42 +117,22 @@ namespace GameProject.Content.Game.Santa {
             float depthY = distanceY > 0 ? toalHeightBoth - distanceY : -toalHeightBoth - distanceY;
             return new Vector2(depthX, depthY);
         }
-        private Vector2 maxIntersectionMultipleHitboxes(Block b, Vector2 movement) {
-            Vector2 maxIntersection = Vector2.Zero;
-            foreach (Rectangle hitbox in activeFrameList[activeFrame].Hitbox)
-            {
-                Rectangle positionRectangle = hitboxRectangle(hitbox, movement);
-                Debug.WriteLine(positionRectangle);
-                Vector2 intersection = intersectionDepth(b.IntersectionBlock, positionRectangle);
-                if (Math.Abs(intersection.X) > Math.Abs(maxIntersection.X))
-                    maxIntersection.X = intersection.X;
-                if (Math.Abs(intersection.Y) > Math.Abs(maxIntersection.Y))
-                    maxIntersection.Y = intersection.Y;
-            }
-            return maxIntersection;
-        }
         private Vector2 checkCollisions(Vector2 movement) {
             Vector2 undoMovement = new Vector2();
             foreach (Block b in Block.Blocks)
             {
-                Vector2 maxIntersection = maxIntersectionMultipleHitboxes(b, movement);
-                if (maxIntersection == Vector2.Zero)
-                    continue;
-                //not a clean stattement in the if's
-                else if (Math.Abs(maxIntersection.X) < Math.Abs(maxIntersection.Y))
+                List<Rectangle> collided = activeFrameList[activeFrame].Hitbox.Select(hitbox => hitboxRectangle(hitbox, position + movement)).Where(intersectionBox => b.IntersectionBlock.Intersects(intersectionBox)).ToList();
+                foreach (Rectangle c in collided)
                 {
-                    //move X-axis
-                    Debug.WriteLine($"shift X {maxIntersection}");
-                    if (undoMovement.X < maxIntersection.X)
-                        undoMovement.X = maxIntersection.X;
-                }
-                else if (Math.Abs(maxIntersection.X) >= Math.Abs(maxIntersection.Y))
-                {
-                    //move Y-axis
-                    Debug.WriteLine($"shift Y {maxIntersection}");
-                    if (undoMovement.Y < maxIntersection.Y)
-                        undoMovement.Y = maxIntersection.Y;
-
+                    Vector2 intersection = intersectionDepth(b.IntersectionBlock, c);
+                    if (Math.Abs(intersection.Y) < Math.Abs(intersection.X))
+                        if (Math.Abs(intersection.Y) > Math.Abs(undoMovement.Y))
+                            undoMovement.Y = intersection.Y;
+                        else
+                            continue;
+                    else
+                        if (Math.Abs(intersection.X) > Math.Abs(undoMovement.X))
+                        undoMovement.X = intersection.X;
                 }
             }
             return new Vector2(movement.X - undoMovement.X, movement.Y - undoMovement.Y);
