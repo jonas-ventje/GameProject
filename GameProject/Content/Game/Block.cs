@@ -35,7 +35,7 @@ namespace GameProject.Content
             this.position = position;
             block = new Rectangle(0,0, width, height);
         }
-        public void draw(SpriteBatch spriteBatch) {
+        public void Draw(SpriteBatch spriteBatch) {
             spriteBatch.Draw(texture, position, block, Color.White);
         }
     }

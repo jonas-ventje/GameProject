@@ -55,7 +55,7 @@ namespace GameProject
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
 
-            santa.update(gameTime);
+            santa.Update(gameTime);
             base.Update(gameTime);
         }
 
@@ -63,10 +63,10 @@ namespace GameProject
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
             _spriteBatch.Begin();
-            santa.draw(_spriteBatch);
-            block.draw(_spriteBatch);
-            block2.draw(_spriteBatch);
-            block3.draw(_spriteBatch);
+            santa.Draw(_spriteBatch);
+            block.Draw(_spriteBatch);
+            block2.Draw(_spriteBatch);
+            block3.Draw(_spriteBatch);
             _spriteBatch.End();
             base.Draw(gameTime);
         }

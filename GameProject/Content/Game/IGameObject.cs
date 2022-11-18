@@ -10,7 +10,7 @@ namespace GameProject.Content
 {
     internal interface IGameObject
     {
-        void update(GameTime gameTime);
-        void draw(SpriteBatch spriteBatch);
+        void Update(GameTime gameTime);
+        void Draw(SpriteBatch spriteBatch);
     }
 }

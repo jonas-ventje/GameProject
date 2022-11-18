@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace GameProject.Content {
     internal interface IStaticGameObject {
-        void draw(SpriteBatch spriteBatch);
+        void Draw(SpriteBatch spriteBatch);
 
     }
 }
