@@ -36,7 +36,7 @@ namespace GameProject
             base.Initialize();
 
             santa = new Santa(santaTexture, new Vector2(3,3));
-            block = new Block(blockTexture, 400, 100, new Vector2(10, 900));
+            block = new Block(blockTexture, 400, 100, new Vector2(10, 500));
             block2 = new Block(blockTexture, 200, 200, new Vector2(400, 630));
             block3 = new Block(blockTexture, 300, 200, new Vector2(550, 800));
 
