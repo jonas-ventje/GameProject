@@ -16,9 +16,9 @@ namespace GameProject.Content.Game {
             if (state.IsKeyDown(Keys.Right))
                 movement.X += 1;
             if (state.IsKeyDown(Keys.Down))
-                movement.Y += 1;
-            if (state.IsKeyDown(Keys.Up))
                 movement.Y -= 1;
+            if (state.IsKeyDown(Keys.Up))
+                movement.Y += 1;
             if (state.IsKeyDown(Keys.Space))
                 movement.Y += 1;
             return movement;

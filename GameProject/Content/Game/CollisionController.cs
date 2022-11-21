@@ -1,15 +1,18 @@
-﻿using GameProject.Content.Game.Santa;
+﻿using Microsoft.VisualBasic;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
-namespace GameProject.Content.Game {
+namespace GameProject.Content.Game
+{
     internal static class CollisionController {
-        private static Rectangle HitboxRectangle(SantaFrame frame, SpriteEffects spriteEffect, Rectangle hitbox, Vector2 position) {
+        private static Rectangle HitboxRectangle(Frame frame, SpriteEffects spriteEffect, Rectangle hitbox, Vector2 position) {
             if (spriteEffect == SpriteEffects.FlipHorizontally)
                 //left = positionX + spritesheet width - hitbox.width - hitbox.left
                 return new Rectangle((int)position.X + frame.BoundingBox.Width - hitbox.Left - hitbox.Width, (int)position.Y + hitbox.Top, hitbox.Width, hitbox.Height);
@@ -38,22 +41,28 @@ namespace GameProject.Content.Game {
             float depthY = distanceY > 0 ? toalHeightBoth - distanceY : -toalHeightBoth - distanceY;
             return new Vector2(depthX, depthY);
         }
-        public static Vector2 CalculateAvailableMovement(SantaFrame frame, SpriteEffects spriteEffect, Vector2 position, Vector2 movement) {
+        public static Vector2 CalculateAvailableMovement(Frame frame, SpriteEffects spriteEffect, Vector2 position, Vector2 movement) {
             Vector2 undoMovement = new Vector2();
             foreach (Block b in Block.Blocks)
             {
-                List<Rectangle> collided = frame.Hitbox.Select(hitbox => HitboxRectangle(frame, spriteEffect, hitbox, position + movement)).Where(intersectionBox => b.IntersectionBlock.Intersects(intersectionBox)).ToList();
+                //check which sprite rectangles will collide and return them as the not-moved rectangle in a list
+                List<Rectangle> collided = frame.Hitbox.Select(hitbox => HitboxRectangle(frame, spriteEffect, hitbox, position + movement)).Where(movedHitbox => b.IntersectionBlock.Intersects(movedHitbox)).ToList();
                 foreach (Rectangle c in collided)
                 {
                     Vector2 intersection = IntersectionDepth(b.IntersectionBlock, c);
-                    if (Math.Abs(intersection.Y) < Math.Abs(intersection.X))
-                        if (Math.Abs(intersection.Y) > Math.Abs(undoMovement.Y))
-                            undoMovement.Y = intersection.Y;
+                    if (Math.Abs(intersection.X) < Math.Abs(intersection.Y) || (Math.Abs(intersection.X) <= Math.Abs(movement.X) && Math.Abs(intersection.Y) <= Math.Abs(movement.Y)))
+
+                        //colliion is in the X direction
+                        if (Math.Abs(intersection.X) > Math.Abs(undoMovement.X))
+                            undoMovement.X = intersection.X;
                         else
                             continue;
                     else
-                        if (Math.Abs(intersection.X) > Math.Abs(undoMovement.X))
-                        undoMovement.X = intersection.X;
+                            //collision is in the Y direction
+                            if (Math.Abs(intersection.Y) > Math.Abs(undoMovement.Y))
+                        undoMovement.Y = intersection.Y;
+
+
                 }
             }
             return new Vector2(movement.X - undoMovement.X, movement.Y - undoMovement.Y);

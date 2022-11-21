@@ -3,11 +3,13 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace GameProject.Content.Game {
+namespace GameProject.Content.Game
+{
     internal class MovementControllerSanta : GravityObject, IMovementController {
 
         private IInputReader inputReader;
@@ -18,7 +20,8 @@ namespace GameProject.Content.Game {
         }
 
 #nullable enable
-        public Vector2 Move(GameTime? gameTime, SantaFrame frame, SpriteEffects spriteEffect, Vector2 position) {
+        public Vector2 Move(GameTime? gameTime, ref List<Frame> frameList, ref int activeFrame, ref SpriteEffects spriteEffect, Vector2 position) {
+            Frame frame = frameList[activeFrame];
             if (gameTime == null)
                 throw new NotImplementedException();
             Vector2 inputMovement = inputReader.InputMovement();
@@ -37,6 +40,25 @@ namespace GameProject.Content.Game {
                 ReachGround();
             else
                 startFalling();
+
+
+            //check which animation frame is required
+            List<Frame> prevFrameList = frameList;
+            if (movement.X == 0)
+                frameList = SantaFrames.idleFrames;
+            else if (movement.X != 0)
+            {
+                frameList = SantaFrames.walkingFrames;
+                if (movement.X < 0)
+                    spriteEffect = SpriteEffects.FlipHorizontally;
+                else
+                    spriteEffect = SpriteEffects.None;
+            }
+            //activeFrames must be set to 0 again when animation changes because it does not have equal numbers of frames
+            if (prevFrameList != frameList)
+                activeFrame = 0;
+
+
 
             return actualMovement;
         }

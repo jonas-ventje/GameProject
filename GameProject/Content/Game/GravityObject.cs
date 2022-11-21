@@ -7,9 +7,9 @@ using System.Threading.Tasks;
 
 namespace GameProject.Content.Game {
     internal abstract class GravityObject {
-        private float gravityAcceleration = 9.81f;
+        private float gravityAcceleration = 10f;
         //add a mass (it's not in the free fall formulla, but it's easyer to implement then air resistance and mass etc)
-        private float mass = 2.5f;
+        private float mass = 3.2f;
         private bool isInTheAir = false;
         private double gravityPhysicsTime = 0;
 
@@ -36,7 +36,7 @@ namespace GameProject.Content.Game {
         /// </summary>
         protected void StartJump() {
             isInTheAir = true;
-            jumpPower = -12f;
+            jumpPower = -16f;
         }
 
         /// <summary>

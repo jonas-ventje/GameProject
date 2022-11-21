@@ -14,7 +14,8 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using Keys = Microsoft.Xna.Framework.Input.Keys;
 
-namespace GameProject.Content.Game.Santa {
+namespace GameProject.Content.Game.Santa
+{
     internal class Santa : IGameObject {
         private Texture2D texture;
         private int activeFrame = 0;
@@ -23,11 +24,7 @@ namespace GameProject.Content.Game.Santa {
         private Vector2 position;
         private IMovementController movementController;
         private SpriteEffects spriteEffect;
-        private List<SantaFrame> activeFrameList;
-/*        private float gravityAcceleration = 9f;
-        private bool isInTheAir = false;
-        private double gravityPhysicsTime = 0;
-        float verticalSpeedAtFire = 0;*/
+        private List<Frame> activeFrameList;
 
 
         public Santa(Texture2D texture, Vector2 speed) {
@@ -39,30 +36,15 @@ namespace GameProject.Content.Game.Santa {
         }
 
         private void Move(GameTime gameTime) {
-/*        
-            if (Math.Abs(actualMovement.Y) < Math.Abs(movement.Y))
-            {
-
-                isInTheAir = false;
-            }
-            
-            else
-                isInTheAir = true;
-
-            if (state.IsKeyDown(Keys.Space))
-            {
-                verticalSpeedAtFire = -5.5f;
-                isInTheAir = true;
-            }*/
-
-
-            position += movementController.Move(gameTime, activeFrameList[activeFrame], spriteEffect, position);
+            Vector2 movement = movementController.Move(gameTime, ref activeFrameList, ref activeFrame, ref spriteEffect, position);
+            position += movement;
 
 
 /*            //check which animation frame is required
+            List<SantaFrame> prevFrameList = activeFrameList;
             if (movement.X == 0)
                 activeFrameList = SantaFrames.idleFrames;
-            else if (movement.X != 0 && movement.Y == verticalSpeed * speed.Y)
+            else if (movement.X != 0)
             {
                 activeFrameList = SantaFrames.walkingFrames;
                 if (movement.X < 0)
@@ -72,8 +54,8 @@ namespace GameProject.Content.Game.Santa {
             }
             //activeFrames must be set to 0 again when animation changes because it does not have equal numbers of frames
             if (prevFrameList != activeFrameList)
-                activeFrame = 0;
-*/
+                activeFrame = 0;*/
+
 
         }
 
@@ -83,19 +65,6 @@ namespace GameProject.Content.Game.Santa {
 
 
         public void Update(GameTime gameTime) {
-/*            float verticalSpeed = 1;
-            if (isInTheAir)
-            {
-                gravityPhysicsTime += gameTime.ElapsedGameTime.TotalSeconds;
-                verticalSpeed += gravityAcceleration * (float)gravityPhysicsTime + verticalSpeedAtFire;
-            }
-            else
-            {
-                gravityPhysicsTime = 0;               
-                //for falling without jump, there must be no start velocity
-                verticalSpeedAtFire = 0;
-            }*/
-
             Move(gameTime);
             secondCounter += gameTime.ElapsedGameTime.TotalSeconds;
             if (secondCounter >= 1d / fps)

@@ -12,12 +12,14 @@ namespace GameProject
         private GraphicsDeviceManager _graphics;
         private SpriteBatch _spriteBatch;
         private Texture2D santaTexture;
+        private Texture2D tilesTexture;
         private Texture2D blockTexture;
 
         private Santa santa;
         private Block block;
         private Block block2;
         private Block block3;
+        private Block block4;
 
         public Game1()
         {
@@ -29,16 +31,17 @@ namespace GameProject
 
         protected override void Initialize()
         {
-            _graphics.PreferredBackBufferWidth = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width;
-            _graphics.PreferredBackBufferHeight = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height;
+            _graphics.PreferredBackBufferWidth = 3200;
+            _graphics.PreferredBackBufferHeight = 1792;
 /*            _graphics.IsFullScreen = true;
 */            _graphics.ApplyChanges();
             base.Initialize();
 
             santa = new Santa(santaTexture, new Vector2(3,3));
-            block = new Block(blockTexture, 400, 100, new Vector2(10, 500));
-            block2 = new Block(blockTexture, 200, 200, new Vector2(400, 630));
-            block3 = new Block(blockTexture, 300, 200, new Vector2(550, 800));
+            block = new Block(blockTexture, 400, 128, new Vector2(10, 500));
+            block2 = new Block(blockTexture, 200, 128, new Vector2(400, 200));
+            block3 = new Block(blockTexture, 400, 128, new Vector2(400, 500+128+128));
+            block4 = new Block(blockTexture, 400, 128, new Vector2(10, 500+128));
 
         }
 
@@ -67,6 +70,7 @@ namespace GameProject
             block.Draw(_spriteBatch);
             block2.Draw(_spriteBatch);
             block3.Draw(_spriteBatch);
+            block4.Draw(_spriteBatch);
             _spriteBatch.End();
             base.Draw(gameTime);
         }

@@ -5,9 +5,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace GameProject.Content.Game.Santa
+namespace GameProject.Content.Game
 {
-    internal class SantaFrame
+    internal class Frame
     {
 
         private Rectangle boundingBox;
@@ -39,7 +39,8 @@ namespace GameProject.Content.Game.Santa
                 return hitbox;
             }
         }
-        public SantaFrame(Rectangle boundingBox, List<Rectangle> fatalHitbox, List<Rectangle> hitbox) {
+        public Frame(Rectangle boundingBox, List<Rectangle> fatalHitbox, List<Rectangle> hitbox)
+        {
             this.boundingBox = boundingBox;
             this.fatalHitbox = fatalHitbox;
             this.hitbox = hitbox;
