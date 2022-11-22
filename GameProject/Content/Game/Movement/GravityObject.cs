@@ -11,7 +11,7 @@ namespace GameProject.Content.Game {
         //add a mass (it's not in the free fall formulla, but it's easyer to implement then air resistance and mass etc)
         private float mass = 3.2f;
         private bool isInTheAir = false;
-        private double gravityPhysicsTime = 0;
+        private double airTime = 0;
 
         //this must be 0 for fallings, and a vertical upward speed (negative number) for jumpings
         float jumpPower = 0;
@@ -25,8 +25,8 @@ namespace GameProject.Content.Game {
 
             if (isInTheAir)
             {
-                gravityPhysicsTime += gameTime.ElapsedGameTime.TotalSeconds;
-                return (new Vector2(0, gravityAcceleration * (float)gravityPhysicsTime*mass + jumpPower));
+                airTime += gameTime.ElapsedGameTime.TotalSeconds;
+                return (new Vector2(0, gravityAcceleration * (float)airTime*mass + jumpPower));
             }
             return new Vector2(0,gravityAcceleration);
         }
@@ -42,7 +42,7 @@ namespace GameProject.Content.Game {
         /// <summary>
         /// call this function when start falling
         /// </summary>
-        protected void startFalling() {
+        protected void StartFalling() {
             isInTheAir = true;
         }
 
@@ -51,8 +51,14 @@ namespace GameProject.Content.Game {
         /// </summary>
         protected void ReachGround() {
             isInTheAir = false;
-            gravityPhysicsTime = 0;
+            airTime = 0;
             jumpPower = 0;
+        }
+        /// <summary>
+        /// push the "in the air" time forward til the point where velocity is zero and you stop falling.
+        /// </summary>
+        protected void StopAscent() {
+            airTime = -jumpPower / (gravityAcceleration * mass);
         }
     }
 }

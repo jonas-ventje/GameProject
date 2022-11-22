@@ -36,10 +36,14 @@ namespace GameProject.Content.Game
             Vector2 actualMovement = CollisionController.CalculateAvailableMovement(frame, spriteEffect, position, movement);
 
             //check if object reaches the ground, and obviously needs to fall otherwise
-            if (movement.Y != actualMovement.Y)
+            //an object reaches the ground when movement is movement is downwards and the actualmovemnt is zero or upwards
+            //but if the movements are in the other direction, the top is reached and termination of the ascent is required
+            if (movement.Y > 0 && actualMovement.Y <= 0)
                 ReachGround();
+            else if (movement.Y < 0 && actualMovement.Y >= 0)
+                StopAscent();
             else
-                startFalling();
+                StartFalling();
 
 
             //check which animation frame is required
