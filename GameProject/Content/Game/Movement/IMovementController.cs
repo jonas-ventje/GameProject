@@ -10,7 +10,7 @@ namespace GameProject.Content.Game
 {
     internal interface IMovementController {
 #nullable enable
-        public Vector2 Move(GameTime? gameTime, Frame frame, Vector2 position, SpriteEffects spriteEffect);
+        public Vector2 Move(GameTime? gameTime, Frame frame, Vector2 position, SpriteEffects spriteEffect, out Vector2 noCollisionMovement);
 #nullable disable
         }
     }

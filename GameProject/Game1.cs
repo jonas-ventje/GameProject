@@ -11,9 +11,16 @@ namespace GameProject {
     {
         private GraphicsDeviceManager _graphics;
         private SpriteBatch _spriteBatch;
+        private RenderTarget2D renderTarget;
         private Texture2D santaTexture;
         private Texture2D tilesTexture;
         private Texture2D blockTexture;
+
+
+        private float scale;
+        private int virtualWidht = 3200;
+        private int virtualHeight = 1792;
+
 
         private Santa santa;
         private World world;
@@ -32,11 +39,13 @@ namespace GameProject {
 
         protected override void Initialize()
         {
-            _graphics.PreferredBackBufferWidth = 3200;
-            _graphics.PreferredBackBufferHeight = 1800;
+            _graphics.PreferredBackBufferWidth = 1600;
+            _graphics.PreferredBackBufferHeight = 900;
             //_graphics.IsFullScreen = true;
             _graphics.ApplyChanges();
             base.Initialize();
+
+            scale = 1F / ((float)virtualWidht / GraphicsDevice.Viewport.Width);
 
             santa = new Santa(santaTexture, new Vector2(3,3));
             world = new World(tilesTexture);
@@ -50,6 +59,7 @@ namespace GameProject {
         protected override void LoadContent()
         {
             _spriteBatch = new SpriteBatch(GraphicsDevice);
+            renderTarget = new RenderTarget2D(GraphicsDevice, virtualWidht, virtualHeight);
             santaTexture = Content.Load<Texture2D>("./images/santaClaus_small");
             tilesTexture = Content.Load<Texture2D>("./images/tileset");
             blockTexture = new Texture2D(GraphicsDevice, 1, 1);
@@ -67,8 +77,10 @@ namespace GameProject {
 
         protected override void Draw(GameTime gameTime)
         {
+            GraphicsDevice.SetRenderTarget(renderTarget);
             GraphicsDevice.Clear(Color.CornflowerBlue);
             _spriteBatch.Begin();
+            
             santa.Draw(_spriteBatch);
             //block.Draw(_spriteBatch);
             block2.Draw(_spriteBatch);
@@ -77,6 +89,12 @@ namespace GameProject {
             world.Draw(_spriteBatch);
 
             _spriteBatch.End();
+            GraphicsDevice.SetRenderTarget(null);
+            GraphicsDevice.Clear(Color.CornflowerBlue);
+            _spriteBatch.Begin();
+            _spriteBatch.Draw(renderTarget, Vector2.Zero, null, Color.White, 0f, Vector2.Zero, scale, SpriteEffects.None, 0f);
+            _spriteBatch.End();
+
             base.Draw(gameTime);
         }
     }

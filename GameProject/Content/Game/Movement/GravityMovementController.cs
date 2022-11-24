@@ -20,7 +20,7 @@ namespace GameProject.Content.Game
         }
 
 #nullable enable
-        public Vector2 Move(GameTime? gameTime, Frame frame, Vector2 position, SpriteEffects spriteEffect) {
+        public Vector2 Move(GameTime? gameTime, Frame frame, Vector2 position, SpriteEffects spriteEffect, out Vector2 noCollisionMovement) {
             if (gameTime == null)
                 throw new NotImplementedException();
             Vector2 inputMovement = inputReader.InputMovement();
@@ -32,6 +32,7 @@ namespace GameProject.Content.Game
 
             movement *= speed;
             movement += UpdateGravity(gameTime);
+            noCollisionMovement = movement;
             Vector2 actualMovement = CollisionController.CalculateAvailableMovement(frame, spriteEffect, position, movement);
 
             //check if object reaches the ground, and obviously needs to fall otherwise

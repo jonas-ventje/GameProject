@@ -25,10 +25,12 @@ namespace GameProject.Content.Game.Santa
         private List<Frame> activeFrameList;
         private Animation animation;
         private Frame activeFrame;
+        private Vector2 speed;
 
 
         public Santa(Texture2D texture, Vector2 speed) {
             this.texture = texture;
+            this.speed = speed;
             position = new Vector2(0, 0);
             spriteEffect = SpriteEffects.None;
             movementController = new GravityMovementController(new InputReaderKeyboard(), speed);
@@ -38,17 +40,18 @@ namespace GameProject.Content.Game.Santa
         }
 
         private void Move(GameTime gameTime) {
-            Vector2 movement = movementController.Move(gameTime, activeFrame, position, spriteEffect);
+            Vector2 noCollisionMovement;
+            Vector2 movement = movementController.Move(gameTime, activeFrame, position, spriteEffect, out noCollisionMovement);
             position += movement;
 
             //check which animation frame is required
             List<Frame> prevFrameList = activeFrameList;
-            if (movement.X == 0)
+            if (noCollisionMovement.X == 0)
                 activeFrameList = SantaFrames.idleFrames;
-            else if (movement.X != 0)
+            else if (noCollisionMovement.X != 0)
             {
                 activeFrameList = SantaFrames.walkingFrames;
-                if (movement.X < 0)
+                if (noCollisionMovement.X < 0)
                     spriteEffect = SpriteEffects.FlipHorizontally;
                 else
                     spriteEffect = SpriteEffects.None;
