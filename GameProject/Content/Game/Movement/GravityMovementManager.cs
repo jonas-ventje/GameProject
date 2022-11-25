@@ -46,9 +46,9 @@ namespace GameProject.Content.Game.Movement {
             //check which animation frame is required
             if (isInTheAir)
                 movable.CurrentMovingState = MovingState.Jumping;
-            if (movement.X == 0)
+            else if (movement.X == 0)
                 movable.CurrentMovingState = MovingState.Idle;
-            else if (movement.X != 0)
+            if (movement.X != 0)
             {
                 movable.CurrentMovingState = MovingState.Walking;
                 if (movement.X < 0)

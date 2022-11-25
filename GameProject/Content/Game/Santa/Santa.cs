@@ -67,7 +67,8 @@ namespace GameProject.Content.Game.Santa {
             List<Frame> prevFrameList = activeFrameList;
             switch (CurrentMovingState)
             {
-                case MovingState.Idle: case MovingState.Jumping:
+                case MovingState.Idle:
+                case MovingState.Jumping:
                     activeFrameList = SantaFrames.idleFrames;
                     break;
                 case MovingState.Walking:
