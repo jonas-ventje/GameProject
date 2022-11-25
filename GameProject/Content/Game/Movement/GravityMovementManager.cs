@@ -1,9 +1,11 @@
 ﻿using GameProject.Content.Game.Santa;
+using Microsoft.VisualBasic;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using SharpDX.Direct3D9;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -28,7 +30,23 @@ namespace GameProject.Content.Game.Movement {
 
             movement *= movable.HorizontalSpeed;
             movement += UpdateGravity(gameTime);
-            Vector2 actualMovement = CollisionController.CalculateAvailableMovement(movable.ActiveFrame, movable.SpriteDirection, movable.Position, movement);
+
+            Vector2 undoMovement = new Vector2();
+
+            foreach (var block in GameTile.Tiles)
+            {
+                CollidingSide side;
+                Vector2 intersection = CollisionController.CollisionDepth(movable.ActiveFrame, movable.SpriteDirection, movable.Position, movement, block.IntersectionBlock, out side);
+                if (intersection != Vector2.Zero)
+                {
+                    if (Math.Abs(intersection.Y) > Math.Abs(undoMovement.Y))
+                        undoMovement.Y = intersection.Y;
+                    if (Math.Abs(intersection.X) > Math.Abs(undoMovement.X))
+                        undoMovement.X = intersection.X;
+                }
+            }
+            Vector2 actualMovement = movement - undoMovement;
+            //Vector2 actualMovement = CollisionController.CalculateAvailableMovement(movable.ActiveFrame, movable.SpriteDirection, movable.Position, movement);
 
             //check if object reaches the ground, and obviously needs to fall otherwise
             //an object reaches the ground when movement is movement is downwards and the actualmovemnt is zero or upwards

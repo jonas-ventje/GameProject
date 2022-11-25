@@ -1,8 +1,10 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using System.Collections.Generic;
 
 namespace GameProject.Content.Game {
     internal class GameTile : IStaticGameObject {
+        public static List<GameTile> Tiles = new List<GameTile>();
         private const int tileWidth = 128;
         private const int tileHeight = 128;
         private Texture2D texture;
@@ -12,6 +14,7 @@ namespace GameProject.Content.Game {
             this.texture = texture;
             position = new Vector2(x * tileWidth, y * tileHeight);
             this.tileRectangle = LoadTile(id);
+            Tiles.Add(this);
         }
 
         public Rectangle IntersectionBlock

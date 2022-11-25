@@ -9,8 +9,8 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace GameProject.Content.Game
-{
+namespace GameProject.Content.Game {
+    public enum CollidingSide { Top, Bottom, Left, Right, None };
     internal static class CollisionController {
         private static Rectangle HitboxRectangle(Frame frame, SpriteEffects spriteEffect, Rectangle hitbox, Vector2 position) {
             if (spriteEffect == SpriteEffects.FlipHorizontally)
@@ -19,54 +19,55 @@ namespace GameProject.Content.Game
             //left = positionX + left boundry
             return new Rectangle((int)position.X + hitbox.Left, (int)position.Y + hitbox.Top, hitbox.Width, hitbox.Height);
         }
-        private static Vector2 IntersectionDepth(Rectangle rect1, Rectangle rect2) {
-            // no intersection --> return no depth vector
-            if (!rect1.Intersects(rect2))
+        public static Vector2 CollisionDepth(Frame frame, SpriteEffects spriteEffect, Vector2 position, Vector2 movement, Rectangle collisionObject, out CollidingSide where) {
+            where = CollidingSide.None;
+            Rectangle collidedHitbox = frame.Hitbox.FirstOrDefault(hitbox => collisionObject.Intersects(HitboxRectangle(frame, spriteEffect, hitbox, position + movement)));
+            if (collidedHitbox == default(Rectangle))
                 return Vector2.Zero;
+            Rectangle collided = HitboxRectangle(frame, spriteEffect, collidedHitbox, position);
+            Rectangle movedRectangle = HitboxRectangle(frame, spriteEffect, collidedHitbox, position + movement);
 
-            // calc half sizes.
-            float halfWidth1 = rect1.Width / 2.0f;
-            float halfHeight1 = rect1.Height / 2.0f;
-            float halfWidth2 = rect2.Width / 2.0f;
-            float halfHeight2 = rect2.Height / 2.0f;
-
-            // center distances and width, height when no intercection
-            float distanceX = rect1.Left + halfWidth1 - (rect2.Left + halfWidth2);
-            float distanceY = rect1.Top + halfHeight1 - (rect2.Top + halfHeight2);
-            float totalWidthBoth = halfWidth1 + halfWidth2;
-            float toalHeightBoth = halfHeight1 + halfHeight2;
-
-            // Calculate and return intersection depths.
-            float depthX = distanceX > 0 ? totalWidthBoth - distanceX : -totalWidthBoth - distanceX;
-            float depthY = distanceY > 0 ? toalHeightBoth - distanceY : -toalHeightBoth - distanceY;
-            return new Vector2(depthX, depthY);
-        }
-        public static Vector2 CalculateAvailableMovement(Frame frame, SpriteEffects spriteEffect, Vector2 position, Vector2 movement) {
-            Vector2 undoMovement = new Vector2();
-            foreach (Block b in Block.Blocks)
+            if (collisionObject.Right > collided.Left + movement.X &&
+                collisionObject.Left < collided.Left &&
+                collisionObject.Bottom > collided.Top &&
+                collisionObject.Top < collided.Bottom)
             {
-                //check which sprite rectangles will collide and return them as the not-moved rectangle in a list
-                List<Rectangle> collided = frame.Hitbox.Select(hitbox => HitboxRectangle(frame, spriteEffect, hitbox, position + movement)).Where(movedHitbox => b.IntersectionBlock.Intersects(movedHitbox)).ToList();
-                foreach (Rectangle c in collided)
-                {
-                    Vector2 intersection = IntersectionDepth(b.IntersectionBlock, c);
-                    if (Math.Abs(intersection.X) < Math.Abs(intersection.Y) || (Math.Abs(intersection.X) <= Math.Abs(movement.X) && Math.Abs(intersection.Y) <= Math.Abs(movement.Y)))
-
-                        //colliion is in the X direction
-                        if (Math.Abs(intersection.X) > Math.Abs(undoMovement.X))
-                            undoMovement.X = intersection.X;
-                        else
-                            continue;
-                    else
-                            //collision is in the Y direction
-                            if (Math.Abs(intersection.Y) > Math.Abs(undoMovement.Y))
-                        undoMovement.Y = intersection.Y;
-
-
-                }
+                //collision left, a 
+                where = CollidingSide.Left;
+                return new Vector2(movedRectangle.Left - collisionObject.Right,0);
             }
-            return new Vector2(movement.X - undoMovement.X, movement.Y - undoMovement.Y);
-
+            else if (collisionObject.Left < collided.Right + movement.X &&
+                collisionObject.Right > collided.Right &&
+                collisionObject.Bottom > collided.Top &&
+                collisionObject.Top < collided.Bottom)
+            {
+                //collision right
+                where = CollidingSide.Right;
+                return new Vector2(movedRectangle.Right - collisionObject.Left, 0);
+            }
+            else if (collisionObject.Bottom > collided.Top + movement.Y &&
+                collisionObject.Top < collided.Top &&
+                collisionObject.Right > collided.Left &&
+                collisionObject.Left < collided.Right)
+            {
+                //collision top
+                where = CollidingSide.Top;
+                return new Vector2(0, movedRectangle.Top - collisionObject.Bottom);
+            }
+            else if (collisionObject.Top < collided.Bottom + movement.Y &&
+                collisionObject.Bottom > collided.Bottom &&
+                collisionObject.Right > collided.Left &&
+                collisionObject.Left < collided.Right)
+            {
+                //collision bottom
+                where = CollidingSide.Bottom;
+                return new Vector2(0, movedRectangle.Bottom - collisionObject.Top);
+            }
+            return Vector2.Zero;
+        }
+        public static Vector2 CollisionDepth(Frame frame, SpriteEffects spriteEffect, Vector2 position, Vector2 movement, Rectangle collisionObject) {
+            CollidingSide where;
+            return CollisionDepth(frame, spriteEffect, position, movement, collisionObject, out where); 
         }
     }
 }

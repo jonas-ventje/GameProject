@@ -24,10 +24,6 @@ namespace GameProject {
 
         private Santa santa;
         private World world;
-        private Block block;
-        private Block block2;
-        private Block block3;
-        private Block block4;
 
         public Game1()
         {
@@ -39,9 +35,9 @@ namespace GameProject {
 
         protected override void Initialize()
         {
-            _graphics.PreferredBackBufferWidth = 1600;
-            _graphics.PreferredBackBufferHeight = 900;
-            //_graphics.IsFullScreen = true;
+            _graphics.PreferredBackBufferWidth = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width;
+            _graphics.PreferredBackBufferHeight = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height;
+            _graphics.IsFullScreen = true;
             _graphics.ApplyChanges();
             base.Initialize();
 
@@ -49,10 +45,6 @@ namespace GameProject {
 
             santa = new Santa(santaTexture, 3);
             world = new World(tilesTexture);
-            //block = new Block(blockTexture, 400, 128, new Vector2(10, 500));
-            block2 = new Block(blockTexture, 200, 128, new Vector2(400, 200));
-            block3 = new Block(blockTexture, 400, 128, new Vector2(400, 500+128+128));
-            block4 = new Block(blockTexture, 400, 128, new Vector2(10, 500+128));
 
         }
 
@@ -82,10 +74,6 @@ namespace GameProject {
             _spriteBatch.Begin();
             
             santa.Draw(_spriteBatch);
-            //block.Draw(_spriteBatch);
-            block2.Draw(_spriteBatch);
-            block3.Draw(_spriteBatch);
-            block4.Draw(_spriteBatch);
             world.Draw(_spriteBatch);
 
             _spriteBatch.End();
