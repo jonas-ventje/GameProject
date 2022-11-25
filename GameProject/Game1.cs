@@ -47,7 +47,7 @@ namespace GameProject {
 
             scale = 1F / ((float)virtualWidht / GraphicsDevice.Viewport.Width);
 
-            santa = new Santa(santaTexture, new Vector2(3,3));
+            santa = new Santa(santaTexture, 3);
             world = new World(tilesTexture);
             //block = new Block(blockTexture, 400, 128, new Vector2(10, 500));
             block2 = new Block(blockTexture, 200, 128, new Vector2(400, 200));

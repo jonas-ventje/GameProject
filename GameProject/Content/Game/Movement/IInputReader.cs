@@ -7,6 +7,6 @@ using System.Threading.Tasks;
 
 namespace GameProject.Content.Game {
     internal interface IInputReader {
-        Vector2 InputMovement();
+        Vector2 ReadInput();
     }
 }
