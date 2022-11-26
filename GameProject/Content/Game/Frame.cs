@@ -11,8 +11,7 @@ namespace GameProject.Content.Game
     {
 
         private Rectangle boundingBox;
-        private List<Rectangle> fatalHitbox;
-        private List<Rectangle> hitbox;
+        private Rectangle hitbox;
 
         public Rectangle BoundingBox
         {
@@ -23,27 +22,21 @@ namespace GameProject.Content.Game
         }
 
 
-        public List<Rectangle> FatalHitbox
-        {
-            get
-            {
-                return fatalHitbox;
-            }
-        }
-
-
-        public List<Rectangle> Hitbox
+        public Rectangle Hitbox
         {
             get
             {
                 return hitbox;
             }
         }
-        public Frame(Rectangle boundingBox, List<Rectangle> fatalHitbox, List<Rectangle> hitbox)
+        public Frame(Rectangle boundingBox, Rectangle hitbox)
         {
             this.boundingBox = boundingBox;
-            this.fatalHitbox = fatalHitbox;
             this.hitbox = hitbox;
+        }
+        public Frame(Rectangle boundingBox) {
+            this.boundingBox = boundingBox;
+            this.hitbox = new Rectangle(0,0,boundingBox.Width, boundingBox.Right);
         }
     }
 }

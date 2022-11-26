@@ -6,11 +6,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace GameProject.Content
-{
-    internal interface IGameObject
-    {
-        void Update(GameTime gameTime);
+namespace GameProject.Content {
+    internal interface IGameObject {
         void Draw(SpriteBatch spriteBatch);
+        public Rectangle IntersectionBlock
+        {
+            get;
+        }
+
     }
 }

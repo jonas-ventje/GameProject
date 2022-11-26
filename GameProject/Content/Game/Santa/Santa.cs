@@ -1,11 +1,13 @@
 ﻿using GameProject.Content.Game.Movement;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using SharpDX.Direct3D9;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Windows.Forms;
 
 namespace GameProject.Content.Game.Santa {
-    internal class Santa : IGameObject, IMovable {
+    internal class Santa : IMovableGameObject {
         private List<Frame> activeFrameList;
         private Animation animation;
         private Frame activeFrame;
@@ -44,6 +46,18 @@ namespace GameProject.Content.Game.Santa {
         {
             get => activeFrame;
             set => activeFrame = value;
+        }
+
+        public Rectangle IntersectionBlock
+        {
+            get
+            {
+                if (SpriteDirection == SpriteEffects.FlipHorizontally)
+                    //left = positionX + spritesheet width - hitbox.width - hitbox.left
+                    return new Rectangle((int)position.X + activeFrame.BoundingBox.Width - activeFrame.Hitbox.Left - activeFrame.Hitbox.Width, (int)position.Y + activeFrame.Hitbox.Top, activeFrame.Hitbox.Width, activeFrame.Hitbox.Height);
+                //left = positionX + left boundry
+                return new Rectangle((int)position.X + activeFrame.Hitbox.Left, (int)position.Y + activeFrame.Hitbox.Top, activeFrame.Hitbox.Width, activeFrame.Hitbox.Height);
+            }
         }
         #endregion
 

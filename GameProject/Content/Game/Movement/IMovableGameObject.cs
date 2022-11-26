@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace GameProject.Content.Game.Movement {
     enum MovingState {Idle, Walking, Jumping }
-    internal interface IMovable {
+    internal interface IMovableGameObject : IGameObject {
         public MovingState CurrentMovingState
         {
             get; set;
@@ -33,5 +33,7 @@ namespace GameProject.Content.Game.Movement {
         {
             get; set;
         }
+        void Update(GameTime gameTime);
+
     }
 }

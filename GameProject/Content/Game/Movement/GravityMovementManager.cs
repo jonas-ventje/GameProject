@@ -20,7 +20,7 @@ namespace GameProject.Content.Game.Movement {
         //this must be 0 for fallings, and a vertical upward speed (negative number) for jumpings
         float jumpPower = 0;
 
-        public void Move(IMovable movable, GameTime gameTime) {
+        public void Move(IMovableGameObject movable, GameTime gameTime) {
             Vector2 direction = movable.InputReader.ReadInput();
             Vector2 movement = new Vector2(direction.X, 0);
 
@@ -33,10 +33,9 @@ namespace GameProject.Content.Game.Movement {
 
             Vector2 undoMovement = new Vector2();
 
-            foreach (var block in GameTile.Tiles)
+            foreach (var block in World.Tiles)
             {
-                CollidingSide side;
-                Vector2 intersection = CollisionController.CollisionDepth(movable.ActiveFrame, movable.SpriteDirection, movable.Position, movement, block.IntersectionBlock, out side);
+                Vector2 intersection = CollisionController.CollisionDepth(movable.IntersectionBlock, block.IntersectionBlock, movement);
                 if (intersection != Vector2.Zero)
                 {
                     if (Math.Abs(intersection.Y) > Math.Abs(undoMovement.Y))
@@ -51,9 +50,9 @@ namespace GameProject.Content.Game.Movement {
             //check if object reaches the ground, and obviously needs to fall otherwise
             //an object reaches the ground when movement is movement is downwards and the actualmovemnt is zero or upwards
             //but if the movements are in the other direction, the top is reached and termination of the ascent is required
-            if (movement.Y > 0 && actualMovement.Y <= 0)
+            if (movement.Y > 0 && undoMovement.Y > 0)
                 ReachGround();
-            else if (movement.Y < 0 && actualMovement.Y >= 0)
+            else if (movement.Y < 0 && undoMovement.Y < 0)
                 StopAscent();
             else
                 StartFalling();
@@ -87,7 +86,7 @@ namespace GameProject.Content.Game.Movement {
             if (isInTheAir)
             {
                 airTime += gameTime.ElapsedGameTime.TotalSeconds;
-                return (new Vector2(0, gravityAcceleration * (float)airTime * mass + jumpPower));
+                return (new Vector2(0, (int)(gravityAcceleration * (float)airTime * mass + jumpPower)));
             }
             return new Vector2(0, gravityAcceleration);
         }

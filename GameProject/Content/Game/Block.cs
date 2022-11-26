@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace GameProject.Content
 {
-    internal class Block : IStaticGameObject {
+    internal class Block : IGameObject {
         private Rectangle block;
         private Vector2 position;
         private Texture2D texture;

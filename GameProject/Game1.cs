@@ -35,15 +35,17 @@ namespace GameProject {
 
         protected override void Initialize()
         {
-            _graphics.PreferredBackBufferWidth = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width;
-            _graphics.PreferredBackBufferHeight = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height;
-            _graphics.IsFullScreen = true;
+            /*            _graphics.PreferredBackBufferWidth = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width;
+                        _graphics.PreferredBackBufferHeight = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height;
+                        _graphics.IsFullScreen = true;*/
+            _graphics.PreferredBackBufferWidth = 1120;
+            _graphics.PreferredBackBufferHeight = 630;
             _graphics.ApplyChanges();
             base.Initialize();
 
             scale = 1F / ((float)virtualWidht / GraphicsDevice.Viewport.Width);
 
-            santa = new Santa(santaTexture, 3);
+            santa = new Santa(santaTexture, 5);
             world = new World(tilesTexture);
 
         }
