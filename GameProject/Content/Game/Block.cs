@@ -29,6 +29,12 @@ namespace GameProject.Content
             }
         }
 
+        public bool ToBeRemoved
+        {
+            get => throw new NotImplementedException();
+            set => throw new NotImplementedException();
+        }
+
         public Block(Texture2D texture, int width, int height, Vector2 position) {
             blocks.Add(this);
             this.texture = texture;

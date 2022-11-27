@@ -1,4 +1,5 @@
-﻿using GameProject.Content.Game.Santa;
+﻿using GameProject.Content.Game.Movables;
+using GameProject.Content.Game.Santa;
 using Microsoft.VisualBasic;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -10,7 +11,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace GameProject.Content.Game.Movement {
+namespace GameProject.Content.Game.Movement
+{
     internal class GravityMovementManager {
         private float gravityAcceleration = 10f;
         //add a mass (it's not in the free fall formulla, but it's easyer to implement then air resistance and mass etc)
@@ -33,11 +35,13 @@ namespace GameProject.Content.Game.Movement {
 
             Vector2 undoMovement = new Vector2();
 
-            foreach (var block in World.Tiles)
+            foreach (var gameObject in World.Tiles)
             {
-                Vector2 intersection = CollisionController.CollisionDepth(movable.IntersectionBlock, block.IntersectionBlock, movement);
+                CollidingSide side;
+                Vector2 intersection = CollisionController.CollisionDepth(movable.IntersectionBlock, gameObject.IntersectionBlock, movement, out side);
                 if (intersection != Vector2.Zero)
                 {
+                    movable.CollisionEffect(gameObject, side);
                     if (Math.Abs(intersection.Y) > Math.Abs(undoMovement.Y))
                         undoMovement.Y = intersection.Y;
                     if (Math.Abs(intersection.X) > Math.Abs(undoMovement.X))
@@ -96,7 +100,7 @@ namespace GameProject.Content.Game.Movement {
         /// </summary>
         private void StartJump() {
             isInTheAir = true;
-            jumpPower = -16f;
+            jumpPower = -20f;
         }
 
         /// <summary>

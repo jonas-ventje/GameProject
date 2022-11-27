@@ -6,9 +6,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace GameProject.Content.Game.Movement {
-    enum MovingState {Idle, Walking, Jumping }
-    internal interface IMovableGameObject : IGameObject {
+namespace GameProject.Content.Game.Movables
+{
+    enum MovingState { Idle, Walking, Jumping, Dying }
+    internal interface IMovableGameObject : IGameObject
+    {
         public MovingState CurrentMovingState
         {
             get; set;
@@ -34,6 +36,7 @@ namespace GameProject.Content.Game.Movement {
             get; set;
         }
         void Update(GameTime gameTime);
+        void CollisionEffect(IGameObject collisionObject, CollidingSide side);
 
     }
 }

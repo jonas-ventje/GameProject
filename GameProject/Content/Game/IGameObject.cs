@@ -13,6 +13,10 @@ namespace GameProject.Content {
         {
             get;
         }
+        public bool ToBeRemoved
+        {
+            get;
+        }
 
     }
 }

@@ -1,4 +1,5 @@
-﻿using GameProject.Content.Game.Movement;
+﻿using GameProject.Content.Game.Movables;
+using GameProject.Content.Game.Movement;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using SharpDX.Direct3D9;
@@ -20,6 +21,7 @@ namespace GameProject.Content.Game.Santa {
         private SpriteEffects spriteDirection;
         private IInputReader inputReader;
         private int horizontalSpeed;
+        private bool toBeRemoved = false;
         public MovingState CurrentMovingState
         {
             get => currentMovingState;
@@ -59,18 +61,22 @@ namespace GameProject.Content.Game.Santa {
                 return new Rectangle((int)position.X + activeFrame.Hitbox.Left, (int)position.Y + activeFrame.Hitbox.Top, activeFrame.Hitbox.Width, activeFrame.Hitbox.Height);
             }
         }
+
+        public bool ToBeRemoved => toBeRemoved;
         #endregion
 
         public Santa(Texture2D texture, int speed) {
             this.texture = texture;
             this.HorizontalSpeed = speed;
-            this.Position = new Vector2(0, 0);
+            this.Position = new Vector2(0, 500);
             this.SpriteDirection = SpriteEffects.None;
             this.inputReader = new InputReaderKeyboard();
             movementController = new GravityMovementManager();
             activeFrameList = SantaFrames.idleFrames;
             animation = new Animation(activeFrameList, 15);
             activeFrame = activeFrameList[0];
+        }
+        public void CollisionEffect(IGameObject collisionObject, CollidingSide side) {
         }
 
         private void Move(GameTime gameTime) {
@@ -105,6 +111,8 @@ namespace GameProject.Content.Game.Santa {
             activeFrame = animation.update(gameTime, activeFrameList);
             updateAnimation();
         }
+
+
     }
 
 }

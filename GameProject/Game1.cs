@@ -15,6 +15,7 @@ namespace GameProject {
         private Texture2D santaTexture;
         private Texture2D tilesTexture;
         private Texture2D blockTexture;
+        private Texture2D crateTexture;
 
 
         private float scale;
@@ -35,9 +36,9 @@ namespace GameProject {
 
         protected override void Initialize()
         {
-            /*            _graphics.PreferredBackBufferWidth = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width;
-                        _graphics.PreferredBackBufferHeight = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height;
-                        _graphics.IsFullScreen = true;*/
+           /* _graphics.PreferredBackBufferWidth = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width;
+            _graphics.PreferredBackBufferHeight = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height;
+            _graphics.IsFullScreen = true;*/
             _graphics.PreferredBackBufferWidth = 1120;
             _graphics.PreferredBackBufferHeight = 630;
             _graphics.ApplyChanges();
@@ -46,7 +47,7 @@ namespace GameProject {
             scale = 1F / ((float)virtualWidht / GraphicsDevice.Viewport.Width);
 
             santa = new Santa(santaTexture, 5);
-            world = new World(tilesTexture);
+            world = new World(tilesTexture, crateTexture);
 
         }
 
@@ -56,6 +57,7 @@ namespace GameProject {
             renderTarget = new RenderTarget2D(GraphicsDevice, virtualWidht, virtualHeight);
             santaTexture = Content.Load<Texture2D>("./images/santaClaus_small");
             tilesTexture = Content.Load<Texture2D>("./images/tileset");
+            crateTexture = Content.Load<Texture2D>("./images/crate");
             blockTexture = new Texture2D(GraphicsDevice, 1, 1);
             blockTexture.SetData(new[] { Color.HotPink });
         }
@@ -66,6 +68,7 @@ namespace GameProject {
                 Exit();
 
             santa.Update(gameTime);
+            world.Update(gameTime);
             base.Update(gameTime);
         }
 
