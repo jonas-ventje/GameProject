@@ -8,11 +8,11 @@ using System.Diagnostics;
 using System.Windows.Forms;
 
 namespace GameProject.Content.Game.Movables.Santa {
-    internal class Santa : IMovableGameObject {
+    internal class Santa : IControllableObject, IAnimatable {
         private List<Frame> activeFrameList;
         private Animation animation;
         private Frame activeFrame;
-        private GravityMovementManager movementController;
+        private ControllableMovementManager movementController;
 
         #region propperties
         private MovingState currentMovingState;
@@ -71,7 +71,7 @@ namespace GameProject.Content.Game.Movables.Santa {
             this.Position = new Vector2(0, 500);
             this.SpriteDirection = SpriteEffects.None;
             this.inputReader = new InputReaderKeyboard();
-            movementController = new GravityMovementManager();
+            movementController = new ControllableMovementManager();
             activeFrameList = SantaFrames.idleFrames;
             animation = new Animation(activeFrameList, 15);
             activeFrame = activeFrameList[0];

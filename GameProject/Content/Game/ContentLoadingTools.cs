@@ -10,5 +10,10 @@ namespace GameProject.Content.Game {
         public static Rectangle CoordToRect(int x1, int y1, int x2, int y2) {
             return new Rectangle(x1, y1, (x2 - x1), (y2 - y1));
         }
+        public static Rectangle SpritePositionToRectangle(int spriteWidth, int spriteHeigh, int numberHorizontal, int position) {
+            int startPixelHorizontal = spriteWidth * (position % numberHorizontal);
+            int startPixelVertical = spriteHeigh * (position / numberHorizontal);
+            return new Rectangle(startPixelHorizontal, startPixelVertical, spriteWidth, spriteHeigh);
+        }
     }
 }

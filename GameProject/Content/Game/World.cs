@@ -2,6 +2,7 @@
 using GameProject.Content.Game.Movables.Crate;
 using GameProject.Content.Game.Movables.Santa;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
@@ -35,10 +36,10 @@ namespace GameProject.Content.Game {
         };
 
 
-        public World(Texture2D tilesTexture, Texture2D crateTexture, Texture2D santaTexture) {
-            this.santaTexture = santaTexture;
-            this.tilesTexture = tilesTexture;
-            this.crateTexture = crateTexture;
+        public World(ContentManager content) {
+            this. santaTexture = content.Load<Texture2D>("./images/santaClaus_small");
+            this.tilesTexture = content.Load<Texture2D>("./images/tileset");
+            this.crateTexture = content.Load<Texture2D>("./images/crate");
             for (int y = 0; y < 14; y++)
             {
                 for (int x = 0; x < 25; x++)

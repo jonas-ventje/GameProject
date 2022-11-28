@@ -9,7 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace GameProject.Content.Game.Movables.Crate {
-    internal class Crate:IMovableGameObject {
+    internal class Crate:IMovableGameObject, IAnimatable {
         private List<Frame> activeFrameList;
         private Animation animation;
         private Frame activeFrame;
@@ -19,9 +19,6 @@ namespace GameProject.Content.Game.Movables.Crate {
         private MovingState currentMovingState;
         private Texture2D texture;
         private Vector2 position;
-        private SpriteEffects spriteDirection;
-        private IInputReader inputReader;
-        private int horizontalSpeed = 0;
         private bool toBeRemoved = false;
         public MovingState CurrentMovingState
         {
@@ -33,18 +30,6 @@ namespace GameProject.Content.Game.Movables.Crate {
             get => position;
             set => position = value;
         }
-        public int HorizontalSpeed
-        {
-            get => horizontalSpeed;
-            set => horizontalSpeed = value;
-        }
-        public SpriteEffects SpriteDirection
-        {
-            get => spriteDirection;
-            set => spriteDirection = value;
-        }
-
-        public IInputReader InputReader => inputReader;
         public Frame ActiveFrame
         {
             get => activeFrame;
@@ -65,9 +50,7 @@ namespace GameProject.Content.Game.Movables.Crate {
         public Crate(Texture2D texture, int x, int y) {
             this.texture = texture;
             movementController = new GravityMovementManager();
-            inputReader = new InputReaderGravity();
             activeFrameList = CrateFrames.idleFrames;
-            spriteDirection = SpriteEffects.None;
             CurrentMovingState = MovingState.Idle;
             position = new Vector2(x, y);
             animation = new Animation(activeFrameList, 20);
@@ -86,7 +69,7 @@ namespace GameProject.Content.Game.Movables.Crate {
         }
 
         public void Draw(SpriteBatch spriteBatch) {
-            spriteBatch.Draw(texture, position, activeFrame.BoundingBox, Color.White, 0f, new Vector2(0, 0), 1f, SpriteDirection, 1f);
+            spriteBatch.Draw(texture, position, activeFrame.BoundingBox, Color.White, 0f, new Vector2(0, 0), 1f, SpriteEffects.None, 1f);
         }
 
 

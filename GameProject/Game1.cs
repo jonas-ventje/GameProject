@@ -2,6 +2,7 @@
 using GameProject.Content.Game;
 using GameProject.Content.Game.Movables.Santa;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 
@@ -11,10 +12,7 @@ namespace GameProject {
         private GraphicsDeviceManager _graphics;
         private SpriteBatch _spriteBatch;
         private RenderTarget2D renderTarget;
-        private Texture2D santaTexture;
-        private Texture2D tilesTexture;
         private Texture2D blockTexture;
-        private Texture2D crateTexture;
 
 
         private float scale;
@@ -42,16 +40,13 @@ namespace GameProject {
 
             scale = 1F / ((float)virtualWidht / GraphicsDevice.Viewport.Width);
 
-            world = new World(tilesTexture, crateTexture, santaTexture);
+            world = new World(Content);
 
         }
 
         protected override void LoadContent() {
             _spriteBatch = new SpriteBatch(GraphicsDevice);
             renderTarget = new RenderTarget2D(GraphicsDevice, virtualWidht, virtualHeight);
-            santaTexture = Content.Load<Texture2D>("./images/santaClaus_small");
-            tilesTexture = Content.Load<Texture2D>("./images/tileset");
-            crateTexture = Content.Load<Texture2D>("./images/crate");
             blockTexture = new Texture2D(GraphicsDevice, 1, 1);
             blockTexture.SetData(new[] { Color.HotPink });
         }

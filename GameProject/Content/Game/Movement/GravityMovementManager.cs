@@ -22,15 +22,14 @@ namespace GameProject.Content.Game.Movement
         //this must be 0 for fallings, and a vertical upward speed (negative number) for jumpings
         float jumpPower = 0;
 
-        public void Move(IMovableGameObject movable, GameTime gameTime) {
-            Vector2 direction = movable.InputReader.ReadInput();
-            Vector2 movement = new Vector2(direction.X, 0);
-
-            //check if there is a space or arrow up button pressed
-            if (direction.Y < 0)
-                StartJump();
-
-            movement *= movable.HorizontalSpeed;
+        /// <summary>
+        /// Move the movable object given, Check for collisions, handle flips and movingstate
+        /// </summary>
+        /// <param name="movable">movable object</param>
+        /// <param name="gameTime">gametime</param>
+        /// <param name="inputReaderMovement">only needed for the inheritted controllableMovementManager, for left and right...</param>
+        public void Move(IMovableGameObject movable, GameTime gameTime, Vector2 inputReaderMovement = new Vector2()) {
+            Vector2 movement = inputReaderMovement;
             movement += UpdateGravity(gameTime);
 
             Vector2 undoMovement = new Vector2();
@@ -70,13 +69,7 @@ namespace GameProject.Content.Game.Movement
             else if (movement.X == 0)
                 movable.CurrentMovingState = MovingState.Idle;
             if (movement.X != 0)
-            {
                 movable.CurrentMovingState = MovingState.Walking;
-                if (movement.X < 0)
-                    movable.SpriteDirection = SpriteEffects.FlipHorizontally;
-                else
-                    movable.SpriteDirection = SpriteEffects.None;
-            }
         }
         #region gravity
 
@@ -98,7 +91,7 @@ namespace GameProject.Content.Game.Movement
         /// <summary>
         /// call this function when start jumping
         /// </summary>
-        private void StartJump() {
+        protected void StartJump() {
             isInTheAir = true;
             jumpPower = -20f;
         }

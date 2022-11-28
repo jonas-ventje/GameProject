@@ -19,22 +19,6 @@ namespace GameProject.Content.Game.Movables
         {
             get; set;
         }
-        public int HorizontalSpeed
-        {
-            get; set;
-        }
-        public IInputReader InputReader
-        {
-            get;
-        }
-        public SpriteEffects SpriteDirection
-        {
-            get; set;
-        }
-        public Frame ActiveFrame
-        {
-            get; set;
-        }
         void Update(GameTime gameTime);
         void CollisionEffect(IGameObject collisionObject, CollidingSide side);
 
