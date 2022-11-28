@@ -1,5 +1,5 @@
 ﻿using GameProject.Content.Game.Movables;
-using GameProject.Content.Game.Santa;
+using GameProject.Content.Game.Movables.Santa;
 using Microsoft.VisualBasic;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;

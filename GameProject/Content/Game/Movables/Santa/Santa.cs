@@ -7,7 +7,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Windows.Forms;
 
-namespace GameProject.Content.Game.Santa {
+namespace GameProject.Content.Game.Movables.Santa {
     internal class Santa : IMovableGameObject {
         private List<Frame> activeFrameList;
         private Animation animation;
