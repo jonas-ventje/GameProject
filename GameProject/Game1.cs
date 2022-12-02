@@ -13,6 +13,7 @@ namespace GameProject {
         private SpriteBatch _spriteBatch;
         private RenderTarget2D renderTarget;
         private Texture2D blockTexture;
+        private Texture2D backgroundTexture;
 
 
         private float scale;
@@ -48,6 +49,7 @@ namespace GameProject {
             _spriteBatch = new SpriteBatch(GraphicsDevice);
             renderTarget = new RenderTarget2D(GraphicsDevice, virtualWidht, virtualHeight);
             blockTexture = new Texture2D(GraphicsDevice, 1, 1);
+            backgroundTexture = Content.Load<Texture2D>("./images/background");
             blockTexture.SetData(new[] { Color.HotPink });
         }
 
@@ -63,6 +65,7 @@ namespace GameProject {
             GraphicsDevice.SetRenderTarget(renderTarget);
             GraphicsDevice.Clear(Color.CornflowerBlue);
             _spriteBatch.Begin();
+            _spriteBatch.Draw(backgroundTexture, Vector2.Zero, Color.White);
             world.Draw(_spriteBatch);
             _spriteBatch.End();
             GraphicsDevice.SetRenderTarget(null);

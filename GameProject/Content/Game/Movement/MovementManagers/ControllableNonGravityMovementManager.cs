@@ -1,28 +1,17 @@
-﻿using GameProject.Content.Game.Movables;
-using GameProject.Content.Game.Movables.Santa;
-using Microsoft.VisualBasic;
+﻿using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
-using SharpDX.Direct3D9;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using GameProject.Content.Game.GameObjects;
 
-namespace GameProject.Content.Game.Movement
+namespace GameProject.Content.Game.Movement.MovementManagers
 {
-    internal class ControllableMovementManager:GravityMovementManager {
-
+    internal class ControllableNonGravityMovementManager:NonGravityMovementManager {
         public void Move(IControllableObject movable, GameTime gameTime) {
-            Vector2 direction = movable.InputReader.ReadInput();
-            Vector2 movement = new Vector2(direction.X, 0);
-
-            //check if there is a space or arrow up button pressed
-            if (direction.Y < 0)
-                base.StartJump();
-
+            Vector2 movement = movable.InputReader.ReadInput();
             if (movement.X != 0)
             {
 

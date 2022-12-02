@@ -1,8 +1,10 @@
-﻿using Microsoft.Xna.Framework;
+﻿using GameProject.Content.Game.GameObjects;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System.Collections.Generic;
 
-namespace GameProject.Content.Game {
+namespace GameProject.Content.Game
+{
     internal class GameTile : IGameObject {
 
         private Texture2D texture;

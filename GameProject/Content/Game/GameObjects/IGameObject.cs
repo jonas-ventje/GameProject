@@ -6,8 +6,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace GameProject.Content {
-    internal interface IGameObject {
+namespace GameProject.Content.Game.GameObjects
+{
+    internal interface IGameObject
+    {
         void Draw(SpriteBatch spriteBatch);
         public Rectangle IntersectionBlock
         {

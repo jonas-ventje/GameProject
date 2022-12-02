@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework;
+﻿using GameProject.Content.Game.GameObjects;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
@@ -35,7 +36,7 @@ namespace GameProject.Content
             set => throw new NotImplementedException();
         }
 
-        public Block(Texture2D texture, int width, int height, Vector2 position) {
+        public Block(int width, int height, Vector2 position) {
             blocks.Add(this);
             this.texture = texture;
             this.position = position;

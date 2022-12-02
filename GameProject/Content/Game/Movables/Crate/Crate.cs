@@ -1,5 +1,4 @@
-﻿using GameProject.Content.Game.Movement;
-using GameProject.Content.Game.Movables.Santa;
+﻿using GameProject.Content.Game.Movables.Santa;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
@@ -7,8 +6,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using GameProject.Content.Game.Movement.MovementManagers;
+using GameProject.Content.Game.GameObjects;
 
-namespace GameProject.Content.Game.Movables.Crate {
+namespace GameProject.Content.Game.Movables.Crate
+{
     internal class Crate:IMovableGameObject, IAnimatable {
         private List<Frame> activeFrameList;
         private Animation animation;
@@ -16,15 +18,9 @@ namespace GameProject.Content.Game.Movables.Crate {
         private GravityMovementManager movementController;
 
         #region propperties
-        private MovingState currentMovingState;
         private Texture2D texture;
         private Vector2 position;
         private bool toBeRemoved = false;
-        public MovingState CurrentMovingState
-        {
-            get => currentMovingState;
-            set => currentMovingState = value;
-        }
         public Vector2 Position
         {
             get => position;
@@ -51,7 +47,6 @@ namespace GameProject.Content.Game.Movables.Crate {
             this.texture = texture;
             movementController = new GravityMovementManager();
             activeFrameList = CrateFrames.idleFrames;
-            CurrentMovingState = MovingState.Idle;
             position = new Vector2(x, y);
             animation = new Animation(activeFrameList, 20);
             activeFrame = activeFrameList[0];

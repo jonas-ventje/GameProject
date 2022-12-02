@@ -6,15 +6,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace GameProject.Content.Game.Movables
+namespace GameProject.Content.Game.GameObjects
 {
-    enum MovingState { Idle, Walking, Jumping, Dying }
     internal interface IMovableGameObject : IGameObject
     {
-        public MovingState CurrentMovingState
-        {
-            get; set;
-        }
         public Vector2 Position
         {
             get; set;

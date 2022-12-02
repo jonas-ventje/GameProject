@@ -1,5 +1,5 @@
-﻿using GameProject.Content.Game.Movables;
-using GameProject.Content.Game.Movement;
+﻿using GameProject.Content.Game.GameObjects;
+using GameProject.Content.Game.Movement.MovementManagers;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using SharpDX.Direct3D9;
@@ -7,12 +7,13 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Windows.Forms;
 
-namespace GameProject.Content.Game.Movables.Santa {
-    internal class Santa : IControllableObject, IAnimatable {
+namespace GameProject.Content.Game.Movables.Santa
+{
+    internal class Santa : IControllableGravityObject, IAnimatable {
         private List<Frame> activeFrameList;
         private Animation animation;
         private Frame activeFrame;
-        private ControllableMovementManager movementController;
+        private ControllableGravityMovementManager movementController;
 
         #region propperties
         private MovingState currentMovingState;
@@ -65,18 +66,20 @@ namespace GameProject.Content.Game.Movables.Santa {
         public bool ToBeRemoved => toBeRemoved;
         #endregion
 
-        public Santa(Texture2D texture, int speed) {
+        public Santa(Texture2D texture, int speed, Vector2 position) {
             this.texture = texture;
             this.HorizontalSpeed = speed;
-            this.Position = new Vector2(0, 500);
+            this.Position = position;
             this.SpriteDirection = SpriteEffects.None;
             this.inputReader = new InputReaderKeyboard();
-            movementController = new ControllableMovementManager();
+            movementController = new ControllableGravityMovementManager();
             activeFrameList = SantaFrames.idleFrames;
             animation = new Animation(activeFrameList, 15);
             activeFrame = activeFrameList[0];
         }
         public void CollisionEffect(IGameObject collisionObject, CollidingSide side) {
+            if (collisionObject is Cadeau)
+                (collisionObject as Cadeau).ToBeRemoved = true;
         }
 
         private void Move(GameTime gameTime) {

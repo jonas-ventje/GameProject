@@ -6,8 +6,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace GameProject.Content.Game.Movables {
-    internal interface IControllableObject:IMovableGameObject {
+namespace GameProject.Content.Game.GameObjects
+{
+
+
+    internal interface IControllableObject : IMovableGameObject
+    {
         public IInputReader InputReader
         {
             get;

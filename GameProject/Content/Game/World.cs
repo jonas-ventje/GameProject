@@ -1,4 +1,5 @@
-﻿using GameProject.Content.Game.Movables;
+﻿using GameProject.Content.Game.GameObjects;
+using GameProject.Content.Game.Movables;
 using GameProject.Content.Game.Movables.Crate;
 using GameProject.Content.Game.Movables.Santa;
 using Microsoft.Xna.Framework;
@@ -6,11 +7,13 @@ using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace GameProject.Content.Game {
+namespace GameProject.Content.Game
+{
     internal class World {
         private const int tileWidth = 128;
         private const int tileHeight = 128;
@@ -18,6 +21,8 @@ namespace GameProject.Content.Game {
         private Texture2D tilesTexture;
         private Texture2D crateTexture;
         private Texture2D santaTexture;
+        private Texture2D cadeauTexture;
+        private Texture2D snowManSledTexture;
         private int[,] tileIds = {
             { 15, 19, 0, 0, 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,13 },
             { 15, 0, 0, 0, 0,0,0,0,0,0,0,19,0,0,0,0,0,0,0,19,0,0,0,0,13 },
@@ -27,7 +32,7 @@ namespace GameProject.Content.Game {
             { 15, 0, 0, 0, 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,13 },
             { 15, 0, 0, 0, 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,13 },
             { 15, 0, 0, 0, 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,13 },
-            { 15, 99, 6, 8, 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,13 },
+            { 15, 0, 6, 8, 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,13 },
             { 15, 0, 0, 0, 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,13 },
             { 15, 0, 0, 0, 0,6,8,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,13 },
             { 15, 0, 0, 0, 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,13 },
@@ -35,11 +40,23 @@ namespace GameProject.Content.Game {
             { 2, 3, 11, 11, 11,11,11,11,11,16,9,9,9, 3,11,11,11,11,11,11,11,11,11,16,17 }
         };
 
+        private Santa santa;
+        private SnowmanSled snowmanSled;
+
+        private List<Vector2> cadeauCoords = new List<Vector2>()
+        {
+            new Vector2(150,800),
+            new Vector2(500,400),
+            new Vector2(600,1500)
+        };
+
 
         public World(ContentManager content) {
             this. santaTexture = content.Load<Texture2D>("./images/santaClaus_small");
             this.tilesTexture = content.Load<Texture2D>("./images/tileset");
             this.crateTexture = content.Load<Texture2D>("./images/crate");
+            this.cadeauTexture = content.Load<Texture2D>("./images/cadeau");
+            this.snowManSledTexture = content.Load<Texture2D>("./images/snowman_sled2");
             for (int y = 0; y < 14; y++)
             {
                 for (int x = 0; x < 25; x++)
@@ -48,6 +65,15 @@ namespace GameProject.Content.Game {
                         Tiles.Add(LoadGameObject(tileIds[y, x], x*tileWidth, y*tileHeight));
                 }
             }
+            for (int i = 0; i < cadeauCoords.Count; i++)
+            {
+                Cadeau cadeau = new Cadeau(cadeauTexture, cadeauCoords[i]);
+                Tiles.Add(cadeau);
+            }
+            this.santa = new Santa(santaTexture, 5, new Vector2(0,500));
+            Tiles.Add(santa);
+            this.snowmanSled = new SnowmanSled(snowManSledTexture, new Vector2(128, 50), santa, 3);
+            Tiles.Add(snowmanSled);
         }
         public void Draw(SpriteBatch spritebatch) {
             foreach (var tile in Tiles)
@@ -108,9 +134,6 @@ namespace GameProject.Content.Game {
                     return new GameTile(tilesTexture, new Frame(new Rectangle(640, 256, 128, 128)), x, y);
                 case 19:
                     return new Crate(crateTexture, x, y);
-                case 99:
-                    return new Santa(santaTexture, 5);
-
 
                 default:
                     throw new System.IndexOutOfRangeException();
