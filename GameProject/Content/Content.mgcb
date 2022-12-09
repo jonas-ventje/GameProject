@@ -61,7 +61,7 @@
 /processorParam:TextureFormat=Color
 /build:images/santaClaus_small.png
 
-#begin images/snowman_sled2.png
+#begin images/snowman_sled3.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -71,7 +71,7 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:images/snowman_sled2.png
+/build:images/snowman_sled3.png
 
 #begin images/tileset.png
 /importer:TextureImporter

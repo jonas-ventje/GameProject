@@ -17,9 +17,9 @@ namespace GameProject.Content.Game.Movables
         private int bouncePosition = 0;
         private int fps = 15;
         private const int bounceLength = 20;
-        public Cadeau(Texture2D texture, Vector2 position) {
+        public Cadeau(Texture2D texture, int x, int y) {
             this.texture = texture;
-            this.position = position;
+            this.position = new Vector2(x,y);
             Random rand = new Random();
             this.bouncePosition = rand.Next(-bounceLength, bounceLength+1);
         }

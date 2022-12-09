@@ -36,7 +36,7 @@ namespace GameProject.Content.Game
         }
         public Frame(Rectangle boundingBox) {
             this.boundingBox = boundingBox;
-            this.hitbox = new Rectangle(0,0,boundingBox.Width, boundingBox.Right);
+            this.hitbox = new Rectangle(0,0,boundingBox.Width, boundingBox.Height);
         }
     }
 }

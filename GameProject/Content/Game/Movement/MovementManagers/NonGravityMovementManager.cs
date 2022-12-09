@@ -11,6 +11,8 @@ using GameProject.Content.Game.GameObjects;
 namespace GameProject.Content.Game.Movement.MovementManagers
 {
     internal class NonGravityMovementManager {
+        private double accelerationTime = 0;
+        private const double acceleration = 1.5f;
         /// <summary>
         /// do the move with collisions
         /// </summary>
@@ -20,6 +22,15 @@ namespace GameProject.Content.Game.Movement.MovementManagers
         /// <returns>the undoMovemend used in the GravityMovmentManager</returns>
         public Vector2 Move(IMovableGameObject movable, GameTime gameTime, Vector2 inputMovement = new Vector2()) {
             Vector2 movement = inputMovement;
+
+            //acceleration
+            if (movement.X == 0)
+                accelerationTime = 0;
+            movement.X += (int)(accelerationTime * acceleration)*Math.Sign(movement.X);
+
+            //collision
+            #region collision
+
             Vector2 undoMovement = new Vector2();
 
             foreach (var gameObject in World.Tiles)
@@ -41,6 +52,15 @@ namespace GameProject.Content.Game.Movement.MovementManagers
                 }
             }
             Vector2 actualMovement = movement - undoMovement;
+            #endregion
+
+            //acceleartion
+            if (actualMovement.X != movement.X)
+                accelerationTime = 0;
+            else
+                accelerationTime += gameTime.ElapsedGameTime.TotalSeconds;
+
+
             movable.Position += actualMovement;
             return undoMovement;
         }

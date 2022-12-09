@@ -72,7 +72,10 @@ namespace GameProject.Content.Game.Movables.Crate
             Move(gameTime);
             activeFrame = animation.update(gameTime, activeFrameList);
             if (activeFrame == CrateFrames.breakingFrames[CrateFrames.breakingFrames.Count - 1])
+            {
                 toBeRemoved = true;
+                World.Tiles.Add(GameObjectFactory.CreateGameObject("cadeau", IntersectionBlock.Center.X, IntersectionBlock.Bottom - 150));
+            }
         }
     }
 }
