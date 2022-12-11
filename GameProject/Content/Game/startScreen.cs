@@ -9,11 +9,11 @@ using System.Threading.Tasks;
 
 namespace GameProject.Content.Game {
 
-    internal class startScreen:IScreen {
+    internal class StartScreen:IScreen {
         SpriteFont font;
         Texture2D buttonTexture;
         Dictionary<string, Button> buttons;
-        public startScreen(ContentManager content) {
+        public StartScreen(ContentManager content) {
             buttonTexture = content.Load<Texture2D>("./images/button");
             font = content.Load<SpriteFont>("font/santa_christmas");
             buttons= new Dictionary<string, Button>();
@@ -32,11 +32,21 @@ namespace GameProject.Content.Game {
             }
         }
 
-        public void Update(GameTime gameTime) {
+        public GameState Update(GameTime gameTime) {
+            GameState nextGameState = GameState.StartScreen;
             foreach (var button in buttons)
             {
-                button.Value.Update();
+                if (button.Value.Update() == true)
+                {
+                    if (button.Key == "lv1")
+                        nextGameState = GameState.Level1;
+                    if(button.Key == "lv2")
+                        nextGameState= GameState.Level2;
+                    if (button.Key == "info")
+                        nextGameState = GameState.Info;
+                }
             }
+            return nextGameState;
         }
     }
 }

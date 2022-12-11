@@ -5,7 +5,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
-
+using System;
 
 namespace GameProject {
     public class Game1 : Game {
@@ -14,6 +14,7 @@ namespace GameProject {
         private RenderTarget2D renderTarget;
         private Texture2D blockTexture;
         private Texture2D backgroundTexture;
+        private GameState prevGameState;
 
 
         public static float scale;
@@ -42,7 +43,9 @@ namespace GameProject {
             scale = 1F / ((float)virtualWidth / GraphicsDevice.Viewport.Width);
 
             //onDisplay = new World(Content);
-            onDisplay = new startScreen(Content);
+            onDisplay = new StartScreen(Content);
+
+            prevGameState = GameState.StartScreen;
 
         }
 
@@ -58,7 +61,33 @@ namespace GameProject {
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
 
-            onDisplay.Update(gameTime);
+            GameState newGameState = onDisplay.Update(gameTime);
+            if(prevGameState!=newGameState)
+            {
+                switch (newGameState)
+                {
+                    case GameState.StartScreen:
+                        onDisplay = new StartScreen(Content);
+                        break;
+                    case GameState.Info:
+                        throw new NotImplementedException();
+                        break;
+                    case GameState.Level1:
+                        onDisplay = new World(Content);
+                        break;
+                    case GameState.Level2:
+                        throw new NotImplementedException();
+
+                        break;
+                    case GameState.GameOver:
+                        throw new NotImplementedException();
+
+                        break;
+                    default:
+                        break;
+                }
+                prevGameState= newGameState;
+            }
             base.Update(gameTime);
         }
 

@@ -7,9 +7,10 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace GameProject.Content.Game {
+    enum GameState {StartScreen, Info, Level1, Level2, GameOver}
     internal interface IScreen {
         void Draw(SpriteBatch spriteBatch);
-        void Update(GameTime gameTime);
+        GameState Update(GameTime gameTime);
 
     }
 }

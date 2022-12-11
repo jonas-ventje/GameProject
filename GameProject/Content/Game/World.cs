@@ -79,7 +79,7 @@ namespace GameProject.Content.Game
                 tile.Draw(spritebatch);
             }
         }
-        public void Update(GameTime gameTime) {
+        public GameState Update(GameTime gameTime) {
             List<IGameObject> toRemove = new List<IGameObject>();
             for(int i = 0; i< Tiles.Count; i++)
             {
@@ -90,6 +90,7 @@ namespace GameProject.Content.Game
             }
             foreach (var tile in toRemove)
                 Tiles.Remove(tile);
+            return GameState.Level1;
         }
         private IGameObject LoadGameObject(int id, int x, int y) {
             switch (id)
