@@ -16,12 +16,12 @@ namespace GameProject {
         private Texture2D backgroundTexture;
 
 
-        private float scale;
-        private int virtualWidht = 3200;
-        private int virtualHeight = 1792;
+        public static float scale;
+        public static int virtualWidth = 3200;
+        public static int virtualHeight = 1792;
 
 
-        private World world;
+        private IScreen onDisplay;
 
         public Game1() {
 
@@ -39,15 +39,16 @@ namespace GameProject {
             _graphics.ApplyChanges();
             base.Initialize();
 
-            scale = 1F / ((float)virtualWidht / GraphicsDevice.Viewport.Width);
+            scale = 1F / ((float)virtualWidth / GraphicsDevice.Viewport.Width);
 
-            world = new World(Content);
+            //onDisplay = new World(Content);
+            onDisplay = new startScreen(Content);
 
         }
 
         protected override void LoadContent() {
             _spriteBatch = new SpriteBatch(GraphicsDevice);
-            renderTarget = new RenderTarget2D(GraphicsDevice, virtualWidht, virtualHeight);
+            renderTarget = new RenderTarget2D(GraphicsDevice, virtualWidth, virtualHeight);
             blockTexture = new Texture2D(GraphicsDevice, 1, 1);
             backgroundTexture = Content.Load<Texture2D>("./images/background");
             blockTexture.SetData(new[] { Color.HotPink });
@@ -57,7 +58,7 @@ namespace GameProject {
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
 
-            world.Update(gameTime);
+            onDisplay.Update(gameTime);
             base.Update(gameTime);
         }
 
@@ -66,7 +67,7 @@ namespace GameProject {
             GraphicsDevice.Clear(Color.CornflowerBlue);
             _spriteBatch.Begin();
             _spriteBatch.Draw(backgroundTexture, Vector2.Zero, Color.White);
-            world.Draw(_spriteBatch);
+            onDisplay.Draw(_spriteBatch);
             _spriteBatch.End();
             GraphicsDevice.SetRenderTarget(null);
             GraphicsDevice.Clear(Color.CornflowerBlue);
