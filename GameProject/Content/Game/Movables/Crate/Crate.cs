@@ -57,6 +57,10 @@ namespace GameProject.Content.Game.Movables.Crate
                 activeFrameList = CrateFrames.breakingFrames;
                 animation.reset();
             }
+            if (collisionObject is Santa.Santa)
+            {
+                (collisionObject as Santa.Santa).CurrentMovingState = MovingState.Dying;
+            }
         }
 
         private void Move(GameTime gameTime) {

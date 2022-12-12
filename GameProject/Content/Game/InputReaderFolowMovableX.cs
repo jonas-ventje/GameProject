@@ -16,6 +16,7 @@ namespace GameProject.Content.Game {
             this.reference = reference;
         }
 
+        //this one has bugs. since acceleration, the speed can be higher dan movable stored speed.
         public Vector2 ReadInput() {
             int referenceCenter = reference.IntersectionBlock.Center.X;
             int movableCenter = movable.IntersectionBlock.Center.X;

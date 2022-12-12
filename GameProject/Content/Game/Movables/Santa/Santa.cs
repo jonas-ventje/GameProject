@@ -7,8 +7,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Windows.Forms;
 
-namespace GameProject.Content.Game.Movables.Santa
-{
+namespace GameProject.Content.Game.Movables.Santa {
     internal class Santa : IControllableGravityObject, IAnimatable {
         private List<Frame> activeFrameList;
         private Animation animation;
@@ -80,13 +79,16 @@ namespace GameProject.Content.Game.Movables.Santa
         public void CollisionEffect(IGameObject collisionObject, CollidingSide side) {
             if (collisionObject is Cadeau)
                 (collisionObject as Cadeau).ToBeRemoved = true;
+
         }
 
         private void Move(GameTime gameTime) {
             movementController.Move(this, gameTime);
         }
-
-        private void updateAnimation() {
+        /// <summary>
+        /// change framelist based on the current moving state which is walking, jumping...
+        /// </summary>
+        private void updateFrameList() {
             List<Frame> prevFrameList = activeFrameList;
             switch (CurrentMovingState)
             {
@@ -96,6 +98,9 @@ namespace GameProject.Content.Game.Movables.Santa
                     break;
                 case MovingState.Walking:
                     activeFrameList = SantaFrames.walkingFrames;
+                    break;
+                case MovingState.Dying:
+                    activeFrameList = SantaFrames.dyingFrames;
                     break;
                 default:
                     break;
@@ -112,7 +117,12 @@ namespace GameProject.Content.Game.Movables.Santa
         public void Update(GameTime gameTime) {
             Move(gameTime);
             activeFrame = animation.update(gameTime, activeFrameList);
-            updateAnimation();
+            updateFrameList();
+            //if below is true, santa is dead.
+            if (activeFrameList == SantaFrames.dyingFrames && activeFrame == activeFrameList[activeFrameList.Count-1])
+            {
+                toBeRemoved = true;
+            }
         }
 
 

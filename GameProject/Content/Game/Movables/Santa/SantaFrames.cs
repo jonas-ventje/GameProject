@@ -9,6 +9,7 @@ namespace GameProject.Content.Game.Movables.Santa {
     internal static class SantaFrames {
         internal static List<Frame> idleFrames = new List<Frame>();
         internal static List<Frame> walkingFrames = new List<Frame>();
+        internal static List<Frame> dyingFrames = new List<Frame>();
 
         static SantaFrames() {
             #region idleFrames
@@ -130,6 +131,15 @@ namespace GameProject.Content.Game.Movables.Santa {
                 boundingBox: ContentLoadingTools.SpritePositionToRectangle(256, 176, 8, 83),
                             hitbox: ContentLoadingTools.CoordToRect(51, 8, 147, 157)
                         ));
+            #endregion
+            #region dying
+            for (int i = 0; i < 17; i++)
+            {
+                dyingFrames.Add(new Frame(
+                    boundingBox: ContentLoadingTools.SpritePositionToRectangle(256, 176, 8, i),
+                    hitbox: Rectangle.Empty
+                ));
+            }
             #endregion
         }
 

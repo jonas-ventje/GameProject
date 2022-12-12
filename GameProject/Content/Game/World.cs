@@ -17,7 +17,7 @@ namespace GameProject.Content.Game
     internal class World:IScreen {
         private const int tileWidth = 128;
         private const int tileHeight = 128;
-        public static List<IGameObject> Tiles = new List<IGameObject>();
+        public static List<IGameObject> Tiles;
         private Texture2D tilesTexture;
         private Texture2D santaTexture;
         private Texture2D snowManSledTexture;
@@ -50,6 +50,7 @@ namespace GameProject.Content.Game
 
 
         public World(ContentManager content) {
+            Tiles = new List<IGameObject>();
             this. santaTexture = content.Load<Texture2D>("./images/santaClaus_small");
             this.tilesTexture = content.Load<Texture2D>("./images/tileset");
             GameObjectFactory.Init(content.Load<Texture2D>("./images/crate"), content.Load<Texture2D>("./images/cadeau"));
@@ -89,7 +90,12 @@ namespace GameProject.Content.Game
                     toRemove.Add(Tiles[i]);
             }
             foreach (var tile in toRemove)
+            {
                 Tiles.Remove(tile);
+                //if santa is on the to remove list, santa is dead :(
+                if (tile is Santa)
+                    return GameState.StartScreen;
+            }
             return GameState.Level1;
         }
         private IGameObject LoadGameObject(int id, int x, int y) {
