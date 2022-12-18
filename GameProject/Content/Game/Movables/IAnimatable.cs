@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace GameProject.Content.Game.Movables {
     internal interface IAnimatable {
-        public Frame ActiveFrame
+        public Animation Animation
         {
-            get; set;
+            get;
         }
     }
 }

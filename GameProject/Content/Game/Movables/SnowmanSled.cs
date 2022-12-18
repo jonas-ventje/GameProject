@@ -10,39 +10,15 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace GameProject.Content.Game.Movables {
-    internal class SnowmanSled : IControllableObject {
+    internal class SnowmanSled : ControllableObject {
         private const int minDropInterval = 5;
         private const int maxDropInterval = 10;
 
-        private Texture2D texture;
-        private Vector2 position;
-        private int horizontalSpeed;
-        private SpriteEffects spriteDirection;
-        private IInputReader inputReader;
         private ControllableNonGravityMovementManager movementManager = new ControllableNonGravityMovementManager();
         private double dropInterval;
         private double elapsedDropInterval;
 
-        public IInputReader InputReader => inputReader;
-
-        public SpriteEffects SpriteDirection
-        {
-            get => spriteDirection;
-            set => spriteDirection = value;
-        }
-        public int HorizontalSpeed
-        {
-            get => horizontalSpeed;
-            set => horizontalSpeed = value;
-        }
-        public Vector2 Position
-        {
-            get => position;
-            set => position = value;
-        }
-        public Rectangle IntersectionBlock => new Rectangle((int)position.X, (int)position.Y, texture.Width, texture.Height);
-
-        public bool ToBeRemoved => false;
+        //public Rectangle IntersectionBlock => new Rectangle((int)position.X, (int)position.Y, texture.Width, texture.Height);
 
         private void calcDropInterval() {
             Random rand = new Random();
@@ -50,18 +26,13 @@ namespace GameProject.Content.Game.Movables {
             elapsedDropInterval = 0;
         }
 
-        public SnowmanSled(Texture2D texture, Vector2 position, Santa.Santa santa, int horizontalSpeed) {
+        public SnowmanSled(Texture2D texture, int x, int y, Santa.Santa santa, int horizontalSpeed):base(texture, new Vector2(x,y), false, horizontalSpeed) {
             calcDropInterval();
-            this.texture = texture;
-            this.position = position;
             this.inputReader = new InputReaderFolowMovableX(santa, this);
             this.horizontalSpeed = horizontalSpeed;
         }
 
-        public void CollisionEffect(IGameObject collisionObject, CollidingSide side) {
-        }
-
-        public void Draw(SpriteBatch spriteBatch) {
+        public override void Draw(SpriteBatch spriteBatch) {
             spriteBatch.Draw(texture, position, Color.White);
 
             Texture2D _pointTexture;
@@ -70,15 +41,18 @@ namespace GameProject.Content.Game.Movables {
             spriteBatch.Draw(_pointTexture, new Rectangle((int)position.X + 49, (int)position.Y + 11, (int)(211*(elapsedDropInterval/dropInterval)), 11), Color.White);
         }
 
-        public void Update(GameTime gameTime) {
+        public override void Update(GameTime gameTime) {
             movementManager.Move(this, gameTime);
 
             elapsedDropInterval += gameTime.ElapsedGameTime.TotalSeconds;
             if (elapsedDropInterval >= dropInterval)
             {
                 calcDropInterval();
-                World.Tiles.Add(GameObjectFactory.CreateGameObject("crate", IntersectionBlock.Center.X-50, IntersectionBlock.Bottom));
+                World.Tiles.Add(GameObjectFactory.CreateGameObject("crate", frame.BoundingBox.Center.X-50, frame.BoundingBox.Bottom));
             }
+        }
+
+        public override void CollisionEffect(GameObject collisionObject, CollidingSide side) {
         }
     }
 }

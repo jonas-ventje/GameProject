@@ -10,7 +10,7 @@ using GameProject.Content.Game.GameObjects;
 
 namespace GameProject.Content.Game.Movement.MovementManagers
 {
-    internal class NonGravityMovementManager {
+    internal class BasicMovementManager {
         private double accelerationTime = 0;
         private const double acceleration = 1.5f;
         /// <summary>
@@ -22,7 +22,7 @@ namespace GameProject.Content.Game.Movement.MovementManagers
         /// <returns>the undoMovemend used in the GravityMovmentManager</returns>
         /// 
 
-        public Vector2 Move(IMovableGameObject movable, GameTime gameTime, Vector2 inputMovement = new Vector2()) {
+        public Vector2 Move(MovableGameObject movable, GameTime gameTime, Vector2 inputMovement = new Vector2()) {
             Vector2 movement = inputMovement;
 
             //acceleration
@@ -38,6 +38,8 @@ namespace GameProject.Content.Game.Movement.MovementManagers
             foreach (var gameObject in World.Tiles)
             {
                 CollidingSide side;
+                if (movable.IntersectionBlock.IsEmpty || gameObject.IntersectionBlock.IsEmpty)
+                    continue;
                 Vector2 intersection = CollisionController.CollisionDepth(movable.IntersectionBlock, gameObject.IntersectionBlock, movement, out side);
                 if (intersection != Vector2.Zero)
                 {

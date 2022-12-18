@@ -9,8 +9,8 @@ using GameProject.Content.Game.GameObjects;
 
 namespace GameProject.Content.Game.Movement.MovementManagers
 {
-    internal class ControllableNonGravityMovementManager:NonGravityMovementManager {
-        public void Move(IControllableObject movable, GameTime gameTime) {
+    internal class ControllableNonGravityMovementManager:BasicMovementManager {
+        public void Move(ControllableObject movable, GameTime gameTime) {
             Vector2 movement = movable.InputReader.ReadInput();
             if (movement.X != 0)
             {

@@ -17,7 +17,7 @@ namespace GameProject.Content.Game
     internal class World:IScreen {
         private const int tileWidth = 128;
         private const int tileHeight = 128;
-        public static List<IGameObject> Tiles;
+        public static List<GameObject> Tiles;
         private Texture2D tilesTexture;
         private Texture2D santaTexture;
         private Texture2D snowManSledTexture;
@@ -25,8 +25,8 @@ namespace GameProject.Content.Game
             { 16, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 14 },
             { 16, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 14 },
             { 16, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 14 },
-            { 16, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 9, 0, 8, 0, 14 },
-            { 16, 0, 0, 9, 0, 0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 6, 0, 24, 25, 25, 25, 26, 0, 14 },
+            { 16, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 9, 0, 8, 0, 14 },
+            { 16, 0, 0, 9, 0, 0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 6, 3, 24, 25, 25, 25, 26, 0, 14 },
             { 20, 21, 12, 12, 12, 13, 27, 27, 27, 21, 13, 0, 0, 0, 0, 0, 11, 13, 0, 0, 0, 0, 0, 0, 14 },
             { 15, 19, 19, 19, 19, 19, 19, 19, 19, 19, 20, 21, 12, 12, 12, 17, 18, 16, 0, 0, 0, 0, 0, 0, 14 },
             { 16, 0, 0, 0, 0, 0, 0, 0, 0, 0, 22, 19, 19, 19, 19, 19, 19, 23, 0, 0, 0, 5, 10, 3, 14 },
@@ -49,7 +49,7 @@ namespace GameProject.Content.Game
 
 
         public World(ContentManager content) {
-            Tiles = new List<IGameObject>();
+            Tiles = new List<GameObject>();
             this. santaTexture = content.Load<Texture2D>("./images/santaClaus_small");
             this.tilesTexture = content.Load<Texture2D>("./images/tileset");
             GameObjectFactory.Init(content.Load<Texture2D>("./images/crate"), content.Load<Texture2D>("./images/cadeau"));
@@ -64,12 +64,12 @@ namespace GameProject.Content.Game
             }
             for (int i = 0; i < cadeauCoords.Count; i++)
             {
-                IGameObject cadeau = GameObjectFactory.CreateGameObject("cadeau", (int)cadeauCoords[i].X, (int)cadeauCoords[i].Y);
+                GameObject cadeau = GameObjectFactory.CreateGameObject("cadeau", (int)cadeauCoords[i].X, (int)cadeauCoords[i].Y);
                 Tiles.Add(cadeau);
             }
-            this.santa = new Santa(santaTexture, 5, new Vector2(140,400));
+            this.santa = new Santa(santaTexture, 5, 140,400);
             Tiles.Add(santa);
-            this.snowmanSled = new SnowmanSled(snowManSledTexture, new Vector2(128, 40), santa, 2);
+            this.snowmanSled = new SnowmanSled(snowManSledTexture, 128, 40, santa, 2);
             Tiles.Add(snowmanSled);
         }
 
@@ -80,11 +80,11 @@ namespace GameProject.Content.Game
             }
         }
         public GameState Update(GameTime gameTime) {
-            List<IGameObject> toRemove = new List<IGameObject>();
+            List<GameObject> toRemove = new List<GameObject>();
             for(int i = 0; i< Tiles.Count; i++)
             {
-                if (Tiles[i] is IMovableGameObject)
-                    (Tiles[i] as IMovableGameObject).Update(gameTime);
+                if (Tiles[i] is MovableGameObject)
+                    (Tiles[i] as MovableGameObject).Update(gameTime);
                 if (Tiles[i].ToBeRemoved)
                     toRemove.Add(Tiles[i]);
             }
@@ -97,13 +97,12 @@ namespace GameProject.Content.Game
             }
             return GameState.Level1;
         }
-        private IGameObject LoadGameObject(int id, int x, int y) {
+        private GameObject LoadGameObject(int id, int x, int y) {
             switch (id)
             {
                 case 1:
                     //crate
                     throw new System.IndexOutOfRangeException();
-                    break;
                 case 2:
                     //objectname crystal
                     return new GameTile(tilesTexture, new Frame(new Rectangle(101, 384, 97, 78),false), x, y);

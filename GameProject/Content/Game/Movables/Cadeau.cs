@@ -10,42 +10,25 @@ using System.Threading.Tasks;
 
 namespace GameProject.Content.Game.Movables
 {
-    internal class Cadeau : IMovableGameObject {
-        private Texture2D texture;
-        private Vector2 position;
-        private bool toBeRemoved;
+    internal class Cadeau : MovableGameObject {
         private int bouncePosition = 0;
-        private int fps = 15;
         private const int bounceLength = 20;
-        public Cadeau(Texture2D texture, int x, int y) {
-            this.texture = texture;
-            this.position = new Vector2(x,y);
+        public Cadeau(Texture2D texture, int x, int y):base(texture, new Vector2(x,y), true)  {
             Random rand = new Random();
             this.bouncePosition = rand.Next(-bounceLength, bounceLength+1);
         }
 
-        public Rectangle IntersectionBlock => new Rectangle((int)position.X, (int)position.Y+bouncePosition, 91, 128);
-        public Vector2 Position
-        {
-            get => position;
-            set => position = value;
-        }
-        public bool ToBeRemoved
-        {
-            get => toBeRemoved;
-            set => toBeRemoved = value;
-        }
+        //public Rectangle IntersectionBlock => new Rectangle((int)position.X, (int)position.Y+bouncePosition, 91, 128);
 
-        public void Update(GameTime gameTime) {
+        public override void Update(GameTime gameTime) {
             bouncePosition = (int)(bounceLength * Math.Sin(gameTime.TotalGameTime.TotalSeconds*3));
         }
 
-        public void Draw(SpriteBatch spriteBatch) {
+        public override void Draw(SpriteBatch spriteBatch) {
             spriteBatch.Draw(texture, new Vector2(position.X, position.Y+bouncePosition), Color.White * .9f);
         }
 
-        public void CollisionEffect(IGameObject collisionObject, CollidingSide side) {
-            throw new NotImplementedException();
+        public override void CollisionEffect(GameObject collisionObject, CollidingSide side) {
         }
     }
 }

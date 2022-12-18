@@ -13,7 +13,7 @@ using System.Threading.Tasks;
 
 namespace GameProject.Content.Game.Movement.MovementManagers
 {
-    internal class GravityMovementManager:NonGravityMovementManager
+    internal class GravityMovementManager:BasicMovementManager
     {
         private float gravityAcceleration = 10f;
         //add a mass (it's not in the free fall formulla, but it's easyer to implement then air resistance and mass etc)
@@ -29,7 +29,7 @@ namespace GameProject.Content.Game.Movement.MovementManagers
         /// <param name="movable">movable object</param>
         /// <param name="gameTime">gametime</param>
         /// <param name="inputMovment">only needed for the inheritted controllableMovementManager, for left and right...</param>
-        public void Move(IMovableGameObject movable, GameTime gameTime, Vector2 inputMovment = new Vector2())
+        public void Move(MovableGameObject movable, GameTime gameTime, Vector2 inputMovment = new Vector2())
         {
             Vector2 movement = inputMovment;
             movement += UpdateGravity(gameTime);

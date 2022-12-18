@@ -15,7 +15,7 @@ namespace GameProject.Content.Game.Movement.MovementManagers
 {
     internal class ControllableGravityMovementManager : GravityMovementManager {
 
-        public void Move(IControllableGravityObject movable, GameTime gameTime) {
+        public void Move(ControllableGravityObject movable, GameTime gameTime) {
             if (movable.CurrentMovingState != MovingState.Dying)
             {
 

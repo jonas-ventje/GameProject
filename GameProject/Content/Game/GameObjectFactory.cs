@@ -18,7 +18,7 @@ namespace GameProject.Content.Game {
             crateTexture = crateTextureI;
             cadeauTexture = cadeauTextureI;
         }
-        public static IGameObject CreateGameObject(string type, int x, int y) {
+        public static GameObject CreateGameObject(string type, int x, int y) {
             if(crateTexture == null)
                 throw new NullReferenceException();
             else if (type == "crate")
