@@ -18,8 +18,6 @@ namespace GameProject.Content.Game.Movables {
         private double dropInterval;
         private double elapsedDropInterval;
 
-        //public Rectangle IntersectionBlock => new Rectangle((int)position.X, (int)position.Y, texture.Width, texture.Height);
-
         private void calcDropInterval() {
             Random rand = new Random();
             dropInterval = minDropInterval + rand.NextDouble()*(maxDropInterval-minDropInterval);
@@ -48,7 +46,7 @@ namespace GameProject.Content.Game.Movables {
             if (elapsedDropInterval >= dropInterval)
             {
                 calcDropInterval();
-                World.Tiles.Add(GameObjectFactory.CreateGameObject("crate", frame.BoundingBox.Center.X-50, frame.BoundingBox.Bottom));
+                World.Tiles.Add(GameObjectFactory.CreateGameObject("crate", (int)Position.X+frame.BoundingBox.Center.X-50, (int) position.Y+frame.BoundingBox.Bottom));
             }
         }
 

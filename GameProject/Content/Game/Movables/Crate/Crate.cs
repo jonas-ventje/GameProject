@@ -28,7 +28,7 @@ namespace GameProject.Content.Game.Movables.Crate {
                 activeFrameList = CrateFrames.breakingFrames;
                 animation.reset();
             }
-            if (collisionObject is Santa.Santa)
+            if (collisionObject is Santa.Santa && side = CollidingSide.Bottom)
             {
                 (collisionObject as Santa.Santa).CurrentMovingState = MovingState.Dying;
             }

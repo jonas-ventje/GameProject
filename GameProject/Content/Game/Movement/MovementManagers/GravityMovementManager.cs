@@ -29,7 +29,7 @@ namespace GameProject.Content.Game.Movement.MovementManagers
         /// <param name="movable">movable object</param>
         /// <param name="gameTime">gametime</param>
         /// <param name="inputMovment">only needed for the inheritted controllableMovementManager, for left and right...</param>
-        public void Move(MovableGameObject movable, GameTime gameTime, Vector2 inputMovment = new Vector2())
+        public new void Move(MovableGameObject movable, GameTime gameTime, Vector2 inputMovment = new Vector2())
         {
             Vector2 movement = inputMovment;
             movement += UpdateGravity(gameTime);
