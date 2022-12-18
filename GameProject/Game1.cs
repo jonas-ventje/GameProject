@@ -37,6 +37,7 @@ namespace GameProject {
                         _graphics.IsFullScreen = true;*/
             _graphics.PreferredBackBufferWidth = 1120;
             _graphics.PreferredBackBufferHeight = 630;
+            Window.AllowUserResizing = true;
             _graphics.ApplyChanges();
             base.Initialize();
 

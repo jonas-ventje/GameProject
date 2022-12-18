@@ -51,6 +51,7 @@ namespace GameProject.Content.Game.Movables {
         }
 
         public SnowmanSled(Texture2D texture, Vector2 position, Santa.Santa santa, int horizontalSpeed) {
+            calcDropInterval();
             this.texture = texture;
             this.position = position;
             this.inputReader = new InputReaderFolowMovableX(santa, this);

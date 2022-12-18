@@ -22,21 +22,20 @@ namespace GameProject.Content.Game
         private Texture2D santaTexture;
         private Texture2D snowManSledTexture;
         private int[,] tileIds = {
-            { 15, 0, 0, 0, 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,13 },
-            { 15, 0, 0, 0, 0,0,0,0,0,0,0,19,0,0,0,0,0,0,0,19,0,0,0,0,13 },
-            { 15, 0, 0, 0, 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,13 },
-            { 15, 0, 0, 0, 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,13 },
-            { 15, 0, 0, 0, 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,13 },
-            { 15, 0, 0, 0, 0,0,0,0,0,0,0,0,0,0,0,11,0,0,0,0,0,0,0,0,13 },
-            { 15, 0, 0, 0, 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,13 },
-            { 15, 0, 0, 0, 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,13 },
-            { 15, 0, 6, 8, 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,13 },
-            { 15, 0, 0, 0, 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,13 },
-            { 15, 0, 0, 0, 0,6,8,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,13 },
-            { 15, 0, 0, 0, 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,13 },
-            { 15, 0, 0, 0, 0,0,0,0,11,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,13 },
-            { 2, 3, 11, 11, 11,11,11,11,11,16,9,9,9, 3,11,11,11,11,11,11,11,11,11,16,17 }
-        };
+            { 16, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 14 },
+            { 16, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 14 },
+            { 16, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 14 },
+            { 16, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 9, 0, 8, 0, 14 },
+            { 16, 0, 0, 9, 0, 0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 6, 0, 24, 25, 25, 25, 26, 0, 14 },
+            { 20, 21, 12, 12, 12, 13, 27, 27, 27, 21, 13, 0, 0, 0, 0, 0, 11, 13, 0, 0, 0, 0, 0, 0, 14 },
+            { 15, 19, 19, 19, 19, 19, 19, 19, 19, 19, 20, 21, 12, 12, 12, 17, 18, 16, 0, 0, 0, 0, 0, 0, 14 },
+            { 16, 0, 0, 0, 0, 0, 0, 0, 0, 0, 22, 19, 19, 19, 19, 19, 19, 23, 0, 0, 0, 5, 10, 3, 14 },
+            { 16, 7, 6, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 11, 12, 12, 12, 18 },
+            { 16, 24, 25, 26, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 22, 19, 19, 19, 15 },
+            { 16, 0, 0, 0, 0, 0, 13, 2, 0, 0, 0, 0, 8, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 14 },
+            { 16, 0, 0, 0, 0, 0, 20, 13, 0, 0, 0, 11, 17, 27, 27, 27, 21, 13, 2, 0, 0, 0, 0, 0, 14 },
+            { 16, 0, 0, 0, 0, 0, 15, 20, 13, 10, 8, 14, 15, 28, 28, 28, 15, 20, 21, 13, 0, 8, 7, 0, 14 },
+            { 20, 21, 12, 12, 13, 27, 15, 15, 20, 12, 17, 18, 15, 28, 28, 28, 15, 15, 15, 20, 12, 12, 12, 17, 18 } };
 
         private Santa santa;
         private SnowmanSled snowmanSled;
@@ -68,7 +67,7 @@ namespace GameProject.Content.Game
                 IGameObject cadeau = GameObjectFactory.CreateGameObject("cadeau", (int)cadeauCoords[i].X, (int)cadeauCoords[i].Y);
                 Tiles.Add(cadeau);
             }
-            this.santa = new Santa(santaTexture, 5, new Vector2(0,500));
+            this.santa = new Santa(santaTexture, 5, new Vector2(140,400));
             Tiles.Add(santa);
             this.snowmanSled = new SnowmanSled(snowManSledTexture, new Vector2(128, 40), santa, 2);
             Tiles.Add(snowmanSled);
@@ -102,43 +101,90 @@ namespace GameProject.Content.Game
             switch (id)
             {
                 case 1:
-                    return new GameTile(tilesTexture, new Frame(new Rectangle(0, 0, 128, 128)), x, y);
+                    //crate
+                    throw new System.IndexOutOfRangeException();
+                    break;
                 case 2:
-                    return new GameTile(tilesTexture, new Frame(new Rectangle(128, 0, 128, 128)), x, y);
+                    //objectname crystal
+                    return new GameTile(tilesTexture, new Frame(new Rectangle(101, 384, 97, 78),false), x, y);
                 case 3:
-                    return new GameTile(tilesTexture, new Frame(new Rectangle(256, 0, 128, 128)), x, y);
+                    //objectname icebox
+                    return new GameTile(tilesTexture, new Frame(new Rectangle(198, 384, 101, 101)), x, y);
                 case 4:
-                    return new GameTile(tilesTexture, new Frame(new Rectangle(384, 0, 128, 128)), x, y);
+                    //objectname igloo
+                    return new GameTile(tilesTexture, new Frame(new Rectangle(299, 384, 511, 201), false), x, y);
                 case 5:
-                    return new GameTile(tilesTexture, new Frame(new Rectangle(512, 0, 128, 128)), x, y);
+                    //objectname sign_1
+                    return new GameTile(tilesTexture, new Frame(new Rectangle(0, 585, 87, 94), false), x, y);
                 case 6:
-                    return new GameTile(tilesTexture, new Frame(new Rectangle(640, 0, 128, 128), ContentLoadingTools.CoordToRect(0, 0, 128, 92)), x, y);
+                    //objectname sign_2
+                    return new GameTile(tilesTexture, new Frame(new Rectangle(87, 585, 87, 93), false), x, y);
                 case 7:
-                    return new GameTile(tilesTexture, new Frame(new Rectangle(0, 128, 128, 128), ContentLoadingTools.CoordToRect(0, 0, 128, 92)), x, y);
+                    //objectname snowman
+                    return new GameTile(tilesTexture, new Frame(new Rectangle(174, 585, 193, 210), false), x, y);
                 case 8:
-                    return new GameTile(tilesTexture, new Frame(new Rectangle(128, 128, 128, 128), ContentLoadingTools.CoordToRect(0, 0, 128, 92)), x, y);
+                    //objectname stone
+                    return new GameTile(tilesTexture, new Frame(new Rectangle(367, 585, 124, 78), false), x, y);
                 case 9:
-                    return new GameTile(tilesTexture, new Frame(new Rectangle(256, 128, 128, 128), ContentLoadingTools.CoordToRect(0, 29, 128, 128)), x, y);
+                    //objectname tree_1
+                    return new GameTile(tilesTexture, new Frame(new Rectangle(768, 0, 364, 280), false), x, y);
                 case 10:
-                    return new GameTile(tilesTexture, new Frame(new Rectangle(384, 128, 128, 128)), x, y);
+                    //objectname tree_2
+                    return new GameTile(tilesTexture, new Frame(new Rectangle(810, 280, 228, 280), false), x, y);
                 case 11:
-                    return new GameTile(tilesTexture, new Frame(new Rectangle(512, 128, 128, 128)), x, y);
+                    //tilename 1
+                    return new GameTile(tilesTexture, new Frame(new Rectangle(0, 0, 128, 128)), x, y);
                 case 12:
-                    return new GameTile(tilesTexture, new Frame(new Rectangle(640, 128, 128, 128)), x, y);
+                    //tilename 2
+                    return new GameTile(tilesTexture, new Frame(new Rectangle(512, 128, 128, 128)), x, y);
                 case 13:
-                    return new GameTile(tilesTexture, new Frame(new Rectangle(0, 256, 128, 128)), x, y);
+                    //tilename 3
+                    return new GameTile(tilesTexture, new Frame(new Rectangle(640, 128, 128, 128)), x, y);
                 case 14:
-                    return new GameTile(tilesTexture, new Frame(new Rectangle(128, 256, 128, 128)), x, y);
+                    //tilename 4
+                    return new GameTile(tilesTexture, new Frame(new Rectangle(0, 256, 128, 128)), x, y);
                 case 15:
-                    return new GameTile(tilesTexture, new Frame(new Rectangle(256, 256, 128, 128)), x, y);
+                    //tilename 5
+                    return new GameTile(tilesTexture, new Frame(new Rectangle(128, 256, 128, 128)), x, y);
                 case 16:
-                    return new GameTile(tilesTexture, new Frame(new Rectangle(384, 256, 128, 128)), x, y);
+                    //tilename 6
+                    return new GameTile(tilesTexture, new Frame(new Rectangle(256, 256, 128, 128)), x, y);
                 case 17:
-                    return new GameTile(tilesTexture, new Frame(new Rectangle(512, 256, 128, 128)), x, y);
+                    //tilename 7
+                    return new GameTile(tilesTexture, new Frame(new Rectangle(384, 256, 128, 128)), x, y);
                 case 18:
-                    return new GameTile(tilesTexture, new Frame(new Rectangle(640, 256, 128, 128)), x, y);
+                    //tilename 8
+                    return new GameTile(tilesTexture, new Frame(new Rectangle(512, 256, 128, 128)), x, y);
                 case 19:
-                    return GameObjectFactory.CreateGameObject("crate", x, y);
+                    //tilename 9
+                    return new GameTile(tilesTexture, new Frame(new Rectangle(640, 256, 128, 128)), x, y);
+                case 20:
+                    //tilename 10
+                    return new GameTile(tilesTexture, new Frame(new Rectangle(128, 0, 128, 128)), x, y);
+                case 21:
+                    //tilename 11
+                    return new GameTile(tilesTexture, new Frame(new Rectangle(256, 0, 128, 128)), x, y);
+                case 22:
+                    //tilename 12
+                    return new GameTile(tilesTexture, new Frame(new Rectangle(384, 0, 128, 128)), x, y);
+                case 23:
+                    //tilename 13
+                    return new GameTile(tilesTexture, new Frame(new Rectangle(512, 0, 128, 128)), x, y);
+                case 24:
+                    //tilename 14
+                    return new GameTile(tilesTexture, new Frame(new Rectangle(640, 0, 128, 128), ContentLoadingTools.CoordToRect(0, 0, 128, 92)), x, y);
+                case 25:
+                    //tilename 15
+                    return new GameTile(tilesTexture, new Frame(new Rectangle(0, 128, 128, 128), ContentLoadingTools.CoordToRect(0, 0, 128, 92)), x, y);
+                case 26:
+                    //tilename 16
+                    return new GameTile(tilesTexture, new Frame(new Rectangle(128, 128, 128, 128), ContentLoadingTools.CoordToRect(0, 0, 128, 92)), x, y);
+                case 27:
+                    //tilename 17
+                    return new GameTile(tilesTexture, new Frame(new Rectangle(256, 128, 128, 128), ContentLoadingTools.CoordToRect(0, 29, 128, 128)), x, y);
+                case 28:
+                    //tilename 18
+                    return new GameTile(tilesTexture, new Frame(new Rectangle(384, 128, 128, 128)), x, y);
 
                 default:
                     throw new System.IndexOutOfRangeException();

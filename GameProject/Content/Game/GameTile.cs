@@ -13,8 +13,11 @@ namespace GameProject.Content.Game
         private bool toBeRemoved = false;
         public GameTile(Texture2D texture, Frame tileFrame, int x, int y) {
             this.texture = texture;
-            position = new Vector2(x, y);
             this.tileFrame = tileFrame;
+
+            //always draw from the right lower corner
+            int yShift = 128 - tileFrame.BoundingBox.Height;
+            position = new Vector2(x, y+yShift);
         }
 
         public Rectangle IntersectionBlock

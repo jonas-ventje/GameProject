@@ -34,9 +34,16 @@ namespace GameProject.Content.Game
             this.boundingBox = boundingBox;
             this.hitbox = hitbox;
         }
-        public Frame(Rectangle boundingBox) {
+        /// <summary>
+        /// boundingbox equal to hitbox or no hitbox
+        /// </summary>
+        /// <param name="boundingBox"></param>
+        public Frame(Rectangle boundingBox, bool hasHitbox = true) {
             this.boundingBox = boundingBox;
-            this.hitbox = new Rectangle(0,0,boundingBox.Width, boundingBox.Height);
+            if (hasHitbox)
+                this.hitbox = new Rectangle(0, 0, boundingBox.Width, boundingBox.Height);
+            else
+                this.hitbox = Rectangle.Empty;
         }
     }
 }
