@@ -18,6 +18,8 @@ namespace GameProject.Content.Game.Movables {
         private double dropInterval;
         private double elapsedDropInterval;
 
+        public override bool CanAccelerate => false;
+
         private void calcDropInterval() {
             Random rand = new Random();
             dropInterval = minDropInterval + rand.NextDouble()*(maxDropInterval-minDropInterval);

@@ -17,6 +17,8 @@ namespace GameProject.Content.Game.Movables.Crate {
 
         public Animation Animation => animation;
 
+        public override bool CanAccelerate => false;
+
         public Crate(Texture2D texture, int x, int y) : base(texture, new Vector2(x, y), CrateFrames.idleFrames[0]) {
             activeFrameList = CrateFrames.idleFrames;
             movementController = new GravityMovementManager();

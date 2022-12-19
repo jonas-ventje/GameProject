@@ -6,6 +6,7 @@ using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using System;
+using System.Diagnostics;
 
 namespace GameProject {
     public class Game1 : Game {
@@ -15,6 +16,7 @@ namespace GameProject {
         private Texture2D blockTexture;
         private Texture2D backgroundTexture;
         private GameState prevGameState;
+        private Vector2 position;
 
 
         public static float scale;
@@ -32,14 +34,13 @@ namespace GameProject {
         }
 
         protected override void Initialize() {
-            /*            _graphics.PreferredBackBufferWidth = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width;
-                        _graphics.PreferredBackBufferHeight = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height;
-                        _graphics.IsFullScreen = true;*/
-            _graphics.PreferredBackBufferWidth = 1120;
+         /*   _graphics.PreferredBackBufferWidth = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width;
+            _graphics.PreferredBackBufferHeight = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height;
+            _graphics.IsFullScreen = true;*/
+           _graphics.PreferredBackBufferWidth = 1120;
             _graphics.PreferredBackBufferHeight = 630;
             Window.AllowUserResizing = true;
             _graphics.ApplyChanges();
-            base.Initialize();
 
             scale = 1F / ((float)virtualWidth / GraphicsDevice.Viewport.Width);
 
@@ -47,7 +48,8 @@ namespace GameProject {
             onDisplay = new StartScreen(Content);
 
             prevGameState = GameState.StartScreen;
-
+            position = new Vector2(0, 0);
+            base.Initialize();
         }
 
         protected override void LoadContent() {
@@ -63,7 +65,7 @@ namespace GameProject {
                 Exit();
 
             GameState newGameState = onDisplay.Update(gameTime);
-            if(prevGameState!=newGameState)
+            if (prevGameState != newGameState)
             {
                 switch (newGameState)
                 {
@@ -87,22 +89,38 @@ namespace GameProject {
                     default:
                         break;
                 }
-                prevGameState= newGameState;
+                prevGameState = newGameState;
             }
+            float virtualRatio = (float)virtualWidth / virtualHeight;
+            float screenRatio = (float)GraphicsDevice.Viewport.Width / GraphicsDevice.Viewport.Height;
+            if (virtualRatio > screenRatio)
+            {
+
+                scale = 1F / ((float)virtualWidth / GraphicsDevice.Viewport.Width);
+                int start = (int)(GraphicsDevice.Viewport.Width - scale * virtualWidth) / 2;
+                position = new Vector2(0, start);
+            }
+            else
+            {
+                scale = 1F / ((float)virtualHeight / GraphicsDevice.Viewport.Height);
+                int start = (int)(GraphicsDevice.Viewport.Width - scale * virtualWidth) / 2;
+                position = new Vector2(start, 0);
+            }
+
             base.Update(gameTime);
         }
 
         protected override void Draw(GameTime gameTime) {
             GraphicsDevice.SetRenderTarget(renderTarget);
-            GraphicsDevice.Clear(Color.CornflowerBlue);
+            GraphicsDevice.Clear(Color.White);
             _spriteBatch.Begin();
             _spriteBatch.Draw(backgroundTexture, Vector2.Zero, Color.White);
             onDisplay.Draw(_spriteBatch);
             _spriteBatch.End();
             GraphicsDevice.SetRenderTarget(null);
-            GraphicsDevice.Clear(Color.CornflowerBlue);
+            GraphicsDevice.Clear(Color.LightSalmon);
             _spriteBatch.Begin();
-            _spriteBatch.Draw(renderTarget, Vector2.Zero, null, Color.White, 0f, Vector2.Zero, scale, SpriteEffects.None, 0f);
+            _spriteBatch.Draw(renderTarget, position, null, Color.White, 0f, Vector2.Zero, scale, SpriteEffects.None, 0f);
             _spriteBatch.End();
 
             base.Draw(gameTime);

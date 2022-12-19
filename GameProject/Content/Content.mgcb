@@ -44,7 +44,7 @@
 /processorParam:TextureFormat=Color
 /build:images/button.png
 
-#begin images/cadeau.png
+#begin images/cadeau_2.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -54,7 +54,7 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:images/cadeau.png
+/build:images/cadeau_2.png
 
 #begin images/crate.png
 /importer:TextureImporter

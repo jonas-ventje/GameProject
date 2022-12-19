@@ -52,7 +52,7 @@ namespace GameProject.Content.Game
             Tiles = new List<GameObject>();
             this. santaTexture = content.Load<Texture2D>("./images/santaClaus_small");
             this.tilesTexture = content.Load<Texture2D>("./images/tileset");
-            GameObjectFactory.Init(content.Load<Texture2D>("./images/crate"), content.Load<Texture2D>("./images/cadeau"));
+            GameObjectFactory.Init(content.Load<Texture2D>("./images/crate"), content.Load<Texture2D>("./images/cadeau_2"));
             this.snowManSledTexture = content.Load<Texture2D>("./images/snowman_sled3");
             for (int y = 0; y < 14; y++)
             {
@@ -69,7 +69,7 @@ namespace GameProject.Content.Game
             }
             this.santa = new Santa(santaTexture, 5, 140,400);
             Tiles.Add(santa);
-            this.snowmanSled = new SnowmanSled(snowManSledTexture, 128, 40, santa, 2);
+            this.snowmanSled = new SnowmanSled(snowManSledTexture, 128, 40, santa, 4);
             Tiles.Add(snowmanSled);
         }
 

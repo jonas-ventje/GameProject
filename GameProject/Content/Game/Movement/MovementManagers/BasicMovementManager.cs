@@ -26,9 +26,12 @@ namespace GameProject.Content.Game.Movement.MovementManagers
             Vector2 movement = inputMovement;
 
             //acceleration
-            if (movement.X == 0)
-                accelerationTime = 0;
-            movement.X += (int)(accelerationTime * acceleration)*Math.Sign(movement.X);
+            if (movable.CanAccelerate)
+            {
+                if (movement.X == 0)
+                    accelerationTime = 0;
+                movement.X += (int)(accelerationTime * acceleration) * Math.Sign(movement.X);
+            }
 
             //collision
             #region collision

@@ -2,7 +2,6 @@
 using GameProject.Content.Game.Movement.MovementManagers;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using SharpDX.Direct3D9;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Windows.Forms;
@@ -14,6 +13,8 @@ namespace GameProject.Content.Game.Movables.Santa {
         private ControllableGravityMovementManager movementController;
 
         public Animation Animation => animation;
+
+        public override bool CanAccelerate => true;
 
         public Santa(Texture2D texture, int speed, int x, int y):base(texture, new Vector2(x, y), SantaFrames.idleFrames[0], speed) {
             inputReader = new InputReaderKeyboard();
@@ -61,7 +62,7 @@ namespace GameProject.Content.Game.Movables.Santa {
 
         public override void Update(GameTime gameTime) {
             Move(gameTime);
-            frame = animation.update(gameTime, frameList);
+            frame = Animation.update(gameTime, frameList);
             updateFrameList();
             //if below is true, santa is dead.
             if (frameList == SantaFrames.dyingFrames && frame == frameList[frameList.Count-1])

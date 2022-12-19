@@ -9,6 +9,10 @@ using System.Threading.Tasks;
 
 namespace GameProject.Content.Game.GameObjects {
     internal abstract class MovableGameObject : GameObject {
+        public abstract bool CanAccelerate
+        {
+            get;
+        }
         public MovableGameObject(Texture2D texture, Vector2 position, Frame frame) : base(texture, position, frame) {
         }
         public MovableGameObject(Texture2D texture, Vector2 position, bool hasHitbox)

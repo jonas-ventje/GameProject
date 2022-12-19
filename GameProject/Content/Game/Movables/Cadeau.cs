@@ -13,6 +13,9 @@ namespace GameProject.Content.Game.Movables
     internal class Cadeau : MovableGameObject {
         private int bouncePosition = 0;
         private const int bounceLength = 20;
+
+        public override bool CanAccelerate => false;
+
         public Cadeau(Texture2D texture, int x, int y):base(texture, new Vector2(x,y), true)  {
             Random rand = new Random();
             this.bouncePosition = rand.Next(-bounceLength, bounceLength+1);

@@ -15,7 +15,7 @@ namespace GameProject.Content.Game.Movement.MovementManagers
 {
     internal class GravityMovementManager:BasicMovementManager
     {
-        private float gravityAcceleration = 10f;
+        private float gravityAcceleration = 12f;
         //add a mass (it's not in the free fall formulla, but it's easyer to implement then air resistance and mass etc)
         private float mass = 3.2f;
         protected bool isInTheAir = false;
