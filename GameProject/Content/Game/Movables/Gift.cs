@@ -10,21 +10,19 @@ using System.Threading.Tasks;
 
 namespace GameProject.Content.Game.Movables
 {
-    internal class Cadeau : MovableGameObject {
+    internal class Gift : MovableGameObject {
         private int bouncePosition = 0;
         private const int bounceLength = 20;
+        private int offsetX;
 
         public override bool CanAccelerate => false;
 
-        public Cadeau(Texture2D texture, int x, int y):base(texture, new Vector2(x,y), true)  {
-            Random rand = new Random();
-            this.bouncePosition = rand.Next(-bounceLength, bounceLength+1);
+        public Gift(Texture2D texture, int x, int y):base(texture, new Vector2(x,y), true)  {
+            offsetX = Game1.rand.Next(0, 360);
         }
 
-        //public Rectangle IntersectionBlock => new Rectangle((int)position.X, (int)position.Y+bouncePosition, 91, 128);
-
         public override void Update(GameTime gameTime) {
-            bouncePosition = (int)(bounceLength * Math.Sin(gameTime.TotalGameTime.TotalSeconds*3));
+            bouncePosition = (int)(bounceLength * Math.Sin(gameTime.TotalGameTime.TotalSeconds*3 + offsetX));
         }
 
         public override void Draw(SpriteBatch spriteBatch) {

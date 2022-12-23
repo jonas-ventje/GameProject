@@ -47,9 +47,9 @@ namespace GameProject.Content.Game.Movement.MovementManagers
                 if (intersection != Vector2.Zero)
                 {
                     //no move back when collision is a cadeau, but santa does need to know
-                    if (!(gameObject is Cadeau) || movable is Santa)
+                    if (!(gameObject is Gift) || movable is Santa)
                         movable.CollisionEffect(gameObject, side);
-                    if (!(gameObject is Cadeau))
+                    if (!(gameObject is Gift))
                     {
                         if (Math.Abs(intersection.Y) > Math.Abs(undoMovement.Y))
                             undoMovement.Y = intersection.Y;

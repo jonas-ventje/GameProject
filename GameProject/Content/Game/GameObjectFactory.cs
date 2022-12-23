@@ -24,7 +24,7 @@ namespace GameProject.Content.Game {
             else if (type == "crate")
                 return new Crate(crateTexture, x, y);
             else if (type == "cadeau")
-                return new Cadeau(cadeauTexture, x, y);
+                return new Gift(cadeauTexture, x, y);
             else throw new ArgumentException();
         
         }

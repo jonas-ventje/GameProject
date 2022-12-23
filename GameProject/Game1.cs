@@ -20,8 +20,10 @@ namespace GameProject {
 
 
         public static float scale;
-        public static int virtualWidth = 3200;
+        public static int virtualWidth = 3328;
         public static int virtualHeight = 1792;
+
+        public static Random rand = new Random();
 
 
         private IScreen onDisplay;
@@ -55,9 +57,7 @@ namespace GameProject {
         protected override void LoadContent() {
             _spriteBatch = new SpriteBatch(GraphicsDevice);
             renderTarget = new RenderTarget2D(GraphicsDevice, virtualWidth, virtualHeight);
-            blockTexture = new Texture2D(GraphicsDevice, 1, 1);
             backgroundTexture = Content.Load<Texture2D>("./images/background");
-            blockTexture.SetData(new[] { Color.HotPink });
         }
 
         protected override void Update(GameTime gameTime) {
@@ -118,7 +118,7 @@ namespace GameProject {
             onDisplay.Draw(_spriteBatch);
             _spriteBatch.End();
             GraphicsDevice.SetRenderTarget(null);
-            GraphicsDevice.Clear(Color.LightSalmon);
+            GraphicsDevice.Clear(Color.Black);
             _spriteBatch.Begin();
             _spriteBatch.Draw(renderTarget, position, null, Color.White, 0f, Vector2.Zero, scale, SpriteEffects.None, 0f);
             _spriteBatch.End();

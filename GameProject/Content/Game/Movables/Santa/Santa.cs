@@ -23,8 +23,14 @@ namespace GameProject.Content.Game.Movables.Santa {
             animation = new Animation(frameList, 15);
         }
         public override void CollisionEffect(GameObject collisionObject, CollidingSide side) {
-            if (collisionObject is Cadeau)
-                (collisionObject as Cadeau).ToBeRemoved = true;
+            if (collisionObject is Gift)
+                (collisionObject as Gift).ToBeRemoved = true;
+            else if (collisionObject is Snowman.Snowman)
+            {
+                if (side == CollidingSide.Bottom)
+                    (collisionObject as Snowman.Snowman).CurrentMovingState = MovingState.Dying;
+                else currentMovingState= MovingState.Dying;
+            }
 
         }
 
@@ -34,7 +40,7 @@ namespace GameProject.Content.Game.Movables.Santa {
         /// <summary>
         /// change framelist based on the current moving state which is walking, jumping...
         /// </summary>
-        private void updateFrameList() {
+        private void UpdateFrameList() {
             List<Frame> prevFrameList = frameList;
             switch (CurrentMovingState)
             {
@@ -63,7 +69,7 @@ namespace GameProject.Content.Game.Movables.Santa {
         public override void Update(GameTime gameTime) {
             Move(gameTime);
             frame = Animation.update(gameTime, frameList);
-            updateFrameList();
+            UpdateFrameList();
             //if below is true, santa is dead.
             if (frameList == SantaFrames.dyingFrames && frame == frameList[frameList.Count-1])
             {
