@@ -11,7 +11,6 @@ using GameProject.Content.Game.GameObjects;
 
 namespace GameProject.Content.Game.Movables.Crate {
     internal class Crate : MovableGameObject, IAnimatable {
-        private List<Frame> activeFrameList;
         private Animation animation;
         private GravityMovementManager movementController;
 
@@ -20,15 +19,13 @@ namespace GameProject.Content.Game.Movables.Crate {
         public override bool CanAccelerate => false;
 
         public Crate(Texture2D texture, int x, int y) : base(texture, new Vector2(x, y), CrateFrames.idleFrames[0]) {
-            activeFrameList = CrateFrames.idleFrames;
             movementController = new GravityMovementManager();
-            animation = new Animation(activeFrameList, 20);
+            animation = new Animation(CrateFrames.idleFrames, 20);
         }
         public override void CollisionEffect(GameObject collisionObject, CollidingSide side) {
-            if (side == CollidingSide.Bottom && activeFrameList != CrateFrames.breakingFrames)
+            if (side == CollidingSide.Bottom && Animation.FrameList != CrateFrames.breakingFrames)
             {
-                activeFrameList = CrateFrames.breakingFrames;
-                animation.reset();
+                Animation.updateFrameList(CrateFrames.breakingFrames);
             }
             if (collisionObject is Santa.Santa && side == CollidingSide.Bottom)
             {
@@ -47,7 +44,7 @@ namespace GameProject.Content.Game.Movables.Crate {
 
         public override void Update(GameTime gameTime) {
             Move(gameTime);
-            frame = animation.update(gameTime, activeFrameList);
+            frame = animation.update(gameTime);
             if (frame == CrateFrames.breakingFrames[CrateFrames.breakingFrames.Count - 1])
             {
                 toBeRemoved = true;

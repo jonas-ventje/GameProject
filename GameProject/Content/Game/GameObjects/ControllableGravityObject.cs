@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace GameProject.Content.Game.GameObjects {
     enum MovingState {
-        Idle, Walking, Jumping, Dying
+        Idle, Walking, Jumping, Dying, Attacking
     }
     internal abstract class ControllableGravityObject:ControllableObject {
         protected MovingState currentMovingState;

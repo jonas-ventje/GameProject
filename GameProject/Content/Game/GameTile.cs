@@ -16,6 +16,7 @@ namespace GameProject.Content.Game {
         public GameTile(Texture2D texture, int id, int x, int y)
             //always draw from the right lower corner
             : base(texture, Vector2.Zero , new Frame(Rectangle.Empty)) {
+            this.id = id;
             position = new Vector2(x, y + 128 - LoadGameObject(id).BoundingBox.Height);
             frame = LoadGameObject(id);
         }

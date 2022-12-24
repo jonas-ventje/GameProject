@@ -136,8 +136,7 @@ namespace GameProject.Content.Game.Movables.Santa {
             for (int i = 0; i < 17; i++)
             {
                 dyingFrames.Add(new Frame(
-                    boundingBox: ContentLoadingTools.SpritePositionToRectangle(256, 176, 8, i),
-                    hitbox: Rectangle.Empty
+                    boundingBox: ContentLoadingTools.SpritePositionToRectangle(256, 176, 8, i), false
                 ));
             }
             #endregion

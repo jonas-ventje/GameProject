@@ -93,28 +93,28 @@ namespace GameProject.Content.Game.Movables.Snowman {
             #endregion
             #region atticFrames
             attackFrames.Add(new Frame(
-                boundingBox: new Rectangle(0, 0, 119, 148)
+                boundingBox: new Rectangle(0, 0, 119, 146)
             ));
             attackFrames.Add(new Frame(
-                boundingBox: new Rectangle(119, 0, 119, 147)
+                boundingBox: new Rectangle(119, 0, 119, 146)
             ));
             attackFrames.Add(new Frame(
                 boundingBox: new Rectangle(238, 0, 116, 146)
             ));
             attackFrames.Add(new Frame(
-                boundingBox: new Rectangle(354, 0, 111, 145)
+                boundingBox: new Rectangle(354, 0, 111, 146)
             ));
             attackFrames.Add(new Frame(
-                boundingBox: new Rectangle(465, 0, 108, 144)
+                boundingBox: new Rectangle(465, 0, 108, 146)
             ));
             attackFrames.Add(new Frame(
-                boundingBox: new Rectangle(573, 0, 109, 145)
+                boundingBox: new Rectangle(573, 0, 109, 146)
             ));
             attackFrames.Add(new Frame(
                 boundingBox: new Rectangle(682, 0, 114, 146)
             ));
             attackFrames.Add(new Frame(
-                boundingBox: new Rectangle(796, 0, 131, 147)
+                boundingBox: new Rectangle(796, 0, 131, 146)
             ));
             attackFrames.Add(new Frame(
                 boundingBox: new Rectangle(0, 148, 140, 146)

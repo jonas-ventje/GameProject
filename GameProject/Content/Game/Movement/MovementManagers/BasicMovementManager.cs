@@ -40,12 +40,23 @@ namespace GameProject.Content.Game.Movement.MovementManagers
 
             foreach (var gameObject in World.Tiles)
             {
-                CollidingSide side;
+                if (gameObject == movable)
+                    continue;
                 if (movable.IntersectionBlock.IsEmpty || gameObject.IntersectionBlock.IsEmpty)
                     continue;
+                if (!(movable is Santa) && gameObject is Gift)
+                    continue;
+                CollidingSide side;
                 Vector2 intersection = CollisionController.CollisionDepth(movable.IntersectionBlock, gameObject.IntersectionBlock, movement, out side);
                 if (intersection != Vector2.Zero)
                 {
+                    //no move back when collision is water
+                    if (gameObject is GameTile)
+                        if ((gameObject as GameTile).Id == 27 || (gameObject as GameTile).Id == 28)
+                        {
+                            movable.CollisionEffect(gameObject, side);
+                            continue;
+                        }
                     //no move back when collision is a cadeau, but santa does need to know
                     if (!(gameObject is Gift) || movable is Santa)
                         movable.CollisionEffect(gameObject, side);

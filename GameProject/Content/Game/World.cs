@@ -44,8 +44,8 @@ namespace GameProject.Content.Game {
         private GameCounter counter;
         private List<Vector2> snowmanCoords = new List<Vector2>()
         {
-            new Vector2(3000, 1300),
-            new Vector2(1900,600),
+            new Vector2(3000, 1500),
+            new Vector2(1900,700),
 
         };
 
@@ -87,13 +87,13 @@ namespace GameProject.Content.Game {
                 GameObject cadeau = GameObjectFactory.CreateGameObject("cadeau", (int)giftCoords[i].X, (int)giftCoords[i].Y);
                 Tiles.Add(cadeau);
             }
-            this.santa = new Santa(santaTexture, 5, 140, 400);
+            this.santa = new Santa(santaTexture, 5, 240, 400);
             Tiles.Add(santa);
             this.snowmanSled = new SnowmanSled(snowManSledTexture, 128, 40, santa, 4);
             Tiles.Add(snowmanSled);
             foreach (var snowman in snowmanCoords)
             {
-                Tiles.Add(new Snowman(snowManTexture, 3, (int)snowman.X, (int)snowman.Y));
+                Tiles.Add(new Snowman(snowManTexture, 3, (int)snowman.X, (int)snowman.Y, santa));
             }
             progressbar = new Progressbar(content.Load<Texture2D>("./images/progressbar"), content.Load<Texture2D>("./images/progress"));
             counter = new GameCounter(content.Load<SpriteFont>("font/santa_christmas"));

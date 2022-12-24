@@ -13,6 +13,18 @@ namespace GameProject.Content.Game
         private int activeFrame = 0;
         private double secondCounter;
         private int fps;
+        public List<Frame> FrameList
+        {
+            get
+            {
+                return frameList;
+            }
+            set
+            {
+                frameList = value;
+            }
+        }
+
         public Animation(List<Frame> activeFrameList, int fps) {
             this.frameList = activeFrameList;
             this.activeFrame = 0;
@@ -32,14 +44,18 @@ namespace GameProject.Content.Game
 
         }
         /// <summary>
-        /// when an animation should start with frame 0
+        /// updates the stored framelist, and sets the activeFrame back to 0 if its another framelist
         /// </summary>
-        public void reset() {
-            activeFrame = 0;
-        }
-        public Frame update(GameTime gameTime, List<Frame> frameList) {
+        /// <param name="gameTime"></param>
+        /// <param name="frameList"></param>
+        /// <returns></returns>
+        public void updateFrameList(List<Frame> frameList) {
+            List<Frame> oldFrameList = frameList;
             this.frameList = frameList;
-            return update(gameTime);
+            if (oldFrameList != frameList)
+            {
+                activeFrame = 0;
+            }
         }
     }
 }

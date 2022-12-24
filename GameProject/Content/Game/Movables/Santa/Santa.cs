@@ -2,13 +2,13 @@
 using GameProject.Content.Game.Movement.MovementManagers;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Windows.Forms;
 
 namespace GameProject.Content.Game.Movables.Santa {
     internal class Santa : ControllableGravityObject, IAnimatable {
-        private List<Frame> frameList;
         private Animation animation;
         private ControllableGravityMovementManager movementController;
 
@@ -19,8 +19,7 @@ namespace GameProject.Content.Game.Movables.Santa {
         public Santa(Texture2D texture, int speed, int x, int y):base(texture, new Vector2(x, y), SantaFrames.idleFrames[0], speed) {
             inputReader = new InputReaderKeyboard();
             movementController = new ControllableGravityMovementManager();
-            frameList = SantaFrames.idleFrames;
-            animation = new Animation(frameList, 15);
+            animation = new Animation(SantaFrames.idleFrames, 15);
         }
         public override void CollisionEffect(GameObject collisionObject, CollidingSide side) {
             if (collisionObject is Gift)
@@ -29,8 +28,12 @@ namespace GameProject.Content.Game.Movables.Santa {
             {
                 if (side == CollidingSide.Bottom)
                     (collisionObject as Snowman.Snowman).CurrentMovingState = MovingState.Dying;
-                else currentMovingState= MovingState.Dying;
+                else
+                    currentMovingState = MovingState.Dying;
             }
+            else if (collisionObject is GameTile)
+                if ((collisionObject as GameTile).Id == 27 || (collisionObject as GameTile).Id == 28)
+                    currentMovingState = MovingState.Dying;
 
         }
 
@@ -41,24 +44,22 @@ namespace GameProject.Content.Game.Movables.Santa {
         /// change framelist based on the current moving state which is walking, jumping...
         /// </summary>
         private void UpdateFrameList() {
-            List<Frame> prevFrameList = frameList;
             switch (CurrentMovingState)
             {
                 case MovingState.Idle:
                 case MovingState.Jumping:
-                    frameList = SantaFrames.idleFrames;
+                    Animation.updateFrameList(SantaFrames.idleFrames);
                     break;
                 case MovingState.Walking:
-                    frameList = SantaFrames.walkingFrames;
+                    Animation.updateFrameList(SantaFrames.walkingFrames);
                     break;
                 case MovingState.Dying:
-                    frameList = SantaFrames.dyingFrames;
+                    Animation.updateFrameList(SantaFrames.dyingFrames);
                     break;
                 default:
                     break;
             }
-            if (prevFrameList != frameList)
-                animation.reset();
+
         }
 
         public override void Draw(SpriteBatch spriteBatch) {
@@ -68,10 +69,10 @@ namespace GameProject.Content.Game.Movables.Santa {
 
         public override void Update(GameTime gameTime) {
             Move(gameTime);
-            frame = Animation.update(gameTime, frameList);
             UpdateFrameList();
+            frame = Animation.update(gameTime);
             //if below is true, santa is dead.
-            if (frameList == SantaFrames.dyingFrames && frame == frameList[frameList.Count-1])
+            if (Animation.FrameList == SantaFrames.dyingFrames && frame == Animation.FrameList[Animation.FrameList.Count-1])
             {
                 toBeRemoved = true;
             }

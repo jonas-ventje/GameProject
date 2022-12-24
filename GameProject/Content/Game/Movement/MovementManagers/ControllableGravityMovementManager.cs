@@ -37,12 +37,16 @@ namespace GameProject.Content.Game.Movement.MovementManagers
                 movement *= movable.HorizontalSpeed;
                 base.Move(movable, gameTime, movement);
                 //check which animation frame is required
-                if (isInTheAir)
-                    movable.CurrentMovingState = MovingState.Jumping;
-                else if (movement.X == 0)
-                    movable.CurrentMovingState = MovingState.Idle;
-                if (movement.X != 0)
-                    movable.CurrentMovingState = MovingState.Walking;
+                if (movable.CurrentMovingState != MovingState.Dying)
+                {
+
+                    if (isInTheAir)
+                        movable.CurrentMovingState = MovingState.Jumping;
+                    else if (movement.X == 0)
+                        movable.CurrentMovingState = MovingState.Idle;
+                    if (movement.X != 0)
+                        movable.CurrentMovingState = MovingState.Walking;
+                }
             }
         }
     }
