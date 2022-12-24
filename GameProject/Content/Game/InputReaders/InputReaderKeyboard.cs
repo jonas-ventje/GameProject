@@ -6,9 +6,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace GameProject.Content.Game {
-    internal class InputReaderKeyboard : IInputReader {
-        public Vector2 ReadInput() {
+namespace GameProject.Content.Game.InputReaders
+{
+    internal class InputReaderKeyboard : IInputReader
+    {
+        public Vector2 ReadInput()
+        {
             KeyboardState state = Keyboard.GetState();
             var movement = new Vector2(0, 0);
             if (state.IsKeyDown(Keys.Left))

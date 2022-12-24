@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using GameProject.Content.Game.GameObjects;
+using GameProject.Content.Game.Screens;
 
 namespace GameProject.Content.Game.Movement.MovementManagers
 {

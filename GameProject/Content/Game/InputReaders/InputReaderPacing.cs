@@ -6,14 +6,18 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace GameProject.Content.Game {
-    internal class InputReaderPacing:IInputReader {
+namespace GameProject.Content.Game.InputReaders
+{
+    internal class InputReaderPacing : IInputReader
+    {
         private IPacing movable;
-        public InputReaderPacing(IPacing movable) {
-            this.movable= movable;
+        public InputReaderPacing(IPacing movable)
+        {
+            this.movable = movable;
         }
 
-        public Vector2 ReadInput() {
+        public Vector2 ReadInput()
+        {
             if (movable.MovingDirection == MovingDirection.Left)
                 return new Vector2(-1, 0);
             else if (movable.MovingDirection == MovingDirection.Right)

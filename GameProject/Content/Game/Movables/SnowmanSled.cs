@@ -8,8 +8,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using GameProject.Content.Game.Screens;
+using GameProject.Content.Game.InputReaders;
 
-namespace GameProject.Content.Game.Movables {
+namespace GameProject.Content.Game.Movables
+{
     internal class SnowmanSled : ControllableObject {
         private const int minDropInterval = 5;
         private const int maxDropInterval = 10;

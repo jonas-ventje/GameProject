@@ -6,11 +6,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace GameProject.Content.Game {
-    enum GameState {StartScreen, Info, Level1, Level2, GameOver}
-    internal interface IScreen {
+namespace GameProject.Content.Game.Screens
+{
+    internal interface IScreen
+    {
         void Draw(SpriteBatch spriteBatch);
-        GameState Update(GameTime gameTime);
+        IScreen Update(GameTime gameTime);
 
     }
 }

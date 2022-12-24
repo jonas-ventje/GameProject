@@ -12,6 +12,11 @@ namespace GameProject.Content.Game {
         private double millisElapsed;
         private string millisPrint = "";
 
+        public string Score
+        {
+            get => millisPrint;
+        }
+
         public GameCounter(SpriteFont font) {
             this.font = font;
         }

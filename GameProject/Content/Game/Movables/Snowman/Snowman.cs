@@ -1,4 +1,5 @@
 ﻿using GameProject.Content.Game.GameObjects;
+using GameProject.Content.Game.InputReaders;
 using GameProject.Content.Game.Movables.Santa;
 using GameProject.Content.Game.Movement.MovementManagers;
 using Microsoft.Xna.Framework;

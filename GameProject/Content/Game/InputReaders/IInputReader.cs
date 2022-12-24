@@ -5,8 +5,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace GameProject.Content.Game {
-    internal interface IInputReader {
+namespace GameProject.Content.Game.InputReaders
+{
+    internal interface IInputReader
+    {
         Vector2 ReadInput();
     }
 }

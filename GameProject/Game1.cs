@@ -1,6 +1,8 @@
 ﻿using GameProject.Content;
 using GameProject.Content.Game;
+using GameProject.Content.Game.Levels;
 using GameProject.Content.Game.Movables.Santa;
+using GameProject.Content.Game.Screens;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
@@ -8,14 +10,13 @@ using Microsoft.Xna.Framework.Input;
 using System;
 using System.Diagnostics;
 
-namespace GameProject {
+namespace GameProject
+{
     public class Game1 : Game {
         private GraphicsDeviceManager _graphics;
         private SpriteBatch _spriteBatch;
         private RenderTarget2D renderTarget;
-        private Texture2D blockTexture;
         private Texture2D backgroundTexture;
-        private GameState prevGameState;
         private Vector2 position;
 
 
@@ -46,10 +47,8 @@ namespace GameProject {
 
             scale = 1F / ((float)virtualWidth / GraphicsDevice.Viewport.Width);
 
-            //onDisplay = new World(Content);
             onDisplay = new StartScreen(Content);
 
-            prevGameState = GameState.StartScreen;
             position = new Vector2(0, 0);
             base.Initialize();
         }
@@ -64,33 +63,9 @@ namespace GameProject {
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
 
-            GameState newGameState = onDisplay.Update(gameTime);
-            if (prevGameState != newGameState)
-            {
-                switch (newGameState)
-                {
-                    case GameState.StartScreen:
-                        onDisplay = new StartScreen(Content);
-                        break;
-                    case GameState.Info:
-                        throw new NotImplementedException();
-                        break;
-                    case GameState.Level1:
-                        onDisplay = new World(Content);
-                        break;
-                    case GameState.Level2:
-                        throw new NotImplementedException();
+            //update what is on screen
+            onDisplay = onDisplay.Update(gameTime);
 
-                        break;
-                    case GameState.GameOver:
-                        throw new NotImplementedException();
-
-                        break;
-                    default:
-                        break;
-                }
-                prevGameState = newGameState;
-            }
             float virtualRatio = (float)virtualWidth / virtualHeight;
             float screenRatio = (float)GraphicsDevice.Viewport.Width / GraphicsDevice.Viewport.Height;
             if (virtualRatio > screenRatio)
