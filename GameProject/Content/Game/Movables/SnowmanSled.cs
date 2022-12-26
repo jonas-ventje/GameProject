@@ -11,28 +11,28 @@ using System.Threading.Tasks;
 using GameProject.Content.Game.Screens;
 using GameProject.Content.Game.InputReaders;
 
-namespace GameProject.Content.Game.Movables
-{
-    internal class SnowmanSled : ControllableObject {
-        private const int minDropInterval = 5;
+namespace GameProject.Content.Game.Movables {
+    internal class SnowmanSled : ControllableObject, ISantaObserver {
+        private const int minDropInterval = 2;
         private const int maxDropInterval = 10;
 
         private ControllableNonGravityMovementManager movementManager = new ControllableNonGravityMovementManager();
         private double dropInterval;
         private double elapsedDropInterval;
+        private bool santaMoved = false;
 
         public override bool CanAccelerate => false;
 
         private void calcDropInterval() {
             Random rand = new Random();
-            dropInterval = minDropInterval + rand.NextDouble()*(maxDropInterval-minDropInterval);
+            dropInterval = minDropInterval + rand.NextDouble() * (maxDropInterval - minDropInterval);
             elapsedDropInterval = 0;
         }
 
-        public SnowmanSled(Texture2D texture, int x, int y, Santa.Santa santa, int horizontalSpeed):base(texture, new Vector2(x,y), false, horizontalSpeed) {
-            calcDropInterval();
+        public SnowmanSled(Texture2D texture, int x, int y, Santa.Santa santa, int horizontalSpeed, IObserverSubject subject) : base(texture, new Vector2(x, y), false, horizontalSpeed) {
             this.inputReader = new InputReaderFolowMovableX(santa, this);
             this.horizontalSpeed = horizontalSpeed;
+            subject.RegisterObserver(this);
         }
 
         public override void Draw(SpriteBatch spriteBatch) {
@@ -41,21 +41,31 @@ namespace GameProject.Content.Game.Movables
             Texture2D _pointTexture;
             _pointTexture = new Texture2D(spriteBatch.GraphicsDevice, 1, 1);
             _pointTexture.SetData<Color>(new Color[] { Color.DeepSkyBlue });
-            spriteBatch.Draw(_pointTexture, new Rectangle((int)position.X + 49, (int)position.Y + 11, (int)(211*(elapsedDropInterval/dropInterval)), 11), Color.White);
+            spriteBatch.Draw(_pointTexture, new Rectangle((int)position.X + 49, (int)position.Y + 11, (int)(211 * (elapsedDropInterval / dropInterval)), 11), Color.White);
         }
 
         public override void Update(GameTime gameTime) {
             movementManager.Move(this, gameTime);
-
-            elapsedDropInterval += gameTime.ElapsedGameTime.TotalSeconds;
-            if (elapsedDropInterval >= dropInterval)
+            if (santaMoved)
             {
-                calcDropInterval();
-                World.Tiles.Add(GameObjectFactory.CreateGameObject("crate", (int)Position.X+frame.BoundingBox.Center.X-50, (int) position.Y+frame.BoundingBox.Bottom));
+                elapsedDropInterval += gameTime.ElapsedGameTime.TotalSeconds;
+                if (elapsedDropInterval >= dropInterval)
+                {
+                    calcDropInterval();
+                    World.Tiles.Add(GameObjectFactory.CreateGameObject("crate", (int)Position.X + frame.BoundingBox.Center.X - 50, (int)position.Y + frame.BoundingBox.Bottom));
+                }
             }
         }
 
         public override void CollisionEffect(GameObject collisionObject, CollidingSide side) {
+        }
+
+        public void update(bool santaMoved) {
+            if (santaMoved)
+            {
+                this.santaMoved = true;
+                calcDropInterval();
+            }
         }
     }
 }

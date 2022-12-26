@@ -47,10 +47,9 @@ namespace GameProject.Content.Game.Screens
             snowManSledTexture = content.Load<Texture2D>("./images/snowman_sled3");
             GameObjectFactory.Init(content.Load<Texture2D>("./images/crate"), content.Load<Texture2D>("./images/cadeau_2"));
             santa = new Santa(santaTexture, 5, 240, 400);
-            snowmanSled = new SnowmanSled(snowManSledTexture, 128, 40, santa, 4);
+            snowmanSled = new SnowmanSled(snowManSledTexture, 128, 40, santa, 4, santa);
             progressbar = new Progressbar(content.Load<Texture2D>("./images/progressbar"), content.Load<Texture2D>("./images/progress"));
-            counter = new GameCounter(content.Load<SpriteFont>("font/santa_christmas"));
-
+            counter = new GameCounter(content.Load<SpriteFont>("font/santa_christmas"), santa);
 
 
             //add tiles to static list
@@ -74,7 +73,7 @@ namespace GameProject.Content.Game.Screens
             //add snowmans to static list
             foreach (var snowman in level.SnowmanCoords)
             {
-                Tiles.Add(new Snowman(snowManTexture, 3, (int)snowman.X, (int)snowman.Y, santa));
+                Tiles.Add(new Snowman(snowManTexture, 3, (int)snowman.X, (int)snowman.Y, santa, santa));
             }
 
             //add individual componentes to static list

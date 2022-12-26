@@ -19,6 +19,7 @@ namespace GameProject.Content.Game.Movables
 
         public Gift(Texture2D texture, int x, int y):base(texture, new Vector2(x,y), true)  {
             offsetX = Game1.rand.Next(0, 360);
+            Passable = true;
         }
 
         public override void Update(GameTime gameTime) {
