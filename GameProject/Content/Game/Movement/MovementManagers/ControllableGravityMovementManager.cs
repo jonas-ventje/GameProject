@@ -35,7 +35,7 @@ namespace GameProject.Content.Game.Movement.MovementManagers
                 }
 
                 movement *= movable.HorizontalSpeed;
-                base.Move(movable, gameTime, movement);
+                Move(movable, gameTime, movement);
                 //check which animation frame is required
                 if (movable.CurrentMovingState != MovingState.Dying)
                 {

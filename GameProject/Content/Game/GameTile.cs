@@ -27,7 +27,7 @@ namespace GameProject.Content.Game {
             if (id == 0)
                 texture = content.Load<Texture2D>("./images/crate");
             if (id == 29 || id == 30)
-                texture = content.Load<Texture2D>("./images/crate");
+                texture = content.Load<Texture2D>("./images/ladder");
         }
 
         private Frame LoadGameObject(int id) {
