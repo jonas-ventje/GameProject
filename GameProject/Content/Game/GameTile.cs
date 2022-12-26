@@ -19,8 +19,6 @@ namespace GameProject.Content.Game {
             this.id = id;
             position = new Vector2(x, y + 128 - LoadGameObject(id).BoundingBox.Height);
             frame = LoadGameObject(id);
-            //water is passable
-            if(id == 27 || id == 28) Passable = true;
         }
 
         private Frame LoadGameObject(int id) {

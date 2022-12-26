@@ -9,7 +9,6 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using System;
 using System.Diagnostics;
-using System.Reflection.Metadata;
 
 namespace GameProject
 {
@@ -49,7 +48,6 @@ namespace GameProject
             scale = 1F / ((float)virtualWidth / GraphicsDevice.Viewport.Width);
 
             onDisplay = new StartScreen(Content);
-            //onDisplay = new World(Content, new Level1());
 
             position = new Vector2(0, 0);
             base.Initialize();

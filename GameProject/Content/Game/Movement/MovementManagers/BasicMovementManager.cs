@@ -51,9 +51,17 @@ namespace GameProject.Content.Game.Movement.MovementManagers
                 Vector2 intersection = CollisionController.CollisionDepth(movable.IntersectionBlock, gameObject.IntersectionBlock, movement, out side);
                 if (intersection != Vector2.Zero)
                 {
-                    movable.CollisionEffect(gameObject, side);
-                    //no move back when passable (water, gifts...)
-                    if (!gameObject.Passable)
+                    //no move back when collision is water
+                    if (gameObject is GameTile)
+                        if ((gameObject as GameTile).Id == 27 || (gameObject as GameTile).Id == 28)
+                        {
+                            movable.CollisionEffect(gameObject, side);
+                            continue;
+                        }
+                    //no move back when collision is a cadeau, but santa does need to know
+                    if (!(gameObject is Gift) || movable is Santa)
+                        movable.CollisionEffect(gameObject, side);
+                    if (!(gameObject is Gift))
                     {
                         if (Math.Abs(intersection.Y) > Math.Abs(undoMovement.Y))
                             undoMovement.Y = intersection.Y;

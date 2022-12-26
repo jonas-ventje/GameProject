@@ -9,11 +9,9 @@ using System.Diagnostics;
 using System.Windows.Forms;
 
 namespace GameProject.Content.Game.Movables.Santa {
-    internal class Santa : ControllableGravityObject, IAnimatable, IObserverSubject {
+    internal class Santa : ControllableGravityObject, IAnimatable {
         private Animation animation;
         private ControllableGravityMovementManager movementController;
-        private List<ISantaObserver> observers;
-        private bool santaMoved = false;
 
         public Animation Animation => animation;
 
@@ -23,7 +21,6 @@ namespace GameProject.Content.Game.Movables.Santa {
             inputReader = new InputReaderKeyboard();
             movementController = new ControllableGravityMovementManager();
             animation = new Animation(SantaFrames.idleFrames, 15);
-            observers = new List<ISantaObserver>();
         }
         public override void CollisionEffect(GameObject collisionObject, CollidingSide side) {
             if (collisionObject is Gift)
@@ -42,13 +39,7 @@ namespace GameProject.Content.Game.Movables.Santa {
         }
 
         private void Move(GameTime gameTime) {
-            int prevPositionX = (int)position.X;
             movementController.Move(this, gameTime);
-            if (position.X != prevPositionX && !santaMoved)
-            {
-                santaMoved = true;
-                NotifyObservers();
-            }
         }
         /// <summary>
         /// change framelist based on the current moving state which is walking, jumping...
@@ -85,21 +76,6 @@ namespace GameProject.Content.Game.Movables.Santa {
             if (Animation.FrameList == SantaFrames.dyingFrames && frame == Animation.FrameList[Animation.FrameList.Count-1])
             {
                 toBeRemoved = true;
-            }
-        }
-
-        public void RegisterObserver(ISantaObserver observer) {
-            observers.Add(observer);
-        }
-
-        public void RemoveObserver(ISantaObserver observer) {
-            observers.Remove(observer);
-        }
-
-        public void NotifyObservers() {
-            foreach (ISantaObserver observer in observers)
-            {
-                observer.update(santaMoved);
             }
         }
     }
