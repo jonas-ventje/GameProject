@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace GameProject.Content.Game.Levels {
     internal interface ILevel {
-        public int[,] TileIds
+        public List<int[,] > Layers
         {
             get;
         }

@@ -53,14 +53,18 @@ namespace GameProject.Content.Game.Screens
 
 
             //add tiles to static list
-            for (int y = 0; y < level.TileIds.GetLength(0); y++)
+            foreach (var layer in level.Layers)
             {
-                for (int x = 0; x < level.TileIds.GetLength(1); x++)
+                for (int y = 0; y < layer.GetLength(0); y++)
                 {
-                    if (level.TileIds[y, x] != 0)
-                        Tiles.Add(new GameTile(tilesTexture, level.TileIds[y, x], x * tileWidth, y * tileHeight));
+                    for (int x = 0; x < layer.GetLength(1); x++)
+                    {
+                        if (layer[y, x] != 0)
+                            Tiles.Add(new GameTile(content, layer[y, x], x * tileWidth, y * tileHeight));
+                    }
                 }
             }
+
 
             //add gifts to static list
             giftAmount = level.GiftCoords.Count;
