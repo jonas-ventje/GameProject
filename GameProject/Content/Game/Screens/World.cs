@@ -36,8 +36,14 @@ namespace GameProject.Content.Game.Screens
         private int catchedGifts = 0;
         private int giftAmount = 0;
 
+        public double CatchedRatio
+        {
+            get => catchedGifts / (double)giftAmount;
 
-        public World(ContentManager content, ILevel level)
+    }
+
+
+    public World(ContentManager content, ILevel level)
         {
             this.content = content;
             Tiles = new List<GameObject>();
@@ -49,9 +55,9 @@ namespace GameProject.Content.Game.Screens
             GameObjectFactory.Init(content.Load<Texture2D>("./images/crate"), content.Load<Texture2D>("./images/cadeau_2"));
             santa = new Santa(santaTexture, 5, 240, 400);
             snowmanSled = new SnowmanSled(snowManSledTexture, 128, 40, santa, 4, santa);
-            progressbar = new Progressbar(content.Load<Texture2D>("./images/progressbar"), content.Load<Texture2D>("./images/progress"));
+            progressbar = new Progressbar(content.Load<Texture2D>("./images/progressbar"), content.Load<Texture2D>("./images/progress"), this);
             counter = new GameCounter(content.Load<SpriteFont>("font/santa_christmas"), santa);
-            santaSled = new SantaSled(content.Load<Texture2D>("./images/santa_sled"), (int)level.santaSledCoords.X, (int)level.santaSledCoords.Y, new Frame(new Rectangle(0,0,230,229)));
+            santaSled = new SantaSled(content.Load<Texture2D>("./images/santa_sled"), (int)level.santaSledCoords.X, (int)level.santaSledCoords.Y, new Frame(new Rectangle(0,0,230,179)), this, santa);
 
 
 
@@ -85,9 +91,9 @@ namespace GameProject.Content.Game.Screens
             }
 
             //add individual componentes to static list
+            Tiles.Add(santaSled);
             Tiles.Add(santa);
             Tiles.Add(snowmanSled);
-            Tiles.Add(santaSled);
         }
 
         public void Draw(SpriteBatch spritebatch)
@@ -119,7 +125,7 @@ namespace GameProject.Content.Game.Screens
                     catchedGifts++;
 
             }
-            progressbar.Update(giftAmount, catchedGifts, gameTime);
+            progressbar.Update(gameTime);
             counter.Update(gameTime);
             return this;
         }

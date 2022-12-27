@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework;
+﻿using GameProject.Content.Game.Screens;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.CodeDom;
@@ -14,29 +15,30 @@ namespace GameProject.Content.Game {
         private Texture2D textureBar;
         private Vector2 position = new Vector2(40, 150);
         private Rectangle visibleProgressbar;
+        private World world;
 
 
         private const int speed = 5;
         private double secondCounter;
         private const int fps = 15;
-        public Progressbar(Texture2D textureBg, Texture2D textureBar) {
+        public Progressbar(Texture2D textureBg, Texture2D textureBar, World world) {
             this.textureBg = textureBg;
             this.textureBar = textureBar;
+            this.world = world;
             visibleProgressbar = new Rectangle(0, 0, textureBar.Width, 0);
         }
 
-        public void Update(int totalAmount, int catchedAmount, GameTime gameTime) {
+        public void Update(GameTime gameTime) {
 
             int totalLength = textureBar.Height;
-            double catchedRatio = catchedAmount / (double)totalAmount;
-            int finalHeight = (int)(totalLength * catchedRatio);
+            int finalHeight = (int)(totalLength * world.CatchedRatio);
 
             secondCounter += gameTime.ElapsedGameTime.TotalSeconds;
             if (secondCounter >= 1d / fps)
             {
                 if (finalHeight >= visibleProgressbar.Height + speed)
                     visibleProgressbar.Height += speed;
-                else if (catchedRatio == 1)
+                else if (world.CatchedRatio == 1)
                     visibleProgressbar.Height = textureBar.Height;
             }
         }
