@@ -51,6 +51,8 @@ namespace GameProject.Content.Game.Screens
             snowmanSled = new SnowmanSled(snowManSledTexture, 128, 40, santa, 4, santa);
             progressbar = new Progressbar(content.Load<Texture2D>("./images/progressbar"), content.Load<Texture2D>("./images/progress"));
             counter = new GameCounter(content.Load<SpriteFont>("font/santa_christmas"), santa);
+            santaSled = new SantaSled(content.Load<Texture2D>("./images/santa_sled"), (int)level.santaSledCoords.X, (int)level.santaSledCoords.Y, new Frame(new Rectangle(0,0,230,229)));
+
 
 
 

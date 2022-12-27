@@ -21,7 +21,13 @@ namespace GameProject.Content.Game {
             position = new Vector2(x, y + 128 - LoadGameObject(id).BoundingBox.Height);
             frame = LoadGameObject(id);
             //water is passable
-            if(id == 27 || id == 28) Passable = true;
+            if(id == 27 || id == 28 || id == 29 || id == 30) Passable = true;
+
+            //other texture for crates or ladders
+            if (id == 1)
+                texture = content.Load<Texture2D>("./images/crate");
+            if (id == 29 || id == 30)
+                texture = content.Load<Texture2D>("./images/ladder");
         }
 
         private Frame LoadGameObject(int id) {

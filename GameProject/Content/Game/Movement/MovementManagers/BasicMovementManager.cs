@@ -78,6 +78,7 @@ namespace GameProject.Content.Game.Movement.MovementManagers {
                 if (intersection != Vector2.Zero)
                 {
                     movable.CollisionEffect(gameObject, side);
+
                     //no move back when passable (water, gifts...)
                     if (!gameObject.Passable)
                     {
