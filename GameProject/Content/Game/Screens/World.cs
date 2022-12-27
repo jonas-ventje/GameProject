@@ -36,14 +36,19 @@ namespace GameProject.Content.Game.Screens
         private int catchedGifts = 0;
         private int giftAmount = 0;
 
+        private bool victory = false;
+
         public double CatchedRatio
         {
             get => catchedGifts / (double)giftAmount;
 
     }
+        public bool Victory
+        {
+            set => victory = value;
+        }
 
-
-    public World(ContentManager content, ILevel level)
+        public World(ContentManager content, ILevel level)
         {
             this.content = content;
             Tiles = new List<GameObject>();
@@ -119,7 +124,7 @@ namespace GameProject.Content.Game.Screens
             {
                 Tiles.Remove(tile);
                 //if santa is on the to remove list, santa is dead :(
-                if (tile is Santa)
+                if (tile is Santa && !santaSled.Departing)
                     return new GameOverScreen(content);
                 else if (tile is Gift)
                     catchedGifts++;
@@ -127,6 +132,8 @@ namespace GameProject.Content.Game.Screens
             }
             progressbar.Update(gameTime);
             counter.Update(gameTime);
+            if (victory)
+                return new VictoryScreen(content, counter.Score);
             return this;
         }
     }

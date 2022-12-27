@@ -15,6 +15,7 @@ namespace GameProject.Content.Game.Movables.Santa {
         private List<ISantaObserver> observers;
         private bool santaMoved = false;
 
+
         public Animation Animation => animation;
 
         public override bool CanAccelerate => true;
@@ -69,7 +70,6 @@ namespace GameProject.Content.Game.Movables.Santa {
                 default:
                     break;
             }
-
         }
 
         public override void Draw(SpriteBatch spriteBatch) {
