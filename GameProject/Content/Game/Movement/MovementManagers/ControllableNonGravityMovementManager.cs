@@ -21,7 +21,8 @@ namespace GameProject.Content.Game.Movement.MovementManagers
                     movable.SpriteDirection = SpriteEffects.None;
             }
 
-            movement *= movable.HorizontalSpeed;
+            movement *= movable.Speed;
+            bool isOnLadder;
             base.Move(movable, gameTime, movement);
         }
     }

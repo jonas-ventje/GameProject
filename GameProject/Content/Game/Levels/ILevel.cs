@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace GameProject.Content.Game.Levels {
     internal interface ILevel {
-        public int[,] TileIds
+        public List<int[,] > Layers
         {
             get;
         }
@@ -16,6 +16,10 @@ namespace GameProject.Content.Game.Levels {
             get;
         }
         public List<Vector2> GiftCoords
+        {
+            get;
+        }
+        public Vector2 santaSledCoords
         {
             get;
         }

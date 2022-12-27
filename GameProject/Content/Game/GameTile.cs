@@ -1,5 +1,6 @@
 ﻿using GameProject.Content.Game.GameObjects;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using System.Collections.Generic;
 
@@ -13,9 +14,9 @@ namespace GameProject.Content.Game {
             get => id;
         }
 
-        public GameTile(Texture2D texture, int id, int x, int y)
+        public GameTile(ContentManager content, int id, int x, int y)
             //always draw from the right lower corner
-            : base(texture, Vector2.Zero , new Frame(Rectangle.Empty)) {
+            : base(content.Load<Texture2D>("./images/tileset"), Vector2.Zero , new Frame(Rectangle.Empty)) {
             this.id = id;
             position = new Vector2(x, y + 128 - LoadGameObject(id).BoundingBox.Height);
             frame = LoadGameObject(id);
@@ -108,6 +109,14 @@ namespace GameProject.Content.Game {
                 case 28:
                     //tilename 18
                     return  new Frame(new Rectangle(384, 128, 128, 128));
+                case 29:
+                    //tilename ladder_1
+                    return new Frame(new Rectangle(0, 0, 128, 128));
+                case 30:
+                    //tilename ladder_2
+                    return new Frame(new Rectangle(128, 0, 128, 128));
+                case 31:
+
 
                 default:
                     throw new System.IndexOutOfRangeException();

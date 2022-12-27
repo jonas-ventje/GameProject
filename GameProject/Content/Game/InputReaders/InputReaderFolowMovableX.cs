@@ -28,7 +28,7 @@ namespace GameProject.Content.Game.InputReaders
             Vector2 movement = new Vector2(movableCenter - referenceCenter, 0);
 
             //if it will shift its speed and is then too far that is will shift back next time, then stay
-            if (Math.Abs(movement.X) <= reference.HorizontalSpeed)
+            if (Math.Abs(movement.X) <= reference.Speed)
                 movement = Vector2.Zero;
 
             if (movement != Vector2.Zero)

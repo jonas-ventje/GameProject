@@ -30,7 +30,7 @@ namespace GameProject.Content.Game.GameObjects
         {
             get => spriteDirecton; set => spriteDirecton = value;
         }
-        public int HorizontalSpeed
+        public int Speed
         {
             get => horizontalSpeed; set => horizontalSpeed = value;
         }

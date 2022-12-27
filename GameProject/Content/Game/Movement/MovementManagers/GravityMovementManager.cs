@@ -11,10 +11,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace GameProject.Content.Game.Movement.MovementManagers
-{
-    internal class GravityMovementManager:BasicMovementManager
-    {
+namespace GameProject.Content.Game.Movement.MovementManagers {
+    internal class GravityMovementManager : BasicMovementManager {
         private float gravityAcceleration = 12f;
         //add a mass (it's not in the free fall formulla, but it's easyer to implement then air resistance and mass etc)
         private float mass = 3.2f;
@@ -29,10 +27,10 @@ namespace GameProject.Content.Game.Movement.MovementManagers
         /// <param name="movable">movable object</param>
         /// <param name="gameTime">gametime</param>
         /// <param name="inputMovment">only needed for the inheritted controllableMovementManager, for left and right...</param>
-        public new void Move(MovableGameObject movable, GameTime gameTime, Vector2 inputMovment = new Vector2())
-        {
+        public new void Move(MovableGameObject movable, GameTime gameTime, Vector2 inputMovment = new Vector2()) {
             Vector2 movement = inputMovment;
-            movement += UpdateGravity(gameTime);
+            if (!IsOnLadder)
+                movement += UpdateGravity(gameTime);
 
             Vector2 undoMovement = base.Move(movable, gameTime, movement);
 
@@ -53,8 +51,7 @@ namespace GameProject.Content.Game.Movement.MovementManagers
         /// </summary>
         /// <param name="gameTime"></param>
         /// <returns>vector with virtical velocity, horizontal is zero</returns>
-        private Vector2 UpdateGravity(GameTime gameTime)
-        {
+        private Vector2 UpdateGravity(GameTime gameTime) {
             if (isInTheAir)
             {
                 airTime += gameTime.ElapsedGameTime.TotalSeconds;
@@ -66,8 +63,7 @@ namespace GameProject.Content.Game.Movement.MovementManagers
         /// <summary>
         /// call this function when start jumping
         /// </summary>
-        protected void StartJump()
-        {
+        protected void StartJump() {
             isInTheAir = true;
             jumpPower = -20f;
         }
@@ -75,16 +71,14 @@ namespace GameProject.Content.Game.Movement.MovementManagers
         /// <summary>
         /// call this function when start falling
         /// </summary>
-        private void StartFalling()
-        {
+        private void StartFalling() {
             isInTheAir = true;
         }
 
         /// <summary>
         /// call this function when ground is reached by the object.
         /// </summary>
-        private void ReachGround()
-        {
+        private void ReachGround() {
             isInTheAir = false;
             airTime = 0;
             jumpPower = 0;
@@ -92,8 +86,7 @@ namespace GameProject.Content.Game.Movement.MovementManagers
         /// <summary>
         /// push the "in the air" time forward til the point where velocity is zero and you stop falling.
         /// </summary>
-        private void StopAscent()
-        {
+        private void StopAscent() {
             airTime = -jumpPower / (gravityAcceleration * mass);
         }
         #endregion
