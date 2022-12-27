@@ -11,8 +11,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace GameProject.Content.Game.Movement.MovementManagers
-{
+namespace GameProject.Content.Game.Movement.MovementManagers {
     internal class ControllableGravityMovementManager : GravityMovementManager {
 
         public void Move(ControllableGravityObject movable, GameTime gameTime) {
@@ -22,9 +21,16 @@ namespace GameProject.Content.Game.Movement.MovementManagers
                 Vector2 direction = movable.InputReader.ReadInput();
                 Vector2 movement = new Vector2(direction.X, 0);
 
-                //check if there is a space or arrow up button pressed
-                if (direction.Y < 0)
-                    StartJump();
+                if (!IsOnLadder)
+                {
+                    //check if there is a space or arrow up button pressed
+                    if (direction.Y < 0)
+                        StartJump();
+                }
+                else
+                {
+                    movement = direction;
+                }
 
                 if (movement.X != 0)
                 {
@@ -34,8 +40,10 @@ namespace GameProject.Content.Game.Movement.MovementManagers
                         movable.SpriteDirection = SpriteEffects.None;
                 }
 
-                movement *= movable.HorizontalSpeed;
+                movement *= movable.Speed;
                 Move(movable, gameTime, movement);
+
+
                 //check which animation frame is required
                 if (movable.CurrentMovingState != MovingState.Dying)
                 {

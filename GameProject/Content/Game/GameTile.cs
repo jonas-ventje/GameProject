@@ -24,7 +24,7 @@ namespace GameProject.Content.Game {
             if(id == 27 || id == 28 || id == 29 || id == 30) Passable = true;
 
             //other texture for crates or ladders
-            if (id == 0)
+            if (id == 1)
                 texture = content.Load<Texture2D>("./images/crate");
             if (id == 29 || id == 30)
                 texture = content.Load<Texture2D>("./images/ladder");
@@ -123,6 +123,8 @@ namespace GameProject.Content.Game {
                 case 30:
                     //tilename ladder_2
                     return new Frame(new Rectangle(128, 0, 128, 128));
+                case 31:
+
 
                 default:
                     throw new System.IndexOutOfRangeException();

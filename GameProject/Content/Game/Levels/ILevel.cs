@@ -19,5 +19,9 @@ namespace GameProject.Content.Game.Levels {
         {
             get;
         }
+        public Vector2 santaSledCoords
+        {
+            get;
+        }
     }
 }
