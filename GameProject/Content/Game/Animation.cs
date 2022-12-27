@@ -50,7 +50,7 @@ namespace GameProject.Content.Game
         /// <param name="frameList"></param>
         /// <returns></returns>
         public void updateFrameList(List<Frame> frameList) {
-            List<Frame> oldFrameList = frameList;
+            List<Frame> oldFrameList = this.frameList;
             this.frameList = frameList;
             if (oldFrameList != frameList)
             {

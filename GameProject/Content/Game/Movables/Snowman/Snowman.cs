@@ -12,17 +12,19 @@ using System.Threading.Tasks;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement.Window;
 
 namespace GameProject.Content.Game.Movables.Snowman {
-    internal class Snowman : ControllableGravityObject, IAnimatable, IPacing {
+    internal class Snowman : ControllableGravityObject, IAnimatable, IPacing, ISantaObserver {
         private ControllableGravityMovementManager movementManager;
         private Animation animation;
         private MovingDirection movingDirection = MovingDirection.Left;
         private MovableGameObject nearbyMovable;
+        private bool santaMoved = false;
 
-        public Snowman(Texture2D texture, int speed, int x, int y, MovableGameObject nearbyMovable) : base(texture, new Vector2(x, y), SnowmanFrames.idleFrames[0], speed) {
-            inputReader = new InputReaderPacing(this);
+        public Snowman(Texture2D texture, int speed, int x, int y, MovableGameObject nearbyMovable, IObserverSubject subject) : base(texture, new Vector2(x, y), SnowmanFrames.idleFrames[0], speed) {
+            inputReader = new InputReaderEmpty();
             movementManager = new ControllableGravityMovementManager();
             animation = new Animation(SnowmanFrames.idleFrames, 15);
             this.nearbyMovable = nearbyMovable;
+            subject.RegisterObserver(this);
         }
 
         public override bool CanAccelerate => false;
@@ -52,16 +54,22 @@ namespace GameProject.Content.Game.Movables.Snowman {
         public override void Update(GameTime gameTime) {
             Move(gameTime);
             CheckAttackMode();
-            UpdateFrameList();
+            //change inputreader when santa moved for the first time
+            if(santaMoved && inputReader is InputReaderEmpty) inputReader = new InputReaderPacing(this);
+
+            //check dead and otherwise update frame
             if (!(Animation.FrameList == SnowmanFrames.dyingFrames && frame == Animation.FrameList[Animation.FrameList.Count - 1]))
             {
                 frame = animation.update(gameTime);
             }
+            UpdateFrameList();
+
         }
 
 
 
-        public override Rectangle IntersectionBlock {
+        public override Rectangle IntersectionBlock
+        {
             get
             {
                 Rectangle rect = base.IntersectionBlock;
@@ -78,18 +86,20 @@ namespace GameProject.Content.Game.Movables.Snowman {
             }
         }
         public override void Draw(SpriteBatch spriteBatch) {
-            spriteBatch.Draw(texture, new Vector2(position.X, position.Y-frame.BoundingBox.Height), frame.BoundingBox, Color.White, 0f, new Vector2(0, 0), 1f, SpriteDirection, 1f);
+            spriteBatch.Draw(texture, new Vector2(position.X, position.Y - frame.BoundingBox.Height), frame.BoundingBox, Color.White, 0f, new Vector2(0, 0), 1f, SpriteDirection, 1f);
         }
 
         private void UpdateFrameList() {
             switch (CurrentMovingState)
             {
                 case MovingState.Idle:
+                    Animation.updateFrameList(SnowmanFrames.idleFrames);
+                    break;
                 case MovingState.Jumping:
                     Animation.updateFrameList(SnowmanFrames.idleFrames);
                     break;
                 case MovingState.Walking:
-                    Animation.updateFrameList( SnowmanFrames.walkingFrames);
+                    Animation.updateFrameList(SnowmanFrames.walkingFrames);
                     break;
                 case MovingState.Dying:
                     Animation.updateFrameList(SnowmanFrames.dyingFrames);
@@ -99,6 +109,13 @@ namespace GameProject.Content.Game.Movables.Snowman {
                     break;
                 default:
                     break;
+            }
+        }
+
+        public void update(bool santaMoved) {
+            if (santaMoved)
+            {
+                this.santaMoved = true;
             }
         }
     }

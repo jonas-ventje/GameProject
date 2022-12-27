@@ -12,7 +12,9 @@ namespace GameProject.Content.Game.GameObjects {
         protected bool toBeRemoved = false;
         protected Vector2 position;
         protected Frame frame;
-        private bool passable;
+        private bool passable = false;
+
+
 
         /// <summary>
         /// the rectangle with position etc included. The rectangle in the screen where colision is posible
