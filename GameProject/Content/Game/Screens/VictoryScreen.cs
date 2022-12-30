@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -16,11 +17,19 @@ namespace GameProject.Content.Game.Screens {
         private string score;
         private ContentManager content;
 
-        public VictoryScreen(ContentManager content, string score) {
+        public VictoryScreen(ContentManager content, string score, Type levelType) {
             victoryTexture = content.Load<Texture2D>("./images/victory");
             font = content.Load<SpriteFont>("font/santa_christmas");
             this.content = content;
             this.score = score;
+            try
+            {
+                Scores.LevelScores[levelType] = int.Parse(score);
+            }
+            catch (Exception)
+            {
+                Debug.WriteLine("type bestat niet foemp");
+            }
 
         }
         public new void Draw(SpriteBatch spriteBatch) {

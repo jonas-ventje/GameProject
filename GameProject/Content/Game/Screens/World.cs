@@ -14,10 +14,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace GameProject.Content.Game.Screens
-{
-    internal class World : IScreen
-    {
+namespace GameProject.Content.Game.Screens {
+    internal class World : IScreen {
         private ContentManager content;
         private const int tileWidth = 128;
         private const int tileHeight = 128;
@@ -26,6 +24,7 @@ namespace GameProject.Content.Game.Screens
         private Texture2D santaTexture;
         private Texture2D snowManSledTexture;
         private Texture2D snowManTexture;
+        private Type levelType;
 
         private Santa santa;
         private SnowmanSled snowmanSled;
@@ -42,16 +41,16 @@ namespace GameProject.Content.Game.Screens
         {
             get => catchedGifts / (double)giftAmount;
 
-    }
+        }
         public bool Victory
         {
             set => victory = value;
         }
 
-        public World(ContentManager content, ILevel level)
-        {
+        public World(ContentManager content, ILevel level) {
             this.content = content;
             Tiles = new List<GameObject>();
+            levelType = level.GetType();
             //setup textures and classes
             santaTexture = content.Load<Texture2D>("./images/santaClaus_small");
             tilesTexture = content.Load<Texture2D>("./images/tileset");
@@ -62,7 +61,7 @@ namespace GameProject.Content.Game.Screens
             snowmanSled = new SnowmanSled(snowManSledTexture, 128, 40, santa, 4, santa);
             progressbar = new Progressbar(content.Load<Texture2D>("./images/progressbar"), content.Load<Texture2D>("./images/progress"), this);
             counter = new GameCounter(content.Load<SpriteFont>("font/santa_christmas"), santa);
-            santaSled = new SantaSled(content.Load<Texture2D>("./images/santa_sled"), (int)level.santaSledCoords.X, (int)level.santaSledCoords.Y, new Frame(new Rectangle(0,0,230,179)), this, santa);
+            santaSled = new SantaSled(content.Load<Texture2D>("./images/santa_sled"), (int)level.santaSledCoords.X, (int)level.santaSledCoords.Y, new Frame(new Rectangle(0, 0, 230, 179)), this, santa);
 
 
 
@@ -101,8 +100,7 @@ namespace GameProject.Content.Game.Screens
             Tiles.Add(snowmanSled);
         }
 
-        public void Draw(SpriteBatch spritebatch)
-        {
+        public void Draw(SpriteBatch spritebatch) {
             foreach (var tile in Tiles)
             {
                 tile.Draw(spritebatch);
@@ -110,8 +108,7 @@ namespace GameProject.Content.Game.Screens
             progressbar.Draw(spritebatch);
             counter.Draw(spritebatch);
         }
-        public IScreen Update(GameTime gameTime)
-        {
+        public IScreen Update(GameTime gameTime) {
             List<GameObject> toRemove = new List<GameObject>();
             for (int i = 0; i < Tiles.Count; i++)
             {
@@ -133,7 +130,7 @@ namespace GameProject.Content.Game.Screens
             progressbar.Update(gameTime);
             counter.Update(gameTime);
             if (victory)
-                return new VictoryScreen(content, counter.Score);
+                return new VictoryScreen(content, counter.Score, levelType);
             return this;
         }
     }

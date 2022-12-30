@@ -46,6 +46,8 @@ namespace GameProject
             Window.AllowUserResizing = true;
             _graphics.ApplyChanges();
 
+            //Scores.CheckScores();
+
             scale = 1F / ((float)virtualWidth / GraphicsDevice.Viewport.Width);
 
             onDisplay = new StartScreen(Content);

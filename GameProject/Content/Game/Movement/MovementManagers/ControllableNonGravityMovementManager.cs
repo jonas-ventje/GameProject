@@ -22,7 +22,6 @@ namespace GameProject.Content.Game.Movement.MovementManagers
             }
 
             movement *= movable.Speed;
-            bool isOnLadder;
             base.Move(movable, gameTime, movement);
         }
     }

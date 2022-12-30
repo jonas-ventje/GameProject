@@ -19,7 +19,6 @@ namespace GameProject.Content.Game {
         bool isDisabled;
         string text;
 
-
         public Button(Texture2D texture, SpriteFont font, int x, int y, string text, bool disabled = false) {
             this.texture = texture;
             this.position = new Vector2(x, y);
