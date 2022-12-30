@@ -1,18 +1,18 @@
-﻿using Microsoft.Xna.Framework;
+﻿using GameProject.Content.Game.GameObjects;
+using Microsoft.Xna.Framework;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace GameProject.Content.Game
-{
-    internal class Animation
-    {
+namespace GameProject.Content.Game {
+    internal class Animation {
         private List<Frame> frameList;
         private int activeFrame = 0;
         private double secondCounter;
         private int fps;
+        private GameObject movable;
         public List<Frame> FrameList
         {
             get
@@ -25,14 +25,16 @@ namespace GameProject.Content.Game
             }
         }
 
-        public Animation(List<Frame> activeFrameList, int fps) {
+        public Animation(List<Frame> activeFrameList, int fps, GameObject movable) {
             this.frameList = activeFrameList;
             this.activeFrame = 0;
             this.secondCounter = 0;
             this.fps = fps;
+            this.movable = movable;
         }
         public Frame update(GameTime gameTime) {
             secondCounter += gameTime.ElapsedGameTime.TotalSeconds;
+            int prevHitboxHeight = frameList[activeFrame].Hitbox.Height;
             if (secondCounter >= 1d / fps)
             {
                 activeFrame++;
@@ -40,6 +42,14 @@ namespace GameProject.Content.Game
             }
             if (activeFrame >= frameList.Count)
                 activeFrame = 0;
+
+            //change position when heights aren't equal
+            int newHitboxHeight = frameList[activeFrame].Hitbox.Height;
+            if (prevHitboxHeight < newHitboxHeight)
+            {
+                Vector2 newPosition = new Vector2(movable.Position.X, movable.Position.Y + prevHitboxHeight - newHitboxHeight);
+                movable.Position = newPosition;
+            }
             return frameList[activeFrame];
 
         }

@@ -20,7 +20,7 @@ namespace GameProject.Content.Game.Movables.Crate {
 
         public Crate(Texture2D texture, int x, int y) : base(texture, new Vector2(x, y), CrateFrames.idleFrames[0]) {
             movementController = new GravityMovementManager();
-            animation = new Animation(CrateFrames.idleFrames, 20);
+            animation = new Animation(CrateFrames.idleFrames, 20, this);
         }
         public override void CollisionEffect(GameObject collisionObject, CollidingSide side) {
             if (side == CollidingSide.Bottom && Animation.FrameList != CrateFrames.breakingFrames)

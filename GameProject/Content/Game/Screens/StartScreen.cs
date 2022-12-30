@@ -66,8 +66,8 @@ namespace GameProject.Content.Game.Screens {
                 int y = startY + nthRow * marginVertical;
                 Type level = Scores.LevelScores.ElementAt(i).Key;
                 string levelName = level.Name.Substring(5);
-                //bool isDisabled = i==0?false:Scores.LevelScores.ElementAt(i - 1).Value == 0;
-                bool isDisabled = false;
+                bool isDisabled = i==0?false:Scores.LevelScores.ElementAt(i - 1).Value == 0;
+                //bool isDisabled = false;
                 buttons.Add(new Button(buttonTexture, font, x, y, levelName, isDisabled), level);
             }
             for (int i = Scores.LevelScores.Count; i < rows*columns; i++)

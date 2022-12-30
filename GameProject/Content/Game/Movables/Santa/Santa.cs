@@ -23,7 +23,7 @@ namespace GameProject.Content.Game.Movables.Santa {
         public Santa(Texture2D texture, int speed, int x, int y):base(texture, new Vector2(x, y), SantaFrames.idleFrames[0], speed) {
             inputReader = new InputReaderKeyboard();
             movementController = new ControllableGravityMovementManager();
-            animation = new Animation(SantaFrames.idleFrames, 15);
+            animation = new Animation(SantaFrames.idleFrames, 15, this);
             observers = new List<ISantaObserver>();
         }
         public override void CollisionEffect(GameObject collisionObject, CollidingSide side) {

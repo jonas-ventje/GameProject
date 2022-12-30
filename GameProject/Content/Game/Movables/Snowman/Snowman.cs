@@ -22,7 +22,7 @@ namespace GameProject.Content.Game.Movables.Snowman {
         public Snowman(Texture2D texture, int speed, int x, int y, MovableGameObject nearbyMovable, IObserverSubject subject) : base(texture, new Vector2(x, y), SnowmanFrames.idleFrames[0], speed) {
             inputReader = new InputReaderEmpty();
             movementManager = new ControllableGravityMovementManager();
-            animation = new Animation(SnowmanFrames.idleFrames, 15);
+            animation = new Animation(SnowmanFrames.idleFrames, 15, this);
             this.nearbyMovable = nearbyMovable;
             subject.RegisterObserver(this);
         }
@@ -42,7 +42,9 @@ namespace GameProject.Content.Game.Movables.Snowman {
             {
                 (collisionObject as Santa.Santa).CurrentMovingState = MovingState.Dying;
             }
-            if (side == CollidingSide.Right)
+            else if (collisionObject is Santa.Santa && side == CollidingSide.Top)
+                currentMovingState = MovingState.Dying;
+            else if (side == CollidingSide.Right)
                 movingDirection = MovingDirection.Left;
             else if (side == CollidingSide.Left)
                 movingDirection = MovingDirection.Right;
@@ -79,10 +81,12 @@ namespace GameProject.Content.Game.Movables.Snowman {
         }
 
         private void CheckAttackMode() {
+            if (currentMovingState == MovingState.Dying)
+                return;
             if (Vector2.Distance(nearbyMovable.IntersectionBlock.Center.ToVector2(), IntersectionBlock.Center.ToVector2()) < 750)
             {
                 horizontalSpeed = 5;
-                //currentMovingState = MovingState.Attacking;
+                currentMovingState = MovingState.Attacking;
             }
         }
         public override void Draw(SpriteBatch spriteBatch) {
