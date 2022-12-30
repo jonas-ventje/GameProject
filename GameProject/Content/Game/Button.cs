@@ -68,7 +68,7 @@ namespace GameProject.Content.Game {
             spriteBatch.Draw(texture, position, color);
             Vector2 textMiddlePoint = font.MeasureString(text) / 2;
             // Places text in center of the screen
-            spriteBatch.DrawString(font, text, position + new Vector2(texture.Width / 2, texture.Height /1.65f), color, 0, textMiddlePoint, 1.0f, SpriteEffects.None, 0.5f);
+            spriteBatch.DrawString(font, text, position + new Vector2(texture.Width / 2, texture.Height /2f), color, 0, textMiddlePoint, 1.0f, SpriteEffects.None, 0.5f);
         }
     }
 }

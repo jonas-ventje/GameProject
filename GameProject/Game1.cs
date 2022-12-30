@@ -11,13 +11,14 @@ using System;
 using System.Diagnostics;
 using System.Reflection.Metadata;
 
-namespace GameProject
-{
+namespace GameProject {
     public class Game1 : Game {
         private GraphicsDeviceManager _graphics;
         private SpriteBatch _spriteBatch;
         private RenderTarget2D renderTarget;
         private Texture2D backgroundTexture;
+        private Texture2D backgroundTextureBlurred;
+        private Texture2D background;
         private Vector2 position;
 
 
@@ -38,10 +39,10 @@ namespace GameProject
         }
 
         protected override void Initialize() {
-         /*   _graphics.PreferredBackBufferWidth = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width;
-            _graphics.PreferredBackBufferHeight = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height;
-            _graphics.IsFullScreen = true;*/
-           _graphics.PreferredBackBufferWidth = 1120;
+            /*   _graphics.PreferredBackBufferWidth = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width;
+               _graphics.PreferredBackBufferHeight = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height;
+               _graphics.IsFullScreen = true;*/
+            _graphics.PreferredBackBufferWidth = 1120;
             _graphics.PreferredBackBufferHeight = 630;
             Window.AllowUserResizing = true;
             _graphics.ApplyChanges();
@@ -61,6 +62,8 @@ namespace GameProject
             _spriteBatch = new SpriteBatch(GraphicsDevice);
             renderTarget = new RenderTarget2D(GraphicsDevice, virtualWidth, virtualHeight);
             backgroundTexture = Content.Load<Texture2D>("./images/background");
+            backgroundTextureBlurred = Content.Load<Texture2D>("./images/bgBlurred");
+            background = backgroundTexture;
         }
 
         protected override void Update(GameTime gameTime) {
@@ -70,6 +73,7 @@ namespace GameProject
             //update what is on screen
             onDisplay = onDisplay.Update(gameTime);
 
+            //update the scale (for resizing purposes)
             float virtualRatio = (float)virtualWidth / virtualHeight;
             float screenRatio = (float)GraphicsDevice.Viewport.Width / GraphicsDevice.Viewport.Height;
             if (virtualRatio > screenRatio)
@@ -86,16 +90,24 @@ namespace GameProject
                 position = new Vector2(start, 0);
             }
 
+            //update blurred/non-blurred background
+            if (onDisplay is StartScreen)
+                background = backgroundTextureBlurred;
+            else
+                background = backgroundTexture;
             base.Update(gameTime);
         }
 
         protected override void Draw(GameTime gameTime) {
+            //draw at virtual screen
             GraphicsDevice.SetRenderTarget(renderTarget);
             GraphicsDevice.Clear(Color.White);
             _spriteBatch.Begin();
-            _spriteBatch.Draw(backgroundTexture, Vector2.Zero, Color.White);
+            _spriteBatch.Draw(background, Vector2.Zero, Color.White);
             onDisplay.Draw(_spriteBatch);
             _spriteBatch.End();
+
+            //draw at real screen
             GraphicsDevice.SetRenderTarget(null);
             GraphicsDevice.Clear(Color.Black);
             _spriteBatch.Begin();

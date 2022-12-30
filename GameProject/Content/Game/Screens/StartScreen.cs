@@ -14,20 +14,22 @@ namespace GameProject.Content.Game.Screens {
     internal class StartScreen : IScreen {
         private SpriteFont font;
         private Texture2D buttonTexture;
-        private Texture2D buttonBackgroundTexture;
+        private Texture2D logo;
         private Dictionary<Button, Type> buttons;
         private ContentManager content;
         public StartScreen(ContentManager content) {
-            buttonTexture = content.Load<Texture2D>("./images/button");
-            buttonBackgroundTexture = content.Load<Texture2D>("./images/buttonBackground");
-            font = content.Load<SpriteFont>("font/santa_christmas");
+            buttonTexture = content.Load<Texture2D>("./images/button2");
+            font = content.Load<SpriteFont>("font/sugar_snow");
+            logo = content.Load<Texture2D>("./images/logo");
             buttons = new Dictionary<Button, Type>();
             this.content = content;
-            PlaceButtons();
+            PlaceLevelButtons();
+            //int centerX = (Game1.virtualWidth - buttonTexture.Width) / 2;
+            //buttons.Add(new Button(buttonTexture, font, centerX, 1400, "level info"), typeof(StartScreen));
         }
 
         public void Draw(SpriteBatch spriteBatch) {
-            spriteBatch.Draw(buttonBackgroundTexture, new Vector2(Game1.virtualWidth / 2, Game1.virtualHeight / 2), null, Color.White, 0f, new Vector2(buttonBackgroundTexture.Width / 2, buttonBackgroundTexture.Height / 2), 1.5f, SpriteEffects.None, 1f);
+            spriteBatch.Draw(logo, new Vector2(Game1.virtualWidth / 2, 100), null, Color.White, 0f, new Vector2(logo.Width / 2, 0), .9f, SpriteEffects.None, 1f);
             foreach (var button in buttons)
             {
                 button.Key.Draw(spriteBatch);
@@ -47,12 +49,13 @@ namespace GameProject.Content.Game.Screens {
             return this;
         }
 
-        public void PlaceButtons() {
-            const int rows = 2;
-            int columns = (int)Math.Ceiling(Scores.LevelScores.Count / (double)rows);
-            const int marginHorizontal = 600;
-            const int marginVertical = 300;
-            const int startY = 800;
+        public void PlaceLevelButtons() {
+            const int rows = 3;
+            //int columns = (int)Math.Ceiling(Scores.LevelScores.Count / (double)rows);
+            int columns = 5;
+            const int marginHorizontal = 400;
+            const int marginVertical = 400;
+            const int startY = 600;
             int startX = (Game1.virtualWidth - marginHorizontal * (columns - 1) - buttonTexture.Width) / 2;
 
             for (int i = 0; i < Scores.LevelScores.Count; i++)
@@ -63,12 +66,19 @@ namespace GameProject.Content.Game.Screens {
                 int y = startY + nthRow * marginVertical;
                 Type level = Scores.LevelScores.ElementAt(i).Key;
                 string levelName = level.Name.Substring(5);
-                bool isDisabled = i==0?false:Scores.LevelScores.ElementAt(i - 1).Value == 0;
+                //bool isDisabled = i==0?false:Scores.LevelScores.ElementAt(i - 1).Value == 0;
+                bool isDisabled = false;
                 buttons.Add(new Button(buttonTexture, font, x, y, levelName, isDisabled), level);
-
             }
-            int centerX = (Game1.virtualWidth - buttonTexture.Width) / 2;
-            buttons.Add(new Button(buttonTexture, font, centerX, 1400, "level info"), typeof(StartScreen));
+            for (int i = Scores.LevelScores.Count; i < rows*columns; i++)
+            {
+                int nthRow = i / columns;
+                int nthColumn = (i) % columns;
+                int x = startX + nthColumn * marginHorizontal;
+                int y = startY + nthRow * marginVertical;
+                buttons.Add(new Button(buttonTexture, font, x, y, "X", true), typeof(StartScreen));
+            }
+
         }
     }
 }
