@@ -19,7 +19,7 @@ namespace GameProject.Content.Game.Screens {
 
         public VictoryScreen(ContentManager content, string score, Type levelType) {
             victoryTexture = content.Load<Texture2D>("./images/victory");
-            font = content.Load<SpriteFont>("font/santa_christmas");
+            font = content.Load<SpriteFont>("font/sugar_snow");
             this.content = content;
             this.score = score;
             try
@@ -28,7 +28,7 @@ namespace GameProject.Content.Game.Screens {
             }
             catch (Exception)
             {
-                Debug.WriteLine("type bestat niet foemp");
+                throw new Exception("type bestaat niet foemp");
             }
 
         }

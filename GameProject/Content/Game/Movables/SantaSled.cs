@@ -1,6 +1,8 @@
 ﻿using GameProject.Content.Game.GameObjects;
 using GameProject.Content.Game.Screens;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Audio;
+using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using SharpDX.MediaFoundation;
@@ -11,7 +13,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace GameProject.Content.Game.Movables {
+namespace GameProject.Content.Game.Movables
+{
     internal class SantaSled : MovableGameObject {
         private World world;
         private Santa.Santa santa;
@@ -30,13 +33,14 @@ namespace GameProject.Content.Game.Movables {
 
         private Texture2D particleTexture;
         private List<Particle> particles;
+        private SoundEffect departingSound;
 
         public bool Departing
         {
             get => departing;
         }
 
-        public SantaSled(Texture2D texture, Texture2D particleTexture, int x, int y, Frame frame, World world, Santa.Santa santa) : base(texture, new Vector2(x, y), frame) {
+        public SantaSled(Texture2D texture, Texture2D particleTexture, int x, int y, Frame frame, World world, Santa.Santa santa, ContentManager content) : base(texture, new Vector2(x, y), frame) {
             Passable = true;
             this.world = world;
             this.santa = santa;
@@ -46,6 +50,7 @@ namespace GameProject.Content.Game.Movables {
             startPosition = position;
             this.particleTexture = particleTexture;
             this.particles = new List<Particle>();
+            this.departingSound = content.Load<SoundEffect>("./sounds/flying_away");
         }
 
         public override bool CanAccelerate => false;
@@ -103,6 +108,7 @@ namespace GameProject.Content.Game.Movables {
                     startTime = gameTime.TotalGameTime.TotalSeconds;
                     departing = true;
                     santa.ToBeRemoved = true;
+                    departingSound.CreateInstance().Play();
                 }
             }
             else

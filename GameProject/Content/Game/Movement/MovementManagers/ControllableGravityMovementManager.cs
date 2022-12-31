@@ -13,7 +13,6 @@ using System.Threading.Tasks;
 
 namespace GameProject.Content.Game.Movement.MovementManagers {
     internal class ControllableGravityMovementManager : GravityMovementManager {
-
         public void Move(ControllableGravityObject movable, GameTime gameTime) {
             if (movable.CurrentMovingState != MovingState.Dying)
             {
@@ -25,7 +24,9 @@ namespace GameProject.Content.Game.Movement.MovementManagers {
                 {
                     //check if there is a space or arrow up button pressed
                     if (direction.Y < 0)
+                    {
                         StartJump();
+                    }
                 }
                 else
                 {
@@ -49,10 +50,13 @@ namespace GameProject.Content.Game.Movement.MovementManagers {
                 {
 
                     if (isInTheAir)
-                        movable.CurrentMovingState = MovingState.Jumping;
+                        if (jumpPower != 0)
+                            movable.CurrentMovingState = MovingState.Jumping;
+                        else
+                            movable.CurrentMovingState = MovingState.Falling;
                     else if (movement.X == 0)
                         movable.CurrentMovingState = MovingState.Idle;
-                    if (movement.X != 0)
+                    else if (movement.X != 0)
                         movable.CurrentMovingState = MovingState.Walking;
                 }
             }

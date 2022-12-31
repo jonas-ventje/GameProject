@@ -19,7 +19,7 @@ namespace GameProject.Content.Game.Movement.MovementManagers {
         protected bool isInTheAir = false;
         private double airTime = 0;
         //this must be 0 for fallings, and a vertical upward speed (negative number) for jumpings
-        float jumpPower = 0;
+        protected float jumpPower = 0;
 
         /// <summary>
         /// Move the movable object given, Check for collisions, handle flips and movingstate

@@ -5,8 +5,10 @@ using GameProject.Content.Game.Movables.Crate;
 using GameProject.Content.Game.Movables.Santa;
 using GameProject.Content.Game.Movables.Snowman;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Media;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -56,12 +58,12 @@ namespace GameProject.Content.Game.Screens {
             tilesTexture = content.Load<Texture2D>("./images/tileset");
             snowManTexture = content.Load<Texture2D>("./images/snowman_small");
             snowManSledTexture = content.Load<Texture2D>("./images/snowman_sled3");
-            GameObjectFactory.Init(content.Load<Texture2D>("./images/crate"), content.Load<Texture2D>("./images/cadeau_2"));
-            santa = new Santa(santaTexture, 5, 240, 400);
+            GameObjectFactory.Init(content);
+            santa = new Santa(santaTexture, 5, 240, 400, content);
             snowmanSled = new SnowmanSled(snowManSledTexture, 128, 40, santa, 4, santa);
             progressbar = new Progressbar(content.Load<Texture2D>("./images/progressbar"), content.Load<Texture2D>("./images/progress"), this);
             counter = new GameCounter(content.Load<SpriteFont>("font/santa_christmas"), santa);
-            santaSled = new SantaSled(content.Load<Texture2D>("./images/santa_sled"), content.Load<Texture2D>("./images/sparkle"), (int)level.santaSledCoords.X, (int)level.santaSledCoords.Y, new Frame(new Rectangle(0, 0, 230, 179)), this, santa);
+            santaSled = new SantaSled(content.Load<Texture2D>("./images/santa_sled"), content.Load<Texture2D>("./images/sparkle"), (int)level.santaSledCoords.X, (int)level.santaSledCoords.Y, new Frame(new Rectangle(0, 0, 230, 179)), this, santa, content);
 
 
 
@@ -91,7 +93,7 @@ namespace GameProject.Content.Game.Screens {
             //add snowmans to static list
             foreach (var snowman in level.SnowmanCoords)
             {
-                Tiles.Add(new Snowman(snowManTexture, 3, (int)snowman.X, (int)snowman.Y, santa, santa));
+                Tiles.Add(new Snowman(snowManTexture, 3, (int)snowman.X, (int)snowman.Y, santa, santa, content.Load<SoundEffect>("./sounds/snowman_dying")));
             }
 
             //add individual componentes to static list

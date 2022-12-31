@@ -3,7 +3,9 @@ using GameProject.Content.Game.InputReaders;
 using GameProject.Content.Game.Movables.Santa;
 using GameProject.Content.Game.Movement.MovementManagers;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Media;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,13 +20,15 @@ namespace GameProject.Content.Game.Movables.Snowman {
         private MovingDirection movingDirection = MovingDirection.Left;
         private MovableGameObject nearbyMovable;
         private bool santaMoved = false;
+        private SoundEffect dyingSound;
 
-        public Snowman(Texture2D texture, int speed, int x, int y, MovableGameObject nearbyMovable, IObserverSubject subject) : base(texture, new Vector2(x, y), SnowmanFrames.idleFrames[0], speed) {
+        public Snowman(Texture2D texture, int speed, int x, int y, MovableGameObject nearbyMovable, IObserverSubject subject, SoundEffect dyingSound) : base(texture, new Vector2(x, y), SnowmanFrames.idleFrames[0], speed) {
             inputReader = new InputReaderEmpty();
             movementManager = new ControllableGravityMovementManager();
             animation = new Animation(SnowmanFrames.idleFrames, 15, this);
             this.nearbyMovable = nearbyMovable;
             subject.RegisterObserver(this);
+            this.dyingSound = dyingSound;
         }
 
         public override bool CanAccelerate => false;
@@ -86,7 +90,7 @@ namespace GameProject.Content.Game.Movables.Snowman {
             if (Vector2.Distance(nearbyMovable.IntersectionBlock.Center.ToVector2(), IntersectionBlock.Center.ToVector2()) < 750)
             {
                 horizontalSpeed = 5;
-                currentMovingState = MovingState.Attacking;
+                currentMovingState = MovingState.Attacking; 
             }
         }
         public override void Draw(SpriteBatch spriteBatch) {
@@ -97,8 +101,6 @@ namespace GameProject.Content.Game.Movables.Snowman {
             switch (CurrentMovingState)
             {
                 case MovingState.Idle:
-                    Animation.updateFrameList(SnowmanFrames.idleFrames);
-                    break;
                 case MovingState.Jumping:
                     Animation.updateFrameList(SnowmanFrames.idleFrames);
                     break;
@@ -106,7 +108,8 @@ namespace GameProject.Content.Game.Movables.Snowman {
                     Animation.updateFrameList(SnowmanFrames.walkingFrames);
                     break;
                 case MovingState.Dying:
-                    Animation.updateFrameList(SnowmanFrames.dyingFrames);
+                    if (Animation.updateFrameList(SnowmanFrames.dyingFrames))
+                        dyingSound.CreateInstance().Play();
                     break;
                 case MovingState.Attacking:
                     Animation.updateFrameList(SnowmanFrames.attackFrames);
