@@ -43,7 +43,8 @@ namespace GameProject.Content.Game.Movement.MovementManagers {
                 if (checkLadderUnderFeet(movable, movement))
                 {
                     IsOnLadder = true;
-                    movable.Position = new Vector2(movable.Position.X, movable.Position.Y - 1);
+                    movable.Position = new Vector2(movable.Position.X, movable.Position.Y - 2);
+                    undoMovement.Y = 0;
                 }
             }
             if (IsOnLadder)
