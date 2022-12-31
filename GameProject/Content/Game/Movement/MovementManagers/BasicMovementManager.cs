@@ -24,7 +24,7 @@ namespace GameProject.Content.Game.Movement.MovementManagers {
         /// <param name="inputMovement"></param>
         /// <returns>the undoMovemend used in the GravityMovmentManager</returns>
         /// 
-        public Vector2 Move(MovableGameObject movable, GameTime gameTime, Vector2 inputMovement = new Vector2()) {
+        public Vector2 Move(MovableGameObject movable, GameTime gameTime, Vector2 inputMovement = new Vector2(), bool descentLadderRequest = false) {
             Vector2 movement = inputMovement;
             //acceleration
             if (movable.CanAccelerate)
@@ -38,6 +38,14 @@ namespace GameProject.Content.Game.Movement.MovementManagers {
             #region collision
             Vector2 undoMovement = CalcUndoMovement(movable, movement);
             IsOnLadder = IntersectsAnyLadder(movable.IntersectionBlock);
+            if (descentLadderRequest && !IsOnLadder)
+            {
+                if (checkLadderUnderFeet(movable, movement))
+                {
+                    IsOnLadder = true;
+                    movable.Position = new Vector2(movable.Position.X, movable.Position.Y - 1);
+                }
+            }
             if (IsOnLadder)
             {
                 undoMovement = RecalculatreUndoMovement(movable, movement, undoMovement);
@@ -55,6 +63,7 @@ namespace GameProject.Content.Game.Movement.MovementManagers {
             movable.Position += actualMovement;
             return undoMovement;
         }
+
 
         private Vector2 CalcUndoMovement(MovableGameObject movable, Vector2 movement) {
             return CalcUndoMovement(movable, movement, new List<GameObject>());
@@ -107,6 +116,8 @@ namespace GameProject.Content.Game.Movement.MovementManagers {
                 .Any(ladder => rect.Left >= ladder.IntersectionBlock.Left && rect.Right <= ladder.IntersectionBlock.Right);
         }
 
+
+
         private List<GameObject> GameTilesBehindLadders() {
             var laddersIntersectionBlocks = World.Tiles.Where(tile => tile is GameTile)
                 .Where(tile => (tile as GameTile).Id == 29 || (tile as GameTile).Id == 30)
@@ -117,6 +128,15 @@ namespace GameProject.Content.Game.Movement.MovementManagers {
                 .Where(tile => laddersIntersectionBlocks.Any(ladder => ladder.Contains(tile.IntersectionBlock)))
                 .ToList();
             return gameTilesBehindLadders;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns>whether you can enter a ladder or not</returns>
+        /// <exception cref="NotImplementedException"></exception>
+        private bool checkLadderUnderFeet(MovableGameObject movable, Vector2 movement) {
+            return IntersectsAnyLadder(new Point(movable.IntersectionBlock.Center.X + (int)movement.X+1, movable.IntersectionBlock.Bottom));
         }
 
         /// <summary>

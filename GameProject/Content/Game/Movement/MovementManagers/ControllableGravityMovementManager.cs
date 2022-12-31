@@ -19,7 +19,7 @@ namespace GameProject.Content.Game.Movement.MovementManagers {
 
                 Vector2 direction = movable.InputReader.ReadInput();
                 Vector2 movement = new Vector2(direction.X, 0);
-
+                bool descentLadderRequest = direction.Y > 0;
                 if (!IsOnLadder)
                 {
                     //check if there is a space or arrow up button pressed
@@ -42,7 +42,7 @@ namespace GameProject.Content.Game.Movement.MovementManagers {
                 }
 
                 movement *= movable.Speed;
-                Move(movable, gameTime, movement);
+                Move(movable, gameTime, movement, descentLadderRequest);
 
 
                 //check which animation frame is required

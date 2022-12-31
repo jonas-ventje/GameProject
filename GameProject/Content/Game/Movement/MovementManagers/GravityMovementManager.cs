@@ -27,12 +27,12 @@ namespace GameProject.Content.Game.Movement.MovementManagers {
         /// <param name="movable">movable object</param>
         /// <param name="gameTime">gametime</param>
         /// <param name="inputMovment">only needed for the inheritted controllableMovementManager, for left and right...</param>
-        public new void Move(MovableGameObject movable, GameTime gameTime, Vector2 inputMovment = new Vector2()) {
+        public new void Move(MovableGameObject movable, GameTime gameTime, Vector2 inputMovment = new Vector2(), bool descentLadderRequest = false) {
             Vector2 movement = inputMovment;
             if (!IsOnLadder)
                 movement += UpdateGravity(gameTime);
 
-            Vector2 undoMovement = base.Move(movable, gameTime, movement);
+            Vector2 undoMovement = base.Move(movable, gameTime, movement, descentLadderRequest);
 
             //check if object reaches the ground, and obviously needs to fall otherwise
             //an object reaches the ground when movement is movement is downwards and the actualmovemnt is zero or upwards
