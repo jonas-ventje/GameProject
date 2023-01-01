@@ -62,7 +62,7 @@ namespace GameProject.Content.Game.Levels {
             new Vector2(530,630),
             new Vector2(1600,450),
             new Vector2(1740,550),
-            new Vector2(3080,1080),
+            new Vector2(3080,1020),
             new Vector2(1930,1000),
             new Vector2(2273,1118),
 
