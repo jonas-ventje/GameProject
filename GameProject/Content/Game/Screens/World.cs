@@ -1,4 +1,5 @@
 ﻿using GameProject.Content.Game.GameObjects;
+using GameProject.Content.Game.GameParts;
 using GameProject.Content.Game.Levels;
 using GameProject.Content.Game.Movables;
 using GameProject.Content.Game.Movables.Crate;
@@ -16,7 +17,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace GameProject.Content.Game.Screens {
+namespace GameProject.Content.Game.Screens
+{
     internal class World : IScreen {
         private ContentManager content;
         private const int tileWidth = 128;

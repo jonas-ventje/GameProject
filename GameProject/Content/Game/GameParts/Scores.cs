@@ -7,10 +7,13 @@ using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace GameProject.Content.Game {
-    internal static class Scores {
+namespace GameProject.Content.Game.GameParts
+{
+    internal static class Scores
+    {
         public static Dictionary<Type, int> LevelScores;
-        static Scores() {
+        static Scores()
+        {
             LevelScores = new Dictionary<Type, int>();
 
             //get the amount of levels.

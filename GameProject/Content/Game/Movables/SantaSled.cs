@@ -1,4 +1,5 @@
 ﻿using GameProject.Content.Game.GameObjects;
+using GameProject.Content.Game.GameParts;
 using GameProject.Content.Game.Screens;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Audio;

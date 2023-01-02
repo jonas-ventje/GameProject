@@ -1,4 +1,5 @@
-﻿using GameProject.Content.Game.Levels;
+﻿using GameProject.Content.Game.GameParts;
+using GameProject.Content.Game.Levels;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
@@ -9,7 +10,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace GameProject.Content.Game.Screens {
+namespace GameProject.Content.Game.Screens
+{
 
     internal class StartScreen : IScreen {
         private SpriteFont font;

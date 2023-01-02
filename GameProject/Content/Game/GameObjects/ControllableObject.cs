@@ -1,4 +1,5 @@
-﻿using GameProject.Content.Game.InputReaders;
+﻿using GameProject.Content.Game.GameParts;
+using GameProject.Content.Game.InputReaders;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;

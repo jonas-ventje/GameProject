@@ -10,26 +10,30 @@ using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace GameProject.Content.Game {
-    internal static class GameObjectFactory {
+namespace GameProject.Content.Game.GameParts
+{
+    internal static class GameObjectFactory
+    {
 
         private static Texture2D crateTexture;
         private static Texture2D giftTexture;
         private static ContentManager content;
-        public static void Init(ContentManager contentI) {
+        public static void Init(ContentManager contentI)
+        {
             content = contentI;
             crateTexture = content.Load<Texture2D>("./images/crate");
             giftTexture = content.Load<Texture2D>("./images/cadeau_2");
         }
-        public static GameObject CreateGameObject(string type, int x, int y) {
-            if(crateTexture == null)
+        public static GameObject CreateGameObject(string type, int x, int y)
+        {
+            if (crateTexture == null)
                 throw new NullReferenceException();
             else if (type == "crate")
                 return new Crate(crateTexture, x, y, content);
             else if (type == "cadeau")
                 return new Gift(giftTexture, x, y);
             else throw new ArgumentException();
-        
+
         }
 
     }

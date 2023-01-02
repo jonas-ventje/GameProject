@@ -9,8 +9,10 @@ using System.Threading.Tasks;
 using GameProject.Content.Game.GameObjects;
 using GameProject.Content.Game.Screens;
 using System.Diagnostics;
+using GameProject.Content.Game.GameParts;
 
-namespace GameProject.Content.Game.Movement.MovementManagers {
+namespace GameProject.Content.Game.Movement.MovementManagers
+{
     internal class BasicMovementManager {
         private double accelerationTime = 0;
         private const double acceleration = 1.5f;

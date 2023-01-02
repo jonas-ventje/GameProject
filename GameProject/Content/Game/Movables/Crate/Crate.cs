@@ -6,12 +6,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using GameProject.Content.Game.Movement.MovementManagers;
+using GameProject.Content.Game.Movement;
 using GameProject.Content.Game.GameObjects;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Audio;
+using GameProject.Content.Game.Movement.MovementManagers;
 
-namespace GameProject.Content.Game.Movables.Crate {
+namespace GameProject.Content.Game.Movables.Crate
+{
     internal class Crate : MovableGameObject, IAnimatable {
         private Animation animation;
         private GravityMovementManager movementController;

@@ -1,4 +1,5 @@
-﻿using GameProject.Content.Game.Movement.MovementManagers;
+﻿using GameProject.Content.Game.GameParts;
+using GameProject.Content.Game.Movement.MovementManagers;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
@@ -7,7 +8,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace GameProject.Content.Game.GameObjects {
+namespace GameProject.Content.Game.GameObjects
+{
     internal abstract class MovableGameObject : GameObject {
         public abstract bool CanAccelerate
         {

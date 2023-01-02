@@ -10,8 +10,10 @@ using System.Text;
 using System.Threading.Tasks;
 using GameProject.Content.Game.Screens;
 using GameProject.Content.Game.InputReaders;
+using GameProject.Content.Game.GameParts;
 
-namespace GameProject.Content.Game.Movables {
+namespace GameProject.Content.Game.Movables
+{
     internal class SnowmanSled : ControllableObject, ISantaObserver {
         private const int minDropInterval = 2;
         private const int maxDropInterval = 10;

@@ -1,11 +1,13 @@
-﻿using Microsoft.Xna.Framework;
+﻿using GameProject.Content.Game.GameParts;
+using Microsoft.Xna.Framework;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace GameProject.Content.Game.Movables.Santa {
+namespace GameProject.Content.Game.Movables.Santa
+{
     internal static class SantaFrames {
         internal static List<Frame> idleFrames = new List<Frame>();
         internal static List<Frame> walkingFrames = new List<Frame>();

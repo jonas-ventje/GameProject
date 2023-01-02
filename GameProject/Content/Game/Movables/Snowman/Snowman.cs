@@ -1,6 +1,8 @@
 ﻿using GameProject.Content.Game.GameObjects;
+using GameProject.Content.Game.GameParts;
 using GameProject.Content.Game.InputReaders;
 using GameProject.Content.Game.Movables.Santa;
+using GameProject.Content.Game.Movement;
 using GameProject.Content.Game.Movement.MovementManagers;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Audio;
@@ -13,7 +15,8 @@ using System.Text;
 using System.Threading.Tasks;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement.Window;
 
-namespace GameProject.Content.Game.Movables.Snowman {
+namespace GameProject.Content.Game.Movables.Snowman
+{
     internal class Snowman : ControllableGravityObject, IAnimatable, IPacing, ISantaObserver {
         private ControllableGravityMovementManager movementManager;
         private Animation animation;

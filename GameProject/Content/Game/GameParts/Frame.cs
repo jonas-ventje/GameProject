@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace GameProject.Content.Game
+namespace GameProject.Content.Game.GameParts
 {
     internal class Frame
     {
@@ -38,12 +38,13 @@ namespace GameProject.Content.Game
         /// boundingbox equal to hitbox or no hitbox
         /// </summary>
         /// <param name="boundingBox"></param>
-        public Frame(Rectangle boundingBox, bool hasHitbox = true) {
+        public Frame(Rectangle boundingBox, bool hasHitbox = true)
+        {
             this.boundingBox = boundingBox;
             if (hasHitbox)
-                this.hitbox = new Rectangle(0, 0, boundingBox.Width, boundingBox.Height);
+                hitbox = new Rectangle(0, 0, boundingBox.Width, boundingBox.Height);
             else
-                this.hitbox = Rectangle.Empty;
+                hitbox = Rectangle.Empty;
         }
     }
 }

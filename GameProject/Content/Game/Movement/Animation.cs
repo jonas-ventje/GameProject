@@ -1,4 +1,5 @@
 ﻿using GameProject.Content.Game.GameObjects;
+using GameProject.Content.Game.GameParts;
 using Microsoft.Xna.Framework;
 using System;
 using System.Collections.Generic;
@@ -6,8 +7,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace GameProject.Content.Game {
-    internal class Animation {
+namespace GameProject.Content.Game.Movement
+{
+    internal class Animation
+    {
         private List<Frame> frameList;
         private int activeFrame = 0;
         private double secondCounter;
@@ -25,14 +28,16 @@ namespace GameProject.Content.Game {
             }
         }
 
-        public Animation(List<Frame> activeFrameList, int fps, GameObject movable) {
-            this.frameList = activeFrameList;
-            this.activeFrame = 0;
-            this.secondCounter = 0;
+        public Animation(List<Frame> activeFrameList, int fps, GameObject movable)
+        {
+            frameList = activeFrameList;
+            activeFrame = 0;
+            secondCounter = 0;
             this.fps = fps;
             this.movable = movable;
         }
-        public Frame update(GameTime gameTime) {
+        public Frame update(GameTime gameTime)
+        {
             secondCounter += gameTime.ElapsedGameTime.TotalSeconds;
             int prevHitboxHeight = frameList[activeFrame].Hitbox.Height;
             if (secondCounter >= 1d / fps)
@@ -59,7 +64,8 @@ namespace GameProject.Content.Game {
         /// <param name="gameTime"></param>
         /// <param name="frameList"></param>
         /// <returns></returns>
-        public bool updateFrameList(List<Frame> frameList) {
+        public bool updateFrameList(List<Frame> frameList)
+        {
             List<Frame> oldFrameList = this.frameList;
             this.frameList = frameList;
             if (oldFrameList != frameList)

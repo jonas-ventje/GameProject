@@ -1,5 +1,7 @@
 ﻿using GameProject.Content.Game.GameObjects;
+using GameProject.Content.Game.GameParts;
 using GameProject.Content.Game.InputReaders;
+using GameProject.Content.Game.Movement;
 using GameProject.Content.Game.Movement.MovementManagers;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Audio;
@@ -11,7 +13,8 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Windows.Forms;
 
-namespace GameProject.Content.Game.Movables.Santa {
+namespace GameProject.Content.Game.Movables.Santa
+{
     internal class Santa : ControllableGravityObject, IAnimatable, IObserverSubject {
         private Animation animation;
         private ControllableGravityMovementManager movementController;

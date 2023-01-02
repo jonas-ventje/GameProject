@@ -1,4 +1,4 @@
-﻿using GameProject.Content.Game.Movables;
+﻿using GameProject.Content.Game.Movement;
 using Microsoft.Xna.Framework;
 using System;
 using System.Collections.Generic;

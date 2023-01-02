@@ -3,8 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using GameProject.Content.Game.GameParts;
 
-namespace GameProject.Content.Game.Movables.Crate {
+namespace GameProject.Content.Game.Movables.Crate
+{
     internal static class CrateFrames {
         internal static List<Frame> idleFrames = new List<Frame>();
         internal static List<Frame> breakingFrames = new List<Frame>();

@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace GameProject.Content.Game
+namespace GameProject.Content.Game.Movables
 {
     internal class Particle
     {

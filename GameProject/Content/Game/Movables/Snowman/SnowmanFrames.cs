@@ -1,11 +1,13 @@
-﻿using Microsoft.Xna.Framework;
+﻿using GameProject.Content.Game.GameParts;
+using Microsoft.Xna.Framework;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace GameProject.Content.Game.Movables.Snowman {
+namespace GameProject.Content.Game.Movables.Snowman
+{
     internal static class SnowmanFrames {
         internal static List<Frame> idleFrames = new List<Frame>();
         internal static List<Frame> walkingFrames = new List<Frame>();
