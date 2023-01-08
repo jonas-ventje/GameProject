@@ -7,7 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace GameProject.Content.Game.Screens {
-    internal class CountDownScreen {
+    internal abstract class CountDownScreen {
         private const int millisVisible = 5000;
         private int timeLeftMillis;
         public CountDownScreen() {
